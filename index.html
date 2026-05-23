@@ -494,7 +494,7 @@ footer .logo .az{color:rgba(255,255,255,.75)}
 #toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:#fff;padding:.7rem 1.3rem;font-family:var(--ff-body);font-size:.68rem;z-index:300;opacity:0;transform:translateY(.5rem);transition:all .3s;pointer-events:none;max-width:280px}
 #toast.show{opacity:1;transform:translateY(0)}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.reveal.vis{opacity:1;transform:translateY(0)}
-@media(max-width:960px){#hero{grid-template-columns:1fr}.himg{height:55vw;min-height:300px}.contact-grid{grid-template-columns:1fr;gap:3rem}.sh{flex-direction:column;align-items:flex-start}.sec-sub{text-align:left}nav{padding:.85rem 1.2rem}.nav-links{gap:.8rem}.sec{padding:3.5rem 1.2rem}.gal-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:960px){#hero{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr;gap:3rem}.sh{flex-direction:column;align-items:flex-start}.sec-sub{text-align:left}nav{padding:.85rem 1.2rem}.nav-links{gap:.8rem}.sec{padding:3.5rem 1.2rem}.gal-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.gal-grid{grid-template-columns:1fr}.shop-grid{grid-template-columns:1fr}.nav-links li:nth-child(n+3){display:none}.ct-form-row{grid-template-columns:1fr}.about-stats{grid-template-columns:1fr 1fr}}
 
 /* Shopify grid — single consolidated block */
@@ -3709,11 +3709,13 @@ footer > div a {
 
 <style id="yoaz-perf-safe-v9">
 /* Performance: CLS + decode hints — no visual/layout change */
-.himg picture,
-.himg img {
-  aspect-ratio: 573 / 700;
-  max-width: 100%;
-  height: auto;
+@media (min-width: 769px) {
+  .himg picture,
+  .himg img {
+    aspect-ratio: 573 / 700;
+    max-width: 100%;
+    height: auto;
+  }
 }
 .cw-card img,
 .cw-gallery-stack .cw-gimg,
@@ -6078,49 +6080,37 @@ nav a,
 
 <style id="yoaz-hero-mobile-authoritative">
 /*
- * AUTHORITATIVE mobile hero — real DOM only:
+ * MOBILE HERO — real DOM (inspected in index.html):
  *   section#hero
- *     div.hl          (text: .htag, .hname, .hdesc, .hbtns)
- *     div.himg
- *       picture
- *         source + img
+ *     div.hl     → .htag, .hname, .hdesc, .hbtns
+ *     div.himg   → picture → source + img
+ *
+ * Root causes fixed:
+ * - #hero { display:grid; grid-template-columns:1fr 1fr; min-height:100vh }
+ * - .himg img { height:100%; object-fit:cover }
+ * - yoaz-perf-safe-v9 aspect-ratio 573/700 on .himg (beige gap under image)
+ * - @media 960px .himg { height:55vw; min-height:300px }
  */
 @media screen and (max-width: 768px) {
   html body section#hero {
     display: flex !important;
     flex-direction: column !important;
     flex-wrap: nowrap !important;
-    grid-template-columns: unset !important;
-    grid-template-rows: unset !important;
-    grid-auto-columns: unset !important;
-    grid-auto-rows: unset !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: none !important;
     grid-auto-flow: row !important;
     align-items: stretch !important;
-    width: 100% !important;
-    max-width: 100vw !important;
-    min-height: auto !important;
-    height: auto !important;
-    padding-top: 58px !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    overflow: visible !important;
-    background: #fff !important;
-    box-sizing: border-box !important;
-  }
-
-  html body section#hero > div.hl {
-    order: 2 !important;
-    flex: 0 0 auto !important;
+    justify-content: flex-start !important;
     width: 100% !important;
     max-width: 100% !important;
-    min-width: 0 !important;
-    grid-column: auto !important;
-    grid-row: auto !important;
-    padding: 28px 22px 34px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 58px 0 0 !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    background: #fff !important;
     box-sizing: border-box !important;
   }
 
@@ -6130,19 +6120,17 @@ nav a,
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    grid-column: auto !important;
-    grid-row: auto !important;
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
     padding: 0 !important;
     margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: visible !important;
+    display: block !important;
+    overflow: hidden !important;
     background: #f4f1e8 !important;
     box-sizing: border-box !important;
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
   }
 
   html body section#hero > div.himg > picture {
@@ -6150,42 +6138,74 @@ nav a,
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
-    overflow: visible !important;
-    background: transparent !important;
+    overflow: hidden !important;
+    background: #f4f1e8 !important;
     line-height: 0 !important;
   }
 
-  html body section#hero > div.himg > picture > img,
-  html body section#hero > div.himg img {
+  html body section#hero > div.himg > picture > img {
     display: block !important;
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
+    aspect-ratio: auto !important;
     object-fit: contain !important;
     object-position: center center !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
     transform: none !important;
     animation: none !important;
     box-sizing: border-box !important;
   }
+
+  html body section#hero > div.hl {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 28px 22px 32px !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    box-sizing: border-box !important;
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  html body section#hero .hname {
+    font-size: clamp(3.25rem, 16vw, 5.5rem) !important;
+    line-height: 0.9 !important;
+    margin-bottom: 0.75rem !important;
+    width: 100% !important;
+  }
+
+  html body section#hero .hdesc {
+    max-width: 100% !important;
+    margin-bottom: 1.25rem !important;
+  }
 }
 
 @media screen and (max-width: 430px) {
-  html body section#hero > div.himg > picture > img,
-  html body section#hero > div.himg img {
-    object-position: center center !important;
-    max-height: none !important;
+  html body section#hero > div.hl {
+    padding: 24px 18px 28px !important;
   }
 
-  html body section#hero > div.hl {
-    padding: 24px 18px 30px !important;
+  html body section#hero .hname {
+    font-size: clamp(3rem, 15vw, 4.75rem) !important;
   }
 }
 </style>
