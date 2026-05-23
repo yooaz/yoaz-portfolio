@@ -495,7 +495,7 @@ footer .logo .az{color:rgba(255,255,255,.75)}
 #toast.show{opacity:1;transform:translateY(0)}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.reveal.vis{opacity:1;transform:translateY(0)}
 @media(max-width:960px){#hero{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr;gap:3rem}.sh{flex-direction:column;align-items:flex-start}.sec-sub{text-align:left}nav{padding:.85rem 1.2rem}.nav-links{gap:.8rem}.sec{padding:3.5rem 1.2rem}.gal-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.gal-grid{grid-template-columns:1fr}.shop-grid{grid-template-columns:1fr}.nav-links li:nth-child(n+3){display:none}.ct-form-row{grid-template-columns:1fr}.about-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.gal-grid{grid-template-columns:1fr}.shop-grid{grid-template-columns:1fr}.ct-form-row{grid-template-columns:1fr}.about-stats{grid-template-columns:1fr 1fr}}
 
 /* Shopify grid — single consolidated block */
 .sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.4rem;margin-bottom:2rem;align-items:start}
@@ -818,9 +818,6 @@ body.pj-open .pj-modal{display:flex!important}
 @media(max-width:760px){
   nav{padding:.7rem .9rem;gap:.65rem;min-height:58px}
   .logo{font-size:1.45rem}
-  .nav-links{gap:.7rem;overflow-x:auto;scrollbar-width:none;max-width:58vw}
-  .nav-links::-webkit-scrollbar{display:none}
-  .nav-links a{font-size:.58rem;white-space:nowrap}
   .lang-sw{display:none}
   #hero{display:flex;flex-direction:column;min-height:auto;padding-top:58px;background:#fff}
   .hl{order:1}
@@ -1157,7 +1154,6 @@ a:focus-visible,button:focus-visible,.cw-card:focus-visible,.gal-item:focus-visi
 <section id="client" class="sec">
   <div class="sh reveal">
     <div><p class="sec-eyebrow" data-key="client_eyebrow">01 — Clients</p><h2 class="sec-title" data-key="client_title">Travaux<br>Clients</h2></div>
-    <p class="sec-sub" data-key="client_sub">Grandes marques, édition, packaging, campagnes.</p>
   </div>
   <div class="cw-grid">
 
@@ -1643,7 +1639,7 @@ const I18N={
     hero_cta1:'VOIR LES TRAVAUX',hero_cta2:'PRINT SHOP',
     hire_me:'Travailler ensemble',hire_aria:'Prendre contact avec Yoaz',
     sbar_label:'Retrouvez-moi sur',
-    client_eyebrow:'01 — Clients',client_title:'Travaux<br>Clients',client_sub:'Grandes marques, édition, packaging, campagnes.',
+    client_eyebrow:'01 — Clients',client_title:'Travaux<br>Clients',client_sub:'',
     shop_eyebrow:'02 — Boutique',shop_title:'Print<br>Shop',shop_sub:'Sélection officielle Shopify : chaque carte utilise l’image du produit réel et ouvre sa vraie page produit.',
     shop_intro_aria:'Boutique officielle Shopify',shop_intro_kicker:'Shopify officiel',
     shop_intro_h3:'Produits vérifiés depuis la boutique YOAZ : image, titre et lien restent synchronisés.',shop_intro_link:'Shop',
@@ -1698,7 +1694,7 @@ const I18N={
     hero_cta1:'VIEW WORK',hero_cta2:'PRINT SHOP',
     hire_me:'Work together',hire_aria:'Contact Yoaz',
     sbar_label:'Find me on',
-    client_eyebrow:'01 — Clients',client_title:'Client<br>Work',client_sub:'Global brands, editorial, packaging, campaigns.',
+    client_eyebrow:'01 — Clients',client_title:'Client<br>Work',client_sub:'',
     shop_eyebrow:'02 — Shop',shop_title:'Print<br>Shop',shop_sub:'Official Shopify selection: each card uses the real product image and opens its product page.',
     shop_intro_aria:'Official Shopify store',shop_intro_kicker:'Official Shopify',
     shop_intro_h3:'Verified products from the YOAZ store: image, title and link stay in sync.',shop_intro_link:'Shop',
@@ -1753,7 +1749,7 @@ const I18N={
     hero_cta1:'BEKIJK WERK',hero_cta2:'PRINT SHOP',
     hire_me:'Samenwerken',hire_aria:'Contact opnemen met Yoaz',
     sbar_label:'Vind mij op',
-    client_eyebrow:'01 — Klanten',client_title:'Klant<br>Werk',client_sub:'Mondiale merken, redactioneel, verpakking, campagnes.',
+    client_eyebrow:'01 — Klanten',client_title:'Klant<br>Werk',client_sub:'',
     shop_eyebrow:'02 — Winkel',shop_title:'Print<br>Shop',shop_sub:'Officiële Shopify-selectie: elke kaart gebruikt de echte productafbeelding en opent de productpagina.',
     shop_intro_aria:'Officiële Shopify-winkel',shop_intro_kicker:'Officiële Shopify',
     shop_intro_h3:'Geverifieerde producten uit de YOAZ-winkel: afbeelding, titel en link blijven gesynchroniseerd.',shop_intro_link:'Shop',
@@ -1808,7 +1804,7 @@ const I18N={
     hero_cta1:'VER TRABAJO',hero_cta2:'PRINT SHOP',
     hire_me:'Trabajemos juntos',hire_aria:'Contactar con Yoaz',
     sbar_label:'Encuéntrame en',
-    client_eyebrow:'01 — Clientes',client_title:'Trabajo<br>Cliente',client_sub:'Marcas globales, editorial, packaging, campañas.',
+    client_eyebrow:'01 — Clientes',client_title:'Trabajo<br>Cliente',client_sub:'',
     shop_eyebrow:'02 — Tienda',shop_title:'Print<br>Shop',shop_sub:'Selección oficial Shopify: cada tarjeta usa la imagen real del producto y abre su página.',
     shop_intro_aria:'Tienda oficial Shopify',shop_intro_kicker:'Shopify oficial',
     shop_intro_h3:'Productos verificados de la tienda YOAZ: imagen, título y enlace sincronizados.',shop_intro_link:'Shop',
@@ -2607,22 +2603,6 @@ var PJ_DATA={
    YOAZ UX PATCH — swipe, clear exits, mobile refinement
    ========================================================= */
 (function(){
-  // Add a small instruction for swipeable mobile rails without changing content.
-  function addHint(sectionId, text){
-    var sec=document.getElementById(sectionId); if(!sec || sec.querySelector('.yoaz-swipe-hint')) return;
-    var sh=sec.querySelector('.sh'); if(!sh) return;
-    var hint=document.createElement('p');
-    hint.className='yoaz-swipe-hint';
-    hint.textContent=text;
-    hint.style.cssText='font-family:var(--ff-body);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(17,16,8,.38);margin:-1.25rem 1rem 1rem;display:none';
-    sh.insertAdjacentElement('afterend',hint);
-  }
-  addHint('client','Swipe horizontal sur mobile · tap pour ouvrir');
-  addHint('gallery','Swipe horizontal sur mobile · tap pour agrandir');
-  var style=document.createElement('style');
-  style.textContent='@media(max-width:760px){.yoaz-swipe-hint{display:block!important}}';
-  document.head.appendChild(style);
-
   // Lightbox: close by clicking empty background, swipe left/right on image.
   var lightbox=document.getElementById('lb');
   if(lightbox){
@@ -6206,6 +6186,83 @@ nav a,
 
   html body section#hero .hname {
     font-size: clamp(3rem, 15vw, 4.75rem) !important;
+  }
+}
+</style>
+
+<style id="yoaz-mobile-cleanup-final">
+/* Mobile cleanup — hints off, client subtitle off, header bleed fix */
+
+.yoaz-swipe-hint {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+#client .sec-sub,
+#client .sh .sec-sub,
+p.sec-sub[data-key="client_sub"] {
+  display: none !important;
+}
+
+@media screen and (max-width: 780px) {
+  nav {
+    overflow: hidden !important;
+    isolation: isolate;
+  }
+
+  nav .nav-links:not(.open) {
+    position: fixed !important;
+    top: 58px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 0 !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    transform: translate3d(0, -120%, 0) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    clip-path: inset(0 0 100% 0) !important;
+  }
+
+  nav .nav-links.open {
+    max-height: none !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    transform: translate3d(0, 0, 0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    clip-path: none !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08) !important;
+    border-bottom: 1px solid var(--bdr) !important;
+  }
+
+  nav .nav-links li {
+    display: block !important;
+  }
+
+  nav .nav-links a::after {
+    display: none !important;
+  }
+
+  nav .nav-links a.active {
+    border-bottom: none !important;
+  }
+
+  #scroll-progress {
+    max-width: 100vw !important;
+    box-shadow: none !important;
   }
 }
 </style>
