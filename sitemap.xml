@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemaps/image/1.1">
+  <url>
+    <loc>https://yoaz.fr/</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yoaz.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yoaz.fr/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://yoaz.fr/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://yoaz.fr/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yoaz.fr/"/>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/hero.jpg</image:loc>
+      <image:title>Yoaz — Illustrateur Freelance Paris</image:title>
+      <image:caption>Portfolio officiel de Yoaz, illustrateur psychédélique et géométrique basé à Paris.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/client-playstation-metro.jpg</image:loc>
+      <image:title>Mural PlayStation God of War — Paris Métro</image:title>
+      <image:caption>Fresque créée par Yoaz pour PlayStation God of War dans le métro parisien.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/client-adidas-paris.png</image:loc>
+      <image:title>Illustration Adidas Paris — T-shirt campaign</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/gallery-mandala.jpg</image:loc>
+      <image:title>Mandala — illustration géométrique psychédélique</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/gallery-cosmos.jpg</image:loc>
+      <image:title>Cosmos — illustration spatiale psychédélique</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/gallery-jardin-surreal.jpg</image:loc>
+      <image:title>Le Jardin du Surréel — illustration surréaliste</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/gallery-temple-solaire.jpg</image:loc>
+      <image:title>Temple Solaire — illustration surréaliste colorée</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yoaz.fr/images/gallery-dieux-jumeaux.jpg</image:loc>
+      <image:title>Dieux Jumeaux — illustration psychédélique</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/#client</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/#shop</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/#gallery</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/#about</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/#contact</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/#faq</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/llms.txt</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/llms-full.txt</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/ai.txt</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://yoaz.fr/humans.txt</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

@@ -1,0 +1,128 @@
+# robots.txt — https://yoaz.fr
+# Yoaz — Illustrateur Freelance Paris
+# Dernière mise à jour : 2026-04-23
+
+# ─── Règle globale ─────────────────────────────────
+User-agent: *
+Allow: /
+Disallow: /.well-known/
+Disallow: /admin/
+Disallow: /*.bak$
+
+# ─── Moteurs de recherche principaux ───────────────
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /images/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# ─── Assistants IA / LLM crawlers (autorisés) ──────
+# ChatGPT / OpenAI
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# Google Gemini / Bard
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot-Extended
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Meta (Llama, WhatsApp, Facebook AI)
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+
+# Common Crawl (utilisé par de nombreux LLMs)
+User-agent: CCBot
+Allow: /
+
+# Amazon
+User-agent: Amazonbot
+Allow: /
+
+# DuckAssist
+User-agent: DuckAssistBot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Bytespider (ByteDance / TikTok)
+User-agent: Bytespider
+Allow: /
+
+# Diffbot
+User-agent: Diffbot
+Allow: /
+
+# ─── Sitemap ──────────────────────────────────────
+Sitemap: https://yoaz.fr/sitemap.xml
+
+# ─── Documentation pour IA ────────────────────────
+# Version concise pour LLMs : https://yoaz.fr/llms.txt
+# Version complète (AEO) : https://yoaz.fr/llms-full.txt
+# Manifeste AI : https://yoaz.fr/ai.txt
+# humans.txt : https://yoaz.fr/humans.txt

@@ -1,0 +1,36 @@
+{
+  "name": "Yoaz — Illustrateur Freelance Paris",
+  "short_name": "Yoaz",
+  "description": "Portfolio officiel de Yoaz : illustrations psychédéliques, géométriques et commerciales. Paris.",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#e8001c",
+  "categories": ["art", "design", "portfolio", "illustration"],
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/favicon.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/hero.jpg",
+      "sizes": "1200x800",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Yoaz — Portfolio d'illustration"
+    }
+  ]
+}

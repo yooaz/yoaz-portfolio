@@ -1,0 +1,24 @@
+# Dependencies & build
+node_modules/
+dist/
+.cache/
+.netlify/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# OS & editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Backups
+*.bak
+index.html.bak
+
+# Local tooling (optional)
+.vercel/

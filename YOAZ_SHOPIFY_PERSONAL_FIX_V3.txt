@@ -1,0 +1,1 @@
+Shopify rebuilt with verified product image/title/link units. Personal work switched to responsive CSS columns to remove white gaps and prevent oversized cards.

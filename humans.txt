@@ -1,0 +1,20 @@
+/* TEAM */
+   Artist: Yoaz
+   Role: Illustrator, Art Director
+   Site: https://yoaz.fr
+   Contact: yoaz@hotmail.fr
+   Instagram: @iamyoaz
+   From: Paris, France
+
+/* SITE */
+   Last update: 2026/04/26
+   Languages: fr / en / nl / es
+   Doctype: HTML5
+   Standards: WCAG 2.1 AA, Schema.org, Open Graph, Twitter Card
+   Components: Custom — no framework
+   Hosting: Netlify
+
+/* THANKS */
+   To everyone who commissioned, shared, or printed.
+   To my clients (10 years, 50+ brands, 5 continents).
+   To the open web — for letting independent artists exist.

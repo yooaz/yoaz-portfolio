@@ -1,0 +1,1 @@
+Shopify cards now point to direct verified product URLs only; personal work gallery uses adaptive CSS columns; removed old URL rewrite script.
