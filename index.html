@@ -6267,4 +6267,86 @@ p.sec-sub[data-key="client_sub"] {
 }
 </style>
 
+<style id="yoaz-mobile-hero-motion">
+/*
+ * Mobile hero — large artwork + subtle pivot (real DOM):
+ *   section#hero > div.himg > picture > img
+ *   section#hero > div.hl > h1.hname
+ */
+@keyframes yoazHeroFloat {
+  0%, 100% { transform: rotate(-0.8deg) scale(1.01); }
+  50% { transform: rotate(0.8deg) scale(1.035); }
+}
+
+@keyframes yoazTitlePulse {
+  0%, 100% { transform: translateY(0) rotate(-0.2deg); }
+  50% { transform: translateY(-2px) rotate(0.2deg); }
+}
+
+@media screen and (max-width: 768px) {
+  html body section#hero {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  html body section#hero > div.himg {
+    order: 1 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+  }
+
+  html body section#hero > div.hl {
+    order: 2 !important;
+  }
+
+  html body section#hero > div.himg > picture {
+    display: block !important;
+    width: 100% !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  html body section#hero > div.himg > picture > img {
+    width: 108vw !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    margin-left: calc(50% - 54vw) !important;
+    margin-right: calc(50% - 54vw) !important;
+    display: block !important;
+  }
+
+  html body section#hero .hname {
+    opacity: 1 !important;
+  }
+}
+
+@media screen and (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  html body section#hero > div.himg > picture > img {
+    animation: yoazHeroFloat 7s ease-in-out infinite !important;
+    transform-origin: center center !important;
+    will-change: transform;
+  }
+
+  html body section#hero .hname {
+    animation: yoazTitlePulse 5.5s ease-in-out infinite !important;
+    transform-origin: left center !important;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body section#hero > div.himg > picture > img,
+  html body section#hero .hname {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+</style>
+
 </body></html>
