@@ -6104,7 +6104,7 @@ nav a,
     margin: 0 !important;
     display: block !important;
     overflow: hidden !important;
-    background: #f4f1e8 !important;
+    background: #fff !important;
     box-sizing: border-box !important;
     grid-column: 1 / -1 !important;
     grid-row: auto !important;
@@ -6122,7 +6122,7 @@ nav a,
     padding: 0 !important;
     border: 0 !important;
     overflow: hidden !important;
-    background: #f4f1e8 !important;
+    background: #fff !important;
     line-height: 0 !important;
   }
 
@@ -6135,12 +6135,10 @@ nav a,
     max-height: none !important;
     aspect-ratio: auto !important;
     object-fit: contain !important;
-    object-position: center center !important;
+    object-position: 38% center !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
-    transform: none !important;
-    animation: none !important;
     box-sizing: border-box !important;
   }
 
@@ -6307,14 +6305,14 @@ p.sec-sub[data-key="client_sub"] {
   }
 
   html body section#hero > div.himg > picture > img {
-    width: 108vw !important;
-    max-width: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
     max-height: none !important;
     object-fit: contain !important;
-    object-position: center center !important;
-    margin-left: calc(50% - 54vw) !important;
-    margin-right: calc(50% - 54vw) !important;
+    object-position: 38% center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     display: block !important;
   }
 
@@ -6381,21 +6379,13 @@ p.sec-sub[data-key="client_sub"] {
 
     if(horseImg){
       horseImg.classList.add('yoaz-hero-horse-mobile-fixed');
-
-      if(!hero.dataset.yoazHeroDomReady){
-        let imageBlock = horseImg.closest('.himg') || horseImg.closest('figure, picture, div, section') || horseImg.parentElement;
-        if(imageBlock){
-          imageBlock.classList.add('yoaz-hero-image-block-mobile-fixed');
-          hero.insertBefore(imageBlock, hero.firstChild);
-        }
-        hero.dataset.yoazHeroDomReady = '1';
-      } else {
-        var existingBlock = horseImg.closest('.yoaz-hero-image-block-mobile-fixed');
-        if(existingBlock) existingBlock.classList.add('yoaz-hero-image-block-mobile-fixed');
+      var imageBlock = horseImg.closest('.himg');
+      if(imageBlock){
+        imageBlock.classList.add('yoaz-hero-image-block-mobile-fixed');
       }
     }
 
-    const textBlock = title.closest('div, article, section') || title.parentElement;
+    var textBlock = title.closest('.hl') || title.parentElement;
     if(textBlock){
       textBlock.classList.add('yoaz-hero-text-mobile-fixed');
     }
@@ -6438,30 +6428,28 @@ p.sec-sub[data-key="client_sub"] {
     overflow-y:visible!important;
   }
 
-  body.yoaz-mobile-hero-fixed .yoaz-hero-image-block-mobile-fixed{
-    order:1!important;
-    width:100vw!important;
-    max-width:100vw!important;
-    margin-left:calc(50% - 50vw)!important;
-    margin-right:calc(50% - 50vw)!important;
-    padding:0!important;
-    background:#f4f1e8!important;
-    overflow:hidden!important;
-    display:block!important;
-  }
-
   body.yoaz-mobile-hero-fixed .yoaz-hero-horse-mobile-fixed{
     display:block!important;
-    width:108vw!important;
-    max-width:none!important;
+    width:100%!important;
+    max-width:100%!important;
     height:auto!important;
     max-height:none!important;
-    margin-left:calc(50% - 54vw)!important;
-    margin-right:calc(50% - 54vw)!important;
+    margin:0!important;
     object-fit:contain!important;
-    object-position:center center!important;
+    object-position:38% center!important;
     animation:none!important;
     transform:none!important;
+  }
+
+  body.yoaz-mobile-hero-fixed .yoaz-hero-image-block-mobile-fixed{
+    order:1!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+    overflow:hidden!important;
+    display:block!important;
   }
 
   body.yoaz-mobile-hero-fixed .yoaz-hero-text-mobile-fixed{
@@ -6594,6 +6582,111 @@ h2.section-mega-title,
     line-height: 0.92 !important;
     letter-spacing: 0.03em !important;
     margin-bottom: 1.25rem !important;
+  }
+}
+</style>
+
+<style id="yoaz-hero-mobile-correct-final">
+/* Mobile hero — last word: image first, full width, horse visible, no 108vw bleed */
+
+@media screen and (max-width: 900px) {
+  html body section#hero,
+  html body section#hero.yoaz-hero-mobile-fixed {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 58px 0 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+  }
+
+  html body section#hero > .himg,
+  html body section#hero .himg.yoaz-hero-image-block-mobile-fixed,
+  html body section#hero .yoaz-hero-image-block-mobile-fixed {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  html body section#hero > .hl,
+  html body section#hero .hl.yoaz-hero-text-mobile-fixed,
+  html body section#hero .yoaz-hero-text-mobile-fixed {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 24px 20px 32px !important;
+    margin: 0 !important;
+    background: #fff !important;
+  }
+
+  html body section#hero .himg picture {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    background: #fff !important;
+    overflow: hidden !important;
+  }
+
+  html body section#hero .himg img,
+  html body section#hero .yoaz-hero-horse-mobile-fixed,
+  html body section#hero img[src*="hero"] {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    object-position: 38% center !important;
+    box-sizing: border-box !important;
+  }
+
+  html body section#hero .hname {
+    opacity: 1 !important;
+  }
+}
+
+@media screen and (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  html body section#hero .himg img,
+  html body section#hero .yoaz-hero-horse-mobile-fixed {
+    animation: yoazHorseMobileFloat 7s ease-in-out infinite !important;
+    transform-origin: center center !important;
+  }
+
+  html body section#hero .hname {
+    animation: yoazHeroTitleFloat 5.5s ease-in-out infinite !important;
+    transform-origin: left center !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body section#hero .himg img,
+  html body section#hero .yoaz-hero-horse-mobile-fixed,
+  html body section#hero .hname {
+    animation: none !important;
+    transform: none !important;
   }
 }
 </style>
