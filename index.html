@@ -6855,39 +6855,152 @@ h2.section-mega-title,
 }
 </style>
 
-<script id="mobile-hero-final-anchor">
-(function(){
-  function syncHeroAnchors(){
-    var mobile = window.matchMedia('(max-width:768px)').matches;
-    document.querySelectorAll('a[href="#hero"]').forEach(function(a){
-      a.setAttribute('href', mobile ? '#hero-mobile' : '#hero');
-    });
-  }
-  document.addEventListener('DOMContentLoaded', syncHeroAnchors);
-  window.addEventListener('resize', syncHeroAnchors);
-  if(document.readyState !== 'loading') syncHeroAnchors();
-})();
-</script>
-
 <style id="mobile-hero-img-enlarge-final">
-@media screen and (max-width: 768px) {
-  html body img.mobile-hero-img {
+/* superseded by yoaz-mobile-hero-v2-final below */
+</style>
+
+<style id="yoaz-mobile-hero-v2-final">
+/*
+ * MOBILE HERO v2 — last word (real DOM):
+ *   Desktop: section#hero.hero-desktop-only
+ *   Mobile:  section#hero-mobile.mobile-hero-final
+ *     .mobile-hero-art > picture > .mobile-hero-img
+ *     .mobile-hero-copy > .htag, .hname, .hdesc, .hbtns
+ */
+
+@media screen and (max-width: 900px) {
+  html body section#hero.hero-desktop-only,
+  html body section#hero.hero-desktop-only * {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  html body section#hero-mobile.mobile-hero-final {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 58px 0 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+  }
+
+  html body section#hero-mobile .mobile-hero-art {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding: 0 !important;
+    background: #f4f1e8 !important;
+    overflow: hidden !important;
+    line-height: 0 !important;
+  }
+
+  html body section#hero-mobile .mobile-hero-img {
+    display: block !important;
     width: 112vw !important;
     max-width: none !important;
-    min-width: 112vw !important;
     height: auto !important;
-    min-height: min(58vh, 480px) !important;
-    max-height: none !important;
     margin-left: calc(50% - 56vw) !important;
     margin-right: calc(50% - 56vw) !important;
     object-fit: contain !important;
-    object-position: 38% center !important;
+    object-position: center center !important;
+    box-sizing: border-box !important;
   }
 
-  html body #hero-mobile .mobile-hero-art {
-    min-height: min(65vh, 540px) !important;
+  html body section#hero-mobile .mobile-hero-copy {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 28px 24px 42px !important;
+    margin: 0 !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+  }
+
+  html body section#hero-mobile .mobile-hero-copy .htag,
+  html body section#hero-mobile .mobile-hero-copy .hname,
+  html body section#hero-mobile .mobile-hero-copy .hdesc,
+  html body section#hero-mobile .mobile-hero-copy .hbtns {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  html body section#hero-mobile .mobile-hero-copy .hname {
+    font-size: clamp(3rem, 16vw, 5.5rem) !important;
+    line-height: 0.9 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  html body {
+    overflow-x: hidden !important;
+  }
+}
+
+@media screen and (min-width: 901px) {
+  html body section#hero-mobile.mobile-hero-final {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  html body section#hero-mobile .mobile-hero-img {
+    animation: yoazHorseMobileFloat 7s ease-in-out infinite !important;
+    transform-origin: center center !important;
+  }
+
+  html body section#hero-mobile .mobile-hero-copy .hname {
+    animation: yoazHeroTitleFloat 5.5s ease-in-out infinite !important;
+    transform-origin: left center !important;
   }
 }
 </style>
+
+<script id="yoaz-mobile-hero-v2-guard">
+(function(){
+  function apply(){
+    var mobile = window.matchMedia('(max-width:900px)').matches;
+    var desktop = document.querySelector('section#hero.hero-desktop-only');
+    var mob = document.getElementById('hero-mobile');
+    if(desktop){
+      desktop.setAttribute('aria-hidden', mobile ? 'true' : 'false');
+      desktop.style.cssText = mobile ? 'display:none!important;position:absolute!important;left:-9999px!important;height:0!important;overflow:hidden!important;' : '';
+    }
+    if(mob){
+      mob.setAttribute('aria-hidden', mobile ? 'false' : 'true');
+      mob.style.display = mobile ? 'flex' : 'none';
+    }
+    document.querySelectorAll('a[href="#hero"],a[href="#hero-mobile"]').forEach(function(a){
+      if(!a.dataset.heroHrefSaved) a.dataset.heroHrefSaved = a.getAttribute('href') || '#hero';
+      a.setAttribute('href', mobile ? '#hero-mobile' : '#hero');
+    });
+  }
+  apply();
+  document.addEventListener('DOMContentLoaded', apply);
+  window.addEventListener('resize', apply);
+})();
+</script>
 
 </body></html>
