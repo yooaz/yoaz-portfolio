@@ -1128,7 +1128,7 @@ a:focus-visible,button:focus-visible,.cw-card:focus-visible,.gal-item:focus-visi
     <button type="button" class="lang-btn" onclick="setLang('es')" aria-label="Mostrar el sitio en español">ES</button>
   </div>
 </nav>
-<section id="hero" class="hero-desktop-only">
+<section id="hero" class="hero-desktop-only desktop-hero-selector">
   <div class="hl">
     <p class="htag" data-key="hero_tag">Illustrateur & Graphiste Freelance — Paris</p>
     <h1 class="hname"><span class="black" data-key="hero_h1a">ILLUSTRA</span><span class="red" data-key="hero_h1b">TEUR</span></h1>
@@ -1141,18 +1141,15 @@ a:focus-visible,button:focus-visible,.cw-card:focus-visible,.gal-item:focus-visi
   <div class="himg"><picture><source srcset="images/hero.webp" type="image/webp"><img decoding="async" fetchpriority="high" src="images/hero.jpg" loading="eager" width="573" height="700" alt="Yoaz — Illustrateur Freelance Paris, illustration psychédélique et géométrique"></picture></div>
 </section>
 
-<section id="hero-mobile" class="mobile-hero-final" aria-labelledby="hero-mobile-heading">
-  <div class="mobile-hero-art">
-    <picture>
-      <source srcset="images/hero.webp" type="image/webp">
-      <img class="mobile-hero-img" decoding="async" fetchpriority="high" src="images/hero.jpg" loading="eager" width="573" height="700" alt="Yoaz — Illustrateur Freelance Paris, illustration psychédélique et géométrique">
-    </picture>
+<section id="yoaz-mobile-hero" class="yoaz-mobile-hero-final" aria-labelledby="yoaz-mobile-hero-title">
+  <div class="yoaz-mobile-hero-image">
+    <img src="images/hero.jpg" width="573" height="700" decoding="async" fetchpriority="high" loading="eager" alt="Yoaz geometric horse illustration">
   </div>
-  <div class="mobile-hero-copy">
-    <p class="htag" data-key="hero_tag">Illustrateur & Graphiste Freelance — Paris</p>
-    <h1 class="hname" id="hero-mobile-heading"><span class="black" data-key="hero_h1a">ILLUSTRA</span><span class="red" data-key="hero_h1b">TEUR</span></h1>
-    <p class="hdesc" data-key="hero_desc">Illustrations géométriques & psychédéliques. Paris.</p>
-    <div class="hbtns">
+  <div class="yoaz-mobile-hero-copy">
+    <p class="yoaz-mobile-kicker" data-key="hero_tag">Illustrateur & graphiste freelance — Paris</p>
+    <h1 class="yoaz-mobile-title" id="yoaz-mobile-hero-title"><span data-key="hero_h1a">ILLUSTRA</span><span data-key="hero_h1b">TEUR</span></h1>
+    <p class="yoaz-mobile-desc" data-key="hero_desc">Illustrations géométriques & psychédéliques. Paris.</p>
+    <div class="yoaz-mobile-buttons">
       <a href="#client" class="btn-p"><span data-key="hero_cta1">VOIR LES TRAVAUX</span></a>
       <a href="https://yoaz-art.myshopify.com/" target="_blank" class="btn-s" data-key="hero_cta2">PRINT SHOP</a>
     </div>
@@ -6372,11 +6369,11 @@ p.sec-sub[data-key="client_sub"] {
   }
 
   function fixMobileHero(){
-    if(document.getElementById('hero-mobile')){
+    if(document.getElementById('yoaz-mobile-hero')){
       clearMobileHeroFix();
       return;
     }
-    if(window.innerWidth > 900){
+    if(window.innerWidth > 768){
       clearMobileHeroFix();
       return;
     }
@@ -6981,20 +6978,20 @@ h2.section-mega-title,
 <script id="yoaz-mobile-hero-v2-guard">
 (function(){
   function apply(){
-    var mobile = window.matchMedia('(max-width:900px)').matches;
+    var mobile = window.matchMedia('(max-width:768px)').matches;
     var desktop = document.querySelector('section#hero.hero-desktop-only');
-    var mob = document.getElementById('hero-mobile');
+    var mob = document.getElementById('yoaz-mobile-hero');
     if(desktop){
       desktop.setAttribute('aria-hidden', mobile ? 'true' : 'false');
       desktop.style.cssText = mobile ? 'display:none!important;position:absolute!important;left:-9999px!important;height:0!important;overflow:hidden!important;' : '';
     }
     if(mob){
       mob.setAttribute('aria-hidden', mobile ? 'false' : 'true');
-      mob.style.display = mobile ? 'flex' : 'none';
+      mob.style.display = mobile ? 'block' : 'none';
     }
-    document.querySelectorAll('a[href="#hero"],a[href="#hero-mobile"]').forEach(function(a){
+    document.querySelectorAll('a[href="#hero"],a[href="#hero-mobile"],a[href="#yoaz-mobile-hero"]').forEach(function(a){
       if(!a.dataset.heroHrefSaved) a.dataset.heroHrefSaved = a.getAttribute('href') || '#hero';
-      a.setAttribute('href', mobile ? '#hero-mobile' : '#hero');
+      a.setAttribute('href', mobile ? '#yoaz-mobile-hero' : '#hero');
     });
   }
   apply();
@@ -7002,5 +6999,176 @@ h2.section-mega-title,
   window.addEventListener('resize', apply);
 })();
 </script>
+
+<style id="yoaz-mobile-hero-apply-direct">
+/* FINAL MOBILE HERO — dedicated section; desktop #hero untouched at ≥769px */
+
+.yoaz-mobile-hero-final {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .yoaz-mobile-hero-final,
+  #yoaz-mobile-hero {
+    display: none !important;
+  }
+
+  html body section#hero.desktop-hero-selector,
+  html body section#hero.hero-desktop-only {
+    display: grid !important;
+    visibility: visible !important;
+    position: relative !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding-top: 68px !important;
+    overflow: hidden !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: auto !important;
+  }
+
+  html body section#hero.desktop-hero-selector *,
+  html body section#hero.hero-desktop-only * {
+    visibility: visible !important;
+    position: static !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: auto !important;
+  }
+
+  html body section#hero.desktop-hero-selector .hl,
+  html body section#hero.hero-desktop-only .hl {
+    display: flex !important;
+  }
+
+  html body section#hero.desktop-hero-selector .himg,
+  html body section#hero.hero-desktop-only .himg {
+    display: block !important;
+    overflow: hidden !important;
+  }
+
+  html body section#hero.desktop-hero-selector .himg picture,
+  html body section#hero.hero-desktop-only .himg picture {
+    display: block !important;
+  }
+
+  html body section#hero.desktop-hero-selector .himg img,
+  html body section#hero.hero-desktop-only .himg img {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html body {
+    overflow-x: hidden;
+  }
+
+  .desktop-hero-selector,
+  section#hero.desktop-hero-selector,
+  section#hero.hero-desktop-only,
+  section#hero.hero-desktop-only * {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+
+  #hero-mobile,
+  .mobile-hero-final {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body.yoaz-mobile-hero-fixed .yoaz-hero-mobile-fixed,
+  html body section#hero.yoaz-hero-mobile-fixed {
+    display: none !important;
+  }
+
+  .yoaz-mobile-hero-final,
+  #yoaz-mobile-hero.yoaz-mobile-hero-final {
+    display: block !important;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #f4f1e8;
+    padding-top: 58px;
+    box-sizing: border-box;
+  }
+
+  .yoaz-mobile-hero-image {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    overflow: hidden;
+    background: #f4f1e8;
+  }
+
+  .yoaz-mobile-hero-image img {
+    display: block;
+    width: 115vw;
+    max-width: none;
+    height: auto;
+    margin-left: calc(50% - 57.5vw);
+    object-fit: contain;
+  }
+
+  .yoaz-mobile-hero-copy {
+    padding: 26px 24px 42px;
+    background: #f4f1e8;
+  }
+
+  .yoaz-mobile-kicker {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #d00;
+    margin-bottom: 14px;
+  }
+
+  .yoaz-mobile-title {
+    font-family: var(--ff-head);
+    font-size: 64px;
+    line-height: 0.9;
+    font-weight: 900;
+    margin: 0 0 20px;
+    color: #111;
+    text-transform: uppercase;
+  }
+
+  .yoaz-mobile-title span[data-key="hero_h1b"] {
+    color: #d00;
+  }
+
+  .yoaz-mobile-desc {
+    font-family: var(--ff-serif);
+    font-size: 20px;
+    line-height: 1.45;
+    color: #555;
+    margin-bottom: 28px;
+  }
+
+  .yoaz-mobile-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}
+</style>
 
 </body></html>
