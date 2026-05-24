@@ -1128,7 +1128,7 @@ a:focus-visible,button:focus-visible,.cw-card:focus-visible,.gal-item:focus-visi
     <button type="button" class="lang-btn" onclick="setLang('es')" aria-label="Mostrar el sitio en español">ES</button>
   </div>
 </nav>
-<section id="hero">
+<section id="hero" class="hero-desktop-only">
   <div class="hl">
     <p class="htag" data-key="hero_tag">Illustrateur & Graphiste Freelance — Paris</p>
     <h1 class="hname"><span class="black" data-key="hero_h1a">ILLUSTRA</span><span class="red" data-key="hero_h1b">TEUR</span></h1>
@@ -1139,6 +1139,24 @@ a:focus-visible,button:focus-visible,.cw-card:focus-visible,.gal-item:focus-visi
     </div>
   </div>
   <div class="himg"><picture><source srcset="images/hero.webp" type="image/webp"><img decoding="async" fetchpriority="high" src="images/hero.jpg" loading="eager" width="573" height="700" alt="Yoaz — Illustrateur Freelance Paris, illustration psychédélique et géométrique"></picture></div>
+</section>
+
+<section id="hero-mobile" class="mobile-hero-final" aria-labelledby="hero-mobile-heading">
+  <div class="mobile-hero-art">
+    <picture>
+      <source srcset="images/hero.webp" type="image/webp">
+      <img class="mobile-hero-img" decoding="async" fetchpriority="high" src="images/hero.jpg" loading="eager" width="573" height="700" alt="Yoaz — Illustrateur Freelance Paris, illustration psychédélique et géométrique">
+    </picture>
+  </div>
+  <div class="mobile-hero-copy">
+    <p class="htag" data-key="hero_tag">Illustrateur & Graphiste Freelance — Paris</p>
+    <h1 class="hname" id="hero-mobile-heading"><span class="black" data-key="hero_h1a">ILLUSTRA</span><span class="red" data-key="hero_h1b">TEUR</span></h1>
+    <p class="hdesc" data-key="hero_desc">Illustrations géométriques & psychédéliques. Paris.</p>
+    <div class="hbtns">
+      <a href="#client" class="btn-p"><span data-key="hero_cta1">VOIR LES TRAVAUX</span></a>
+      <a href="https://yoaz-art.myshopify.com/" target="_blank" class="btn-s" data-key="hero_cta2">PRINT SHOP</a>
+    </div>
+  </div>
 </section>
 <div class="sbar">
   <span class="sbar-l" data-key="sbar_label">Retrouvez-moi sur</span>
@@ -6354,6 +6372,10 @@ p.sec-sub[data-key="client_sub"] {
   }
 
   function fixMobileHero(){
+    if(document.getElementById('hero-mobile')){
+      clearMobileHeroFix();
+      return;
+    }
     if(window.innerWidth > 900){
       clearMobileHeroFix();
       return;
@@ -6690,5 +6712,150 @@ h2.section-mega-title,
   }
 }
 </style>
+
+<style id="mobile-hero-final-authoritative">
+/* Dedicated mobile hero — desktop #hero hidden on mobile, zero grid bleed */
+
+.mobile-hero-final {
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  .mobile-hero-final,
+  #hero-mobile {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html body {
+    overflow-x: hidden;
+  }
+
+  html body section#hero.hero-desktop-only,
+  html body section#hero.hero-desktop-only * {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+
+  html body section.mobile-hero-final,
+  html body #hero-mobile.mobile-hero-final {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 58px 0 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+  }
+
+  html body .mobile-hero-art {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding: 0 !important;
+    background: #fff !important;
+    overflow: hidden !important;
+    line-height: 0 !important;
+  }
+
+  html body .mobile-hero-art picture {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body .mobile-hero-img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    object-position: 38% center !important;
+    box-sizing: border-box !important;
+  }
+
+  html body .mobile-hero-copy {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 28px 24px 42px !important;
+    margin: 0 !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+  }
+
+  html body .mobile-hero-copy .htag {
+    opacity: 1 !important;
+    animation: none !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  html body .mobile-hero-copy .hname {
+    opacity: 1 !important;
+    animation: none !important;
+    font-size: clamp(3rem, 16vw, 5.5rem) !important;
+    line-height: 0.9 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  html body .mobile-hero-copy .hdesc {
+    opacity: 1 !important;
+    animation: none !important;
+    max-width: 100% !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  html body .mobile-hero-copy .hbtns {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  html body .mobile-hero-img {
+    animation: yoazHorseMobileFloat 7s ease-in-out infinite !important;
+    transform-origin: center center !important;
+  }
+
+  html body .mobile-hero-copy .hname {
+    animation: yoazHeroTitleFloat 5.5s ease-in-out infinite !important;
+    transform-origin: left center !important;
+  }
+}
+</style>
+
+<script id="mobile-hero-final-anchor">
+(function(){
+  function syncHeroAnchors(){
+    var mobile = window.matchMedia('(max-width:768px)').matches;
+    document.querySelectorAll('a[href="#hero"]').forEach(function(a){
+      a.setAttribute('href', mobile ? '#hero-mobile' : '#hero');
+    });
+  }
+  document.addEventListener('DOMContentLoaded', syncHeroAnchors);
+  window.addEventListener('resize', syncHeroAnchors);
+  if(document.readyState !== 'loading') syncHeroAnchors();
+})();
+</script>
 
 </body></html>
