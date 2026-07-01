@@ -13447,6 +13447,324 @@ html body .yoaz-home-trust.yoaz-after-client-gallery .yoaz-real-logo-row.yoaz-vi
 })();
 </script>
 
+
+<!-- YOAZ MOBILE HERO ONLY FIX — 2026-07-01
+     Scope: mobile hero only. Does not alter client gallery, tools, logos, shop, Instagram, Stripe, or desktop. -->
+<style id="yoaz-mobile-hero-only-final-fix-2026-07-01">
+@media (max-width: 960px) {
+  html body #hero.desktop-hero-selector,
+  html body section#hero.desktop-hero-selector {
+    display: none !important;
+  }
+
+  html body section#yoaz-mobile-hero.yoaz-mobile-hero-final,
+  html body #yoaz-mobile-hero.yoaz-mobile-hero-final {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 58px 0 2.15rem !important;
+    background: #f7f3ea !important;
+    overflow: visible !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    contain: layout paint !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-hero-image {
+    order: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: .9rem 0 .55rem !important;
+    background: #f7f3ea !important;
+    overflow: visible !important;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-hero-image img {
+    order: 1 !important;
+    display: block !important;
+    width: min(78vw, 330px) !important;
+    max-width: min(78vw, 330px) !important;
+    min-width: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    background: transparent !important;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    translate: none !important;
+    scale: none !important;
+    rotate: none !important;
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
+    filter: saturate(1.02) contrast(1.02) drop-shadow(0 18px 30px rgba(17,17,13,.045)) !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-hero-copy {
+    order: 2 !important;
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    z-index: 3 !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: .65rem 1.35rem 0 !important;
+    box-sizing: border-box !important;
+    background: #f7f3ea !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    text-align: left !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-kicker {
+    display: block !important;
+    margin: 0 0 .95rem !important;
+    padding: 0 !important;
+    color: #b89a5a !important;
+    font-family: var(--ff-body), Arial, sans-serif !important;
+    font-size: .56rem !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+    letter-spacing: .20em !important;
+    text-transform: uppercase !important;
+    white-space: normal !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-kicker:before {
+    content: "" !important;
+    display: block !important;
+    width: 28px !important;
+    height: 1px !important;
+    margin: 0 0 .75rem !important;
+    background: rgba(184,154,90,.65) !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-title {
+    display: block !important;
+    margin: 0 0 .85rem !important;
+    padding: 0 !important;
+    color: #11110d !important;
+    font-family: var(--ff-head), Arial, sans-serif !important;
+    font-size: clamp(3.05rem, 15.8vw, 4.9rem) !important;
+    line-height: .92 !important;
+    font-weight: 800 !important;
+    letter-spacing: .11em !important;
+    text-transform: uppercase !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-title span {
+    display: inline !important;
+    color: #11110d !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-title span:empty,
+  html body #yoaz-mobile-hero .yoaz-mobile-title .red:empty {
+    display: none !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-desc {
+    display: block !important;
+    margin: 0 0 1.1rem !important;
+    padding: 0 !important;
+    color: rgba(17,17,13,.58) !important;
+    font-family: var(--ff-body), Arial, sans-serif !important;
+    font-size: .72rem !important;
+    line-height: 1.55 !important;
+    font-weight: 600 !important;
+    letter-spacing: .16em !important;
+    text-transform: uppercase !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-style,
+  html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-place {
+    display: block !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-place {
+    margin-top: .42rem !important;
+    color: #b89a5a !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: .55rem !important;
+    margin: 0 0 .85rem !important;
+    padding: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-buttons .btn-p,
+  html body #yoaz-mobile-hero .yoaz-mobile-buttons .btn-s {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+    min-height: 43px !important;
+    height: 43px !important;
+    padding: 0 .72rem !important;
+    border-radius: 999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--ff-body), Arial, sans-serif !important;
+    font-size: .58rem !important;
+    line-height: 1 !important;
+    font-weight: 800 !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-buttons .btn-p {
+    background: #11110d !important;
+    color: #fff !important;
+    border-color: #11110d !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-buttons .btn-s {
+    background: transparent !important;
+    color: #11110d !important;
+    border: 1px solid rgba(17,17,13,.48) !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-social-final,
+  html body #yoaz-mobile-hero .yoaz-mobile-socials,
+  html body #yoaz-mobile-hero .yoaz-hero-social-mini {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    gap: .78rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    scrollbar-width: none !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-social-final::-webkit-scrollbar,
+  html body #yoaz-mobile-hero .yoaz-mobile-socials::-webkit-scrollbar,
+  html body #yoaz-mobile-hero .yoaz-hero-social-mini::-webkit-scrollbar {display:none!important;}
+
+  html body #yoaz-mobile-hero .yoaz-mobile-social-final .social-label,
+  html body #yoaz-mobile-hero .yoaz-mobile-socials .social-label,
+  html body #yoaz-mobile-hero .yoaz-hero-social-mini .social-label {
+    flex: 0 0 auto !important;
+    margin: 0 .1rem 0 0 !important;
+    color: rgba(17,17,13,.48) !important;
+    font-size: .62rem !important;
+    line-height: 1 !important;
+    font-weight: 800 !important;
+    letter-spacing: .15em !important;
+    text-transform: uppercase !important;
+  }
+
+  html body #yoaz-mobile-hero .yoaz-mobile-social-final .social-link,
+  html body #yoaz-mobile-hero .yoaz-mobile-socials .social-link,
+  html body #yoaz-mobile-hero .yoaz-hero-social-mini .social-link {
+    flex: 0 0 auto !important;
+    width: 21px !important;
+    height: 21px !important;
+    min-width: 21px !important;
+    padding: 0 !important;
+    color: rgba(17,17,13,.72) !important;
+    text-decoration: none !important;
+  }
+
+  html body #yoaz-mobile-hero .social-link span:not(.social-mark) {display:none!important;}
+  html body #yoaz-mobile-hero .social-mark,
+  html body #yoaz-mobile-hero .social-mark svg {
+    width: 21px !important;
+    height: 21px !important;
+    min-width: 21px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  html body #yoaz-mobile-hero .yoaz-mobile-hero-image img {
+    width: min(76vw, 292px) !important;
+    max-width: min(76vw, 292px) !important;
+  }
+  html body #yoaz-mobile-hero .yoaz-mobile-hero-copy {
+    max-width: 330px !important;
+    padding-left: 1.15rem !important;
+    padding-right: 1.15rem !important;
+  }
+  html body #yoaz-mobile-hero .yoaz-mobile-buttons .btn-p,
+  html body #yoaz-mobile-hero .yoaz-mobile-buttons .btn-s {
+    font-size: .54rem !important;
+    letter-spacing: .10em !important;
+    padding-left: .55rem !important;
+    padding-right: .55rem !important;
+  }
+}
+</style>
+<script id="yoaz-mobile-hero-only-final-fix-js-2026-07-01">
+(function(){
+  'use strict';
+  function stableMobileHero(){
+    var mob=document.getElementById('yoaz-mobile-hero');
+    if(!mob) return;
+    mob.classList.add('yoaz-mobile-hero-compact-final');
+    var desc=mob.querySelector('.yoaz-mobile-desc');
+    if(desc && !desc.querySelector('.hero-style')){
+      desc.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
+    }
+    mob.querySelectorAll('.yoaz-mobile-hero-image,.yoaz-mobile-hero-copy,.yoaz-mobile-hero-image img').forEach(function(el){
+      el.style.setProperty('transform','none','important');
+      el.style.setProperty('animation','none','important');
+      el.style.setProperty('transition','none','important');
+      el.style.setProperty('will-change','auto','important');
+    });
+    var img=mob.querySelector('.yoaz-mobile-hero-image img');
+    if(img){
+      img.classList.remove('hero-parallax');
+      img.style.setProperty('object-fit','contain','important');
+      img.style.setProperty('object-position','center center','important');
+      img.setAttribute('loading','eager');
+      img.setAttribute('fetchpriority','high');
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',stableMobileHero); else stableMobileHero();
+  window.addEventListener('load',stableMobileHero,{once:false});
+  [80,220,500,900,1600].forEach(function(t){setTimeout(stableMobileHero,t);});
+})();
+</script>
+
 </body></html>
 
 <!-- YOAZ V3.4 — final mobile hero top-safe + Facebook social lock -->
