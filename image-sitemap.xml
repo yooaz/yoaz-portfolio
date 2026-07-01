@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://yoaz.fr/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/hero.webp</image:loc><image:title>Yoaz geometric psychedelic illustration</image:title></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/gallery-cite-psychedelique.webp</image:loc><image:title>Cité psychédélique by Yoaz</image:title></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/gallery-temple-solaire.webp</image:loc><image:title>Temple solaire by Yoaz</image:title></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/gallery-jungle.webp</image:loc><image:title>Jungle by Yoaz</image:title></image:image>
+  </url>
+</urlset>

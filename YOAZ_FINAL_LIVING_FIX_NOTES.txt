@@ -1,0 +1,1 @@
+Final patch: unified horse background without editing artwork, slide-left hero animation, staggered text UI animation, black client/gallery background, tools and client logos grouped together in bottom black trust band. Header/menu kept from original zip.

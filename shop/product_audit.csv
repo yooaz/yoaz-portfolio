@@ -1,0 +1,25 @@
+handle,title,kind,variants,priceMin,priceMax,keep,reason
+faces-wall-art,Faces — Surrealist Psychedelic Wall Art Print,poster,48,21.28,117.53,yes,selected core poster
+temple-wall-art,Temple — Sacred Geometry Psychedelic Wall Art Print,poster,32,23.6,114.63,yes,selected core poster
+napoli-mugs-bottle,Napoli — Ceramic Mug,merch,3,23.14,31.79,no,exclude merch/too many variants or lower priority
+napoli-phone-cases,Napoli — Phone Cases,merch,12,28.34,37.93,no,exclude merch/too many variants or lower priority
+napoli-wall-art,Napoli — Mediterranean Psychedelic Wall Art Print,poster,108,24.36,232.68,no,exclude merch/too many variants or lower priority
+palm-guardians-art-deco-psychedelic-wall-art-print-1,Twin Guardians — Mythological Psychedelic Wall Art Print,poster,60,25.96,219.75,no,exclude merch/too many variants or lower priority
+blue-eyes-wall-art,Blue Eyes — Surrealist Psychedelic Wall Art Print,poster,23,33.24,150.13,yes,selected core poster
+blue-eyes-phone-cases,Blue eyes — Phone Cases,merch,15,17.26,29.2,no,exclude merch/too many variants or lower priority
+blue-eyes-mugs,Blue Eyes — Art Ceramic Mug,merch,5,10.26,19.22,no,exclude merch/too many variants or lower priority
+solar-mandala-maximalist-geometric-wall-art-print,Tropical Square — Maximalist Geometric Wall Art Print,poster,11,30.1,54.18,no,exclude merch/too many variants or lower priority
+cubisme-phone-case,Cubisme — Abstract Line Art Phone Case,merch,29,28.75,28.75,no,exclude merch/too many variants or lower priority
+cosmic-flipper-1,Cosmic Flipper — Psychedelic Poster Art Print,poster,108,30.45,300.07,no,exclude merch/too many variants or lower priority
+wall-art-1,Solar Mandala — Maximalist Geometric Wall Art Print,poster,64,16.89,307.72,yes,selected core poster
+flower-power-tshirt,Flower Power,merch,91,26.45,93.92,no,exclude merch/too many variants or lower priority
+flower-power-sweatshirt,Flower Power — Psychedelic Graphic Sweatshirt,merch,133,12.38,61.16,no,exclude merch/too many variants or lower priority
+palm-wall-art-2,Palm Guardians — Art Deco Psychedelic Wall Art Print,poster,120,43.57,209.48,yes,selected core poster
+night-totem-wall-art,Night Totem — Black & White Pattern Wall Art Print  45×60 cm,poster,40,20.4,170.65,yes,selected core poster
+palm-guardians-phone-case,Palm Guardians — Art Deco Psychedelic Phone Case,merch,86,22.3,33.9,no,exclude merch/too many variants or lower priority
+stormtrooper-wall-art-1,Stormtrooper — Star Wars Fan Art Wall Print,poster,165,22.0,287.8,no,exclude IP risk
+horse-wall-art,Chaos Horse — Surrealist Psychedelic Wall Art Print,poster,117,19.83,134.82,yes,selected core poster
+direction-wall-art,Direction — Dense Psychedelic Wall Art Print - 50×70 cm,poster,42,26.86,155.16,yes,selected core poster
+tree-of-life-wall-art,Tree of Life — Psychedelic Folk Wall Art Print,poster,106,19.83,160.8,yes,selected core poster
+cubisme-ceramic-mug,Cubisme — Abstract Art Ceramic Mug,merch,9,12.83,24.03,no,exclude merch/too many variants or lower priority
+cubisme-abstract-line-art-print,Cubisme — Abstract Line Art Print,poster,129,29.15,166.6,yes,selected core poster

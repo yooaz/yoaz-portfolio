@@ -1,5 +1,6 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
@@ -19,7 +20,7 @@
     # Referrer policy moderne
     Referrer-Policy = "strict-origin-when-cross-origin"
     # Permissions policy — restreint les APIs puissantes
-    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(self \"https://yoaz-art.myshopify.com\"), usb=(), magnetometer=(), gyroscope=(), interest-cohort=()"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(self \"https://checkout.stripe.com\"), usb=(), magnetometer=(), gyroscope=(), interest-cohort=()"
     # Protection XSS (legacy mais utile pour vieux navigateurs)
     X-XSS-Protection = "1; mode=block"
     # CORP — isole les ressources
@@ -27,8 +28,8 @@
     Cross-Origin-Resource-Policy = "cross-origin"
     # Bloque prefetching DNS sensible
     X-DNS-Prefetch-Control = "on"
-    # CSP complète — autorise analytics, Shopify, Formspree, Vimeo, fonts
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://sdks.shopifycdn.com https://*.shopify.com https://*.myshopify.com https://player.vimeo.com https://w.behold.so; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://sdks.shopifycdn.com; font-src 'self' data: https://fonts.gstatic.com https://sdks.shopifycdn.com; img-src 'self' data: https: blob:; media-src 'self' https://player.vimeo.com https://*.vimeocdn.com; frame-src 'self' https://www.googletagmanager.com https://player.vimeo.com https://*.myshopify.com; connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://*.google-analytics.com https://stats.g.doubleclick.net https://*.myshopify.com https://yoaz-art.myshopify.com https://sdks.shopifycdn.com https://formspree.io https://api.instagram.com https://graph.instagram.com https://feeds.behold.so https://w.behold.so https://behold.pictures https://cdn2.behold.pictures; form-action 'self' https://formspree.io https://yoaz-art.myshopify.com; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests;"
+    # CSP complète — autorise analytics, Stripe, Formspree, Vimeo, fonts
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://player.vimeo.com https://w.behold.so; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https: blob:; media-src 'self' https://player.vimeo.com https://*.vimeocdn.com; frame-src 'self' https://www.googletagmanager.com https://player.vimeo.com; connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://*.google-analytics.com https://stats.g.doubleclick.net https://formspree.io https://api.instagram.com https://graph.instagram.com https://feeds.behold.so https://w.behold.so https://behold.pictures https://cdn2.behold.pictures; form-action 'self' https://formspree.io; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests;"
 
 # ─────────────────────────────────────────────────────────────
 # CACHE — Assets versionnés : 1 an immutable
@@ -140,3 +141,6 @@
 
 [build.processing.images]
   compress = true
+
+[functions]
+  directory = "netlify/functions"

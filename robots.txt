@@ -126,3 +126,5 @@ Sitemap: https://yoaz.fr/sitemap.xml
 # Version complète (AEO) : https://yoaz.fr/llms-full.txt
 # Manifeste AI : https://yoaz.fr/ai.txt
 # humans.txt : https://yoaz.fr/humans.txt
+Sitemap: https://yoaz.fr/sitemap.xml
+Sitemap: https://yoaz.fr/image-sitemap.xml

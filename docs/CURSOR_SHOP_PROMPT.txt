@@ -1,0 +1,30 @@
+BUILD SIMPLE YOAZ POSTER SHOP — FROM CLEAN DATA
+
+Use /data/posters.json from the attached rebuild kit.
+
+Rules:
+- Do not use Shopify as the site engine.
+- Build a simple /shop page/section for 10 posters only.
+- Keep portfolio design stable.
+- Stripe Checkout first.
+- Gelato-ready architecture, but no automatic Gelato order until API key exists.
+- Use product data from posters.json only.
+- Do not include mugs, phone cases, t-shirts or Stormtrooper/IP-risk products.
+
+Shop UI:
+- Large artwork image.
+- Title: "[Name] — Wall Art Print".
+- Size: 50×70 cm default.
+- Price from posters.json.
+- CTA: "Buy print" / "Acheter le poster".
+
+Backend:
+- Netlify function create-checkout-session.
+- Stripe webhook creates order record.
+- Add fraud-score.js risk check.
+- If risk medium/high: paid_pending_review.
+- If low: paid_pending_manual_gelato.
+
+Gelato:
+- Add placeholders: gelatoProductUid, printFileUrl.
+- Do not expose Gelato API key client-side.
