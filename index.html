@@ -1417,13 +1417,13 @@ html body .yoaz-client-logo-strip-final .brand-fast svg{max-width:170px!importan
     if(hero){
       var tag=hero.querySelector('.htag'); if(tag) tag.textContent='ILLUSTRATEUR & GRAPHISTE FREELANCE.';
       var h=hero.querySelector('.hname .black'); if(h) h.textContent='YOAZ';
-      var desc=hero.querySelector('.hdesc'); if(desc) desc.innerHTML='<span class="hero-place">Paris — Amsterdam</span>';
+      var desc=hero.querySelector('.hdesc'); if(desc) desc.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
     }
     var mob=document.querySelector('#yoaz-mobile-hero');
     if(mob){
       var mt=mob.querySelector('.yoaz-mobile-kicker'); if(mt) mt.textContent='ILLUSTRATEUR & GRAPHISTE FREELANCE.';
       var mh=mob.querySelector('.yoaz-mobile-title span'); if(mh) mh.textContent='YOAZ';
-      var md=mob.querySelector('.yoaz-mobile-desc'); if(md) md.innerHTML='<span class="hero-place">Paris — Amsterdam</span>';
+      var md=mob.querySelector('.yoaz-mobile-desc'); if(md) md.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
     }
     var trust=document.querySelector('.yoaz-trust-strip-final');
     if(trust){
@@ -2024,7 +2024,7 @@ html body #instagram .ig-tile{background:#11110d!important;}
   function socialHTML(){return '<span class="social-label">SUIVEZ-MOI</span>'+['ig:Instagram','be:Behance','dr:Dribbble','in:LinkedIn','fb:Facebook','lt:Linktree'].map(function(x){var p=x.split(':');var cls=p[0],name=p[1];var urls={ig:'https://www.instagram.com/iamyoaz/',be:'https://www.behance.net/yoaz',dr:'https://dribbble.com/yoaz',in:'https://www.linkedin.com/in/yo-az-2982815a/',fb:'https://www.facebook.com/27Yoaz/',fd:'',lt:'https://linktr.ee/yoaz'};var svg={ig:svgs.ig,be:svgs.be,dr:svgs.dr,in:svgs.lin,fb:svgs.fb,fd:svgs.fd,lt:svgs.lt}[cls];return '<a class="social-link social-'+cls+'" href="'+urls[cls]+'" target="_blank" rel="noopener" aria-label="'+name+'"><span class="social-mark">'+svg+'</span><span>'+name+'</span></a>';}).join('');}
   function apply(){
     document.querySelectorAll('.yoaz-hero-side-note').forEach(function(el){el.remove();});
-    document.querySelectorAll('#hero .hdesc,.yoaz-mobile-desc').forEach(function(el){el.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques</span><span class="hero-place">Paris — Amsterdam</span>';});
+    document.querySelectorAll('#hero .hdesc,.yoaz-mobile-desc').forEach(function(el){el.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';});
     document.querySelectorAll('.yoaz-hero-social-mini,.yoaz-mobile-social-final,.yoaz-mobile-socials').forEach(function(el){el.innerHTML=socialHTML();});
     document.querySelectorAll('#hero .himg img,.yoaz-mobile-hero-image img').forEach(function(img){img.classList.remove('hero-parallax');img.setAttribute('src','images/hero-transparent.png');img.style.removeProperty('transform');});
     var row=document.querySelector('.yoaz-real-logo-row');
@@ -2089,7 +2089,7 @@ html body #instagram .ig-tile{background:#11110d!important;}
   <div class="hl">
     <p class="htag" data-key="hero_tag">Illustrateur & graphiste freelance.</p>
     <h1 class="hname"><span class="black" data-key="hero_h1a">YOAZ</span><span class="red" data-key="hero_h1b"></span></h1>
-    <p class="hdesc" data-key="hero_desc"><span class="hero-place">Paris — Amsterdam</span></p>
+    <p class="hdesc" data-key="hero_desc"><span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span></p>
     <div class="hbtns">
       <a href="#client" class="btn-p"><span data-key="hero_cta1">VOIR LES TRAVAUX</span></a>
       <a href="#shop" class="btn-s" data-key="hero_cta2">COLLECTION POSTERS</a>
@@ -2105,7 +2105,7 @@ html body #instagram .ig-tile{background:#11110d!important;}
   <div class="yoaz-mobile-hero-copy">
     <p class="yoaz-mobile-kicker" data-key="hero_tag">Illustrateur & graphiste freelance.</p>
     <h1 class="yoaz-mobile-title" id="yoaz-mobile-hero-title"><span data-key="hero_h1a">YOAZ</span><span data-key="hero_h1b"></span></h1>
-    <p class="yoaz-mobile-desc" data-key="hero_desc"><span class="hero-place">Paris — Amsterdam</span></p>
+    <p class="yoaz-mobile-desc" data-key="hero_desc"><span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span></p>
     <div class="yoaz-mobile-buttons">
       <a href="#client" class="btn-p"><span data-key="hero_cta1">VOIR LES TRAVAUX</span></a>
       <a href="#shop" class="btn-s" data-key="hero_cta2">COLLECTION POSTERS</a>
@@ -2220,8 +2220,8 @@ html body #instagram .ig-tile{background:#11110d!important;}
       <span class="cw-proj-badge">VOIR LE PROJET →</span>
     </div>
     <div class="cw-card  cw-has-proj" data-pid="kraken" tabindex="0" role="button" aria-haspopup="dialog">
-      <picture><source srcset="images/client-mira.webp" type="image/webp"><img decoding="async" src="images/client-mira.jpg" loading="lazy" alt="Kraken — dessin violet psychédélique Yoaz" width="400" height="300"></picture>
-      <div class="cw-info"><span class="cw-client">Kraken</span><span class="cw-type" data-fr="Packaging design" data-en="Packaging Design" data-nl="Verpakkingsontwerp" data-es="Diseño de Packaging">Packaging design</span></div>
+      <picture><source srcset="images/client-fortune.webp" type="image/webp"><img decoding="async" src="images/client-fortune.jpg" loading="lazy" alt="Kraken — Post Facebook, artwork violet psychédélique Yoaz" width="400" height="300"></picture>
+      <div class="cw-info"><span class="cw-client">Kraken</span><span class="cw-type" data-fr="Post Facebook" data-en="Post Facebook" data-nl="Post Facebook" data-es="Post Facebook">Post Facebook</span></div>
       <span class="cw-proj-badge">VOIR LE PROJET →</span>
     </div>
     <div class="cw-card  cw-has-proj cw-gallery-card" data-pid="mira" data-count="2" tabindex="0" role="button" aria-haspopup="dialog">
@@ -2641,7 +2641,7 @@ const I18N={
   fr:{
     nav_work:'COMMANDES',nav_shop:'SHOP',nav_gallery:'GALERIE',nav_about:'À PROPOS',nav_faq:'FAQ',nav_contact:'CONTACT',
     hero_tag:'Illustrateur & graphiste freelance',hero_h1a:'ILLUSTRATEUR',hero_h1b:'',
-    hero_desc:'Illustrations géométriques &<br>psychédéliques.<br><span class="hero-place">Paris — Amsterdam</span>',
+    hero_desc:'<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>',
     hero_cta1:'VOIR LES TRAVAUX',hero_cta2:'COLLECTION POSTERS',
     hire_me:'Contact',hire_aria:'Prendre contact avec Yoaz',
     sbar_label:'Retrouvez-moi sur',
@@ -3102,26 +3102,11 @@ document.querySelectorAll('.cw-card[data-pid]').forEach(function(c){
     if(e.key==='Enter'||e.key===' '){e.preventDefault();if(typeof window.pjOpen==='function')window.pjOpen(c.getAttribute('data-pid'));}
   });
 });
-/* ─── Gallery card hover preview (cycle images) ─── */
+/* ─── Gallery card hover preview disabled: prevents flicker while keeping cards clickable ─── */
 (function(){
   document.querySelectorAll('.cw-gallery-card').forEach(function(card){
     var imgs=card.querySelectorAll('.cw-gimg');
-    if(imgs.length<2)return;
-    var timer=null,current=0;
-    function next(){
-      imgs[current].classList.remove('cw-gimg-active');
-      current=(current+1)%imgs.length;
-      imgs[current].classList.add('cw-gimg-active');
-    }
-    card.addEventListener('mouseenter',function(){
-      timer=setInterval(next,700);
-    });
-    card.addEventListener('mouseleave',function(){
-      clearInterval(timer);
-      imgs.forEach(function(i){i.classList.remove('cw-gimg-active');});
-      current=0;
-      imgs[0].classList.add('cw-gimg-active');
-    });
+    imgs.forEach(function(img,i){ img.classList.toggle('cw-gimg-active', i===0); });
   });
 })();
 if(lbClose){
@@ -3370,14 +3355,14 @@ var PJ_DATA={
   "kraken":{
     client:"Kraken",year:"2021",
     tags:["Packaging Design","Craft Beer","Illustration","Mythologie"],
-    title:{fr:"Kraken \u2014 Design de Packaging",en:"Kraken \u2014 Packaging Design",nl:"Kraken \u2014 Verpakkingsontwerp",es:"Kraken \u2014 Diseño de Packaging"},
+    title:{fr:"Kraken \u2014 Post Facebook",en:"Kraken \u2014 Post Facebook",nl:"Kraken \u2014 Post Facebook",es:"Kraken \u2014 Post Facebook"},
     desc:{
-      fr:"Design de packaging pour Kraken. Illustration tentaculaire et mythologique qui s\u2019enroule autour des bouteilles, créant une identité visuelle forte et reconnaissable.",
-      en:"Packaging design for Kraken. Tentacular and mythological illustration wrapping around bottles, creating a strong recognizable visual identity.",
-      nl:"Verpakkingsontwerp voor Kraken. Tentaculaire illustratie rond de flessen.",
-      es:"Diseño de packaging para Kraken. Ilustración tentacular alrededor de las botellas."
+      fr:"Artwork psychédélique pour un post Facebook Kraken : illustration violette tentaculaire pensée pour les réseaux sociaux et l’identité visuelle de la marque.",
+      en:"Psychedelic artwork for a Kraken Facebook post: a purple tentacular illustration designed for social content and brand expression.",
+      nl:"Psychedelisch artwork voor een Facebook-post van Kraken: een paarse tentaculaire illustratie voor social media en merkexpressie.",
+      es:"Artwork psicodélico para un post de Facebook de Kraken: una ilustración violeta tentacular creada para redes sociales e identidad de marca."
     },
-    images:[{src:"images/client-fortune.jpg",alt:"Kraken \u2014 Packaging design YOAZ"}]
+    images:[{src:"images/client-fortune.jpg",alt:"Kraken — Post Facebook artwork YOAZ"}]
   },
   "mira":{
     client:"Mira Brasserie",year:"2020",
@@ -8795,7 +8780,7 @@ html body .stat-strip{display:none!important}
     document.querySelectorAll('[data-key="hero_desc"], .hdesc, .yoaz-mobile-desc').forEach(function(el){
       var raw = (el.innerHTML || el.textContent || '').replace(/<br>/gi,'<br>').replace(/<br>/gi,'<br>');
       if(raw.indexOf('<br>') === -1 && raw.toUpperCase().indexOf('PARIS') !== -1){
-        raw = 'Illustrations géométriques<br>Paris — Amsterdam';
+        raw = 'Illustrations géométriques & psychédéliques.<br><span class="hero-place">Paris — Amsterdam</span>';
       }
       el.innerHTML = raw;
     });
@@ -9158,7 +9143,7 @@ nav{background:rgba(246,242,235,.96)!important;border-bottom:1px solid rgba(11,1
     document.querySelectorAll('[data-key="hero_tag"]').forEach(function(el){el.textContent='Illustrateur & graphiste freelance';});
     document.querySelectorAll('[data-key="hero_h1a"]').forEach(function(el){el.textContent='ILLUSTRATEUR';});
     document.querySelectorAll('[data-key="hero_h1b"]').forEach(function(el){el.textContent='';el.style.display='none';});
-    document.querySelectorAll('[data-key="hero_desc"]').forEach(function(el){el.innerHTML='Illustrations géométriques &<br>psychédéliques.<br><span class="hero-place">Paris — Amsterdam</span>';});
+    document.querySelectorAll('[data-key="hero_desc"]').forEach(function(el){el.innerHTML='<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';});
     document.querySelectorAll('.nav-cta').forEach(function(a){a.style.background='transparent';a.style.color='';a.style.border='0';});
     document.querySelectorAll('.lang-btn').forEach(function(b){b.style.background='transparent';b.style.border='0';b.style.borderRadius='0';});
   }
@@ -9227,7 +9212,7 @@ html body #hero .himg img{height:min(88vh,840px)!important;width:auto!important;
 (function(){
   function cleanHero(){
     document.querySelectorAll('[data-key="hero_desc"],.hdesc,.yoaz-mobile-desc').forEach(function(el){
-      el.innerHTML = 'Illustrations géométriques &<br>psychédéliques.<br><span class="hero-place">Paris — Amsterdam</span>';
+      el.innerHTML = '<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
     });
     document.querySelectorAll('.nav-cta,.nav-links a').forEach(function(a){a.style.background='transparent';a.style.border='0';a.style.boxShadow='none';});
   }
@@ -9384,7 +9369,7 @@ html body .edition-card[data-product="solar-mandala"]{display:none!important}
       el.textContent=txt;
     });
     document.querySelectorAll('[data-key="hero_desc"],.hdesc,.yoaz-mobile-desc').forEach(function(el){
-      el.innerHTML='Illustrations géométriques &<br>psychédéliques.<br><span class="hero-place">Paris — Amsterdam</span>';
+      el.innerHTML='<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
     });
     document.querySelectorAll('.nav-links a,.lang-btn').forEach(function(a){
       a.style.background='transparent';
@@ -9406,7 +9391,7 @@ html body .edition-card[data-product="solar-mandala"]{display:none!important}
 (function(){
   function fixHeroAndLogos(){
     document.querySelectorAll('[data-key="hero_tag"]').forEach(function(el){el.textContent='Illustrateur & graphiste freelance';});
-    document.querySelectorAll('[data-key="hero_desc"],.hdesc,.yoaz-mobile-desc').forEach(function(el){el.innerHTML='Illustrations géométriques &<br>psychédéliques.<br><span class="hero-place">Paris — Amsterdam</span>';});
+    document.querySelectorAll('[data-key="hero_desc"],.hdesc,.yoaz-mobile-desc').forEach(function(el){el.innerHTML='<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';});
     document.querySelectorAll('.client-real-logo.local-logo').forEach(function(el){el.style.display='none';});
     var strip=document.querySelector('.client-real-logo-strip');
     if(strip && !strip.classList.contains('v13-client-logos')){strip.classList.add('v13-client-logos');}
@@ -9582,7 +9567,7 @@ html body .yoaz-final-client-strip .yoaz-final-logo-text{font-family:var(--ff-he
     document.querySelectorAll('[data-key="hero_tag"]').forEach(function(el){el.textContent='Illustrateur & graphiste freelance.';});
     document.querySelectorAll('[data-key="hero_h1a"]').forEach(function(el){el.textContent='YOAZ';});
     document.querySelectorAll('[data-key="hero_h1b"]').forEach(function(el){el.textContent='';});
-    document.querySelectorAll('[data-key="hero_desc"], .hdesc, .yoaz-mobile-desc').forEach(function(el){el.innerHTML='<span class="hero-place">Paris — Amsterdam</span>';});
+    document.querySelectorAll('[data-key="hero_desc"], .hdesc, .yoaz-mobile-desc').forEach(function(el){el.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';});
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', applyFinalHero); else applyFinalHero();
   window.addEventListener('load', applyFinalHero);
@@ -10537,9 +10522,9 @@ html body nav .logo{margin-left:0!important;transform:none!important;min-width:m
       if(img.getAttribute('src') && img.getAttribute('src').indexOf('hero-cutout')!==-1){ img.setAttribute('src','images/hero.jpg'); }
     });
     var desc=document.querySelector('#hero .hdesc');
-    if(desc) desc.innerHTML='<span class="hero-place">Paris — Amsterdam</span>';
+    if(desc) desc.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
     var mdesc=document.querySelector('.yoaz-mobile-desc');
-    if(mdesc) mdesc.innerHTML='<span class="hero-place">Paris — Amsterdam</span>';
+    if(mdesc) mdesc.innerHTML='<span class="hero-style">Illustrations géométriques & psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fix); else fix();
   window.addEventListener('load',fix,{once:true});
@@ -12157,8 +12142,8 @@ html body section#client .cw-card{grid-column:auto!important;grid-row:auto!impor
 <script id="yoaz-release-1-7-i18n-audit-fix">
 (function(){
   var COPY={
-    fr:{nav:['COMMANDES','SHOP','GALERIE','À PROPOS','FAQ','CONTACT'],tag:'Illustrateur & graphiste freelance',desc:'Illustrations géométriques &<br>psychédéliques.<br><span class="hero-place">Paris — Amsterdam</span>',descMobile:'Paris — Amsterdam',cta1:'VOIR LES TRAVAUX',cta2:'COLLECTION POSTERS',follow:'SUIVEZ-MOI',shopTitle:'Collection Posters',shopKicker:'Édition limitée',shopMeta:'Tirage musée 50×70 · Fine art matte · livraison Europe incluse',buy:'ACHETER',gallery:'Travaux Personnels',client:'Travaux Clients',contact:'Contact'},
-    en:{nav:['COMMISSIONS','SHOP','GALLERY','ABOUT','FAQ','CONTACT'],tag:'Illustrator & graphic artist',desc:'Geometric & psychedelic illustrations.<br><span class="hero-place">Paris — Amsterdam</span>',descMobile:'Paris — Amsterdam',cta1:'VIEW WORK',cta2:'POSTER COLLECTION',follow:'FOLLOW ME',shopTitle:'Poster Collection',shopKicker:'Limited edition',shopMeta:'Museum print 50×70 · fine art matte · Europe shipping included',buy:'BUY',gallery:'Personal Work',client:'Client Work',contact:'Contact'},
+    fr:{nav:['COMMANDES','SHOP','GALERIE','À PROPOS','FAQ','CONTACT'],tag:'Illustrateur & graphiste freelance',desc:'<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>',descMobile:'<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>',cta1:'VOIR LES TRAVAUX',cta2:'COLLECTION POSTERS',follow:'SUIVEZ-MOI',shopTitle:'Collection Posters',shopKicker:'Édition limitée',shopMeta:'Tirage musée 50×70 · Fine art matte · livraison Europe incluse',buy:'ACHETER',gallery:'Travaux Personnels',client:'Travaux Clients',contact:'Contact'},
+    en:{nav:['COMMISSIONS','SHOP','GALLERY','ABOUT','FAQ','CONTACT'],tag:'Illustrator & graphic artist',desc:'Geometric & psychedelic illustrations.<br><span class="hero-place">Paris — Amsterdam</span>',descMobile:'<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>',cta1:'VIEW WORK',cta2:'POSTER COLLECTION',follow:'FOLLOW ME',shopTitle:'Poster Collection',shopKicker:'Limited edition',shopMeta:'Museum print 50×70 · fine art matte · Europe shipping included',buy:'BUY',gallery:'Personal Work',client:'Client Work',contact:'Contact'},
     nl:{nav:['OPDRACHTEN','WINKEL','GALERIJ','OVER','FAQ','CONTACT'],tag:'Illustrator & grafisch kunstenaar freelance',desc:'Geometrische & psychedelische illustraties.<br><span class="hero-place">Parijs — Amsterdam</span>',descMobile:'Parijs — Amsterdam',cta1:'BEKIJK WERK',cta2:'POSTERCOLLECTIE',follow:'VOLG MIJ',shopTitle:'Postercollectie',shopKicker:'Gelimiteerde editie',shopMeta:'Museumprint 50×70 · fine-art matte · verzending in Europa inbegrepen',buy:'KOPEN',gallery:'Persoonlijk Werk',client:'Klantwerk',contact:'Contact'},
     es:{nav:['ENCARGOS','TIENDA','GALERÍA','SOBRE MÍ','FAQ','CONTACTO'],tag:'Ilustrador & diseñador gráfico freelance',desc:'Ilustraciones geométricas & psicodélicas.<br><span class="hero-place">París — Ámsterdam</span>',descMobile:'París — Ámsterdam',cta1:'VER TRABAJOS',cta2:'COLECCIÓN POSTERS',follow:'SÍGUEME',shopTitle:'Colección Posters',shopKicker:'Edición limitada',shopMeta:'Impresión museo 50×70 · fine art matte · envío Europa incluido',buy:'COMPRAR',gallery:'Trabajo Personal',client:'Trabajos para Clientes',contact:'Contacto'}
   };
@@ -12177,7 +12162,7 @@ html body section#client .cw-card{grid-column:auto!important;grid-row:auto!impor
     navKeys.forEach(function(k,i){text('[data-key="'+k+'"],[data-i18n="'+k+'"]',c.nav[i]);});
     html('#hero .htag,.yoaz-mobile-kicker',c.tag);
     html('#hero .hdesc',c.desc);
-    html('.yoaz-mobile-desc','<span class="hero-place">'+c.descMobile+'</span>');
+    html('.yoaz-mobile-desc', c.descMobile);
     text('#hero .btn-p,.yoaz-mobile-buttons .btn-p,[data-key="hero_cta1"],[data-i18n="hero_cta1"]',c.cta1);
     text('#hero .btn-s,.yoaz-mobile-buttons .btn-s,[data-key="hero_cta2"],[data-i18n="hero_cta2"]',c.cta2);
     text('.yoaz-hero-social-mini .social-label,.yoaz-hero-social-mini .follow-label,.yoaz-mobile-social-final .social-label,.yoaz-mobile-social-final .follow-label,.yoaz-mobile-socials .follow-label',c.follow);
@@ -12962,7 +12947,7 @@ html,body{max-width:100%;overflow-x:hidden!important;background:#f7f3ea!importan
     setCard('fortune','client-warner','Fortune','Portrait Elon Musk','Fortune Magazine — Elon Musk portrait Yoaz');
     setCard('fortune-bezos','client-nike','Fortune','Portrait Jeff Bezos','Fortune Magazine — Jeff Bezos portrait Yoaz');
     setCard('fast-company','client-fast-company','Fast Company','Illustration éditoriale','Fast Company — illustration éditoriale Yoaz');
-    setCard('kraken','client-mira','Kraken','Packaging design','Kraken — dessin violet psychédélique Yoaz');
+    setCard('kraken','client-fortune','Kraken','Post Facebook','Kraken — Post Facebook artwork violet psychédélique Yoaz');
   }
   function instagramFeed(){
     var grid=document.getElementById('ig-grid'); if(!grid)return;
@@ -13080,7 +13065,7 @@ html,body{max-width:100%;overflow-x:hidden!important;background:#f7f3ea!importan
   function correctCards(){
     document.querySelectorAll('#client .cw-card[data-pid="cadillac"]').forEach(function(el){el.remove();});
     replaceCard('fast-company','<picture><source srcset="images/client-cadillac.webp" type="image/webp"><img decoding="async" src="images/client-cadillac.jpg" loading="lazy" alt="Fast Company — article Meta illustration Yoaz" width="700" height="500"></picture>','Fast Company','Illustration éditoriale');
-    replaceCard('kraken','<picture><source srcset="images/client-fortune.webp" type="image/webp"><img decoding="async" src="images/client-fortune.jpg" loading="lazy" alt="Kraken — dessin violet pieuvre / tentaculaire Yoaz" width="700" height="500"></picture>','Kraken','Packaging design');
+    replaceCard('kraken','<picture><source srcset="images/client-fortune.webp" type="image/webp"><img decoding="async" src="images/client-fortune.jpg" loading="lazy" alt="Kraken — Post Facebook artwork violet psychédélique Yoaz" width="700" height="500"></picture>','Kraken','Post Facebook');
     replaceGallery('mira','<div class="cw-gallery-stack"><picture><source srcset="images/client-fast-company.webp" type="image/webp"><img class="cw-gimg cw-gimg-active" decoding="async" src="images/client-fast-company.jpg" loading="lazy" alt="Mira Brasserie — bouteilles et packaging" width="700" height="500"></picture><img class="cw-gimg" src="images/client-asics.jpg" alt="Mira Brasserie — label illustration" loading="lazy" width="700" height="700" decoding="async"></div><div class="cw-gallery-count"><span>2</span> photos</div>','Mira Brasserie','Label & Packaging',2);
     replaceCard('fortune','<picture><source srcset="images/client-warner.webp" type="image/webp"><img decoding="async" src="images/client-warner.jpg" loading="lazy" alt="Fortune Magazine — portrait Elon Musk" width="700" height="900"></picture>','Fortune','Portrait Elon Musk');
     replaceCard('fortune-bezos','<picture><source srcset="images/client-nike.webp" type="image/webp"><img decoding="async" src="images/client-nike.jpg" loading="lazy" alt="Fortune Magazine — portrait Jeff Bezos" width="700" height="900"></picture>','Fortune','Portrait Jeff Bezos');
@@ -13764,6 +13749,457 @@ html body .yoaz-home-trust.yoaz-after-client-gallery .yoaz-real-logo-row.yoaz-vi
   [80,220,500,900,1600].forEach(function(t){setTimeout(stableMobileHero,t);});
 })();
 </script>
+
+
+
+<!-- YOAZ FINAL SURGICAL FIX 2026-07-02 — no hero text jitter, correct Kraken, client galleries clickable -->
+<style id="yoaz-final-surgical-stability">
+html body #hero .hdesc,
+html body #yoaz-mobile-hero .yoaz-mobile-desc,
+html body [data-key="hero_desc"]{
+  opacity:1!important;visibility:visible!important;display:block!important;
+  transform:none!important;animation:none!important;transition:none!important;will-change:auto!important;
+}
+html body #hero .hdesc .hero-style,
+html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-style{
+  display:block!important;opacity:1!important;visibility:visible!important;transform:none!important;animation:none!important;transition:none!important;
+}
+html body #hero .hdesc .hero-place,
+html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-place{
+  display:block!important;opacity:1!important;visibility:visible!important;transform:none!important;animation:none!important;transition:none!important;color:#b89a5a!important;
+}
+@media(max-width:960px){
+  html body #yoaz-mobile-hero .yoaz-mobile-desc{
+    min-height:3.7em!important;
+    line-height:1.45!important;
+    letter-spacing:.08em!important;
+    overflow:visible!important;
+    contain:layout!important;
+  }
+  html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-style{
+    white-space:nowrap!important;
+    font-size:clamp(.72rem,3.05vw,.92rem)!important;
+  }
+  html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-place{
+    white-space:nowrap!important;
+    font-size:clamp(.68rem,2.8vw,.82rem)!important;
+    margin-top:.42rem!important;
+  }
+}
+#client .cw-gallery-card .cw-gimg{animation:none!important;transition:none!important;}
+#client .cw-gallery-card .cw-gimg:not(.cw-gimg-active){opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
+#client .cw-gallery-card .cw-gimg.cw-gimg-active{opacity:1!important;visibility:visible!important;}
+#client .cw-card[data-pid]{pointer-events:auto!important;cursor:pointer!important;}
+#client .cw-card[data-pid="kraken"] .cw-type{font-family:inherit!important;}
+</style>
+<script id="yoaz-final-surgical-stability-js">
+(function(){
+  'use strict';
+  var HERO='<span class="hero-style">Illustrations géométriques &amp; psychédéliques.</span><span class="hero-place">Paris — Amsterdam</span>';
+  function stableHero(){
+    document.querySelectorAll('#hero .hdesc,#yoaz-mobile-hero .yoaz-mobile-desc,[data-key="hero_desc"]').forEach(function(el){
+      if(el.innerHTML!==HERO) el.innerHTML=HERO;
+      el.style.opacity='1';el.style.visibility='visible';el.style.display='block';el.style.animation='none';el.style.transition='none';el.style.transform='none';
+    });
+  }
+  function kraken(){
+    var card=document.querySelector('#client .cw-card[data-pid="kraken"]');
+    if(card){
+      var media=card.querySelector(':scope > picture, :scope > img, :scope > .cw-gallery-stack');
+      var html='<picture><source srcset="images/client-fortune.webp" type="image/webp"><img decoding="async" src="images/client-fortune.jpg" loading="lazy" alt="Kraken — Post Facebook artwork violet psychédélique Yoaz" width="400" height="300"></picture>';
+      if(!media || !media.outerHTML.includes('client-fortune')){ if(media) media.remove(); card.insertAdjacentHTML('afterbegin',html); }
+      var t=card.querySelector('.cw-type'); if(t){t.textContent='Post Facebook';['fr','en','nl','es'].forEach(function(l){t.setAttribute('data-'+l,'Post Facebook');});}
+      card.classList.add('cw-has-proj'); card.setAttribute('tabindex','0'); card.setAttribute('role','button'); card.setAttribute('aria-haspopup','dialog');
+    }
+    if(window.PJ_DATA && window.PJ_DATA.kraken){
+      var k=window.PJ_DATA.kraken; k.client='Kraken'; k.title=k.title||{};['fr','en','nl','es'].forEach(function(l){k.title[l]='Kraken — Post Facebook';});
+      k.desc=k.desc||{};
+      k.desc.fr='Artwork psychédélique pour un post Facebook Kraken : illustration violette tentaculaire pensée pour les réseaux sociaux et l’identité visuelle de la marque.';
+      k.desc.en='Psychedelic artwork for a Kraken Facebook post: a purple tentacular illustration designed for social content and brand expression.';
+      k.images=[{src:'images/client-fortune.jpg',alt:'Kraken — Post Facebook artwork'}];
+    }
+  }
+  function freezeClientPreview(){
+    document.querySelectorAll('#client .cw-gallery-card').forEach(function(card){
+      card.querySelectorAll('.cw-gimg').forEach(function(img,i){img.classList.toggle('cw-gimg-active',i===0);});
+    });
+  }
+  function run(){stableHero();kraken();freezeClientPreview();}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
+  window.addEventListener('load',run);
+})();
+</script>
+
+
+
+<!-- YOAZ FINAL CLIENT GALLERIES ONLY FIX — do not touch hero/mobile layout -->
+<style id="yoaz-final-client-gallery-modal-only-css">
+  /* Keep client cards visible, clickable and stable without affecting the hero */
+  html body #client .cw-card[data-pid]{cursor:pointer!important;pointer-events:auto!important;}
+  html body #client .cw-card[data-pid] img{opacity:1!important;visibility:visible!important;display:block!important;}
+  html body #client .cw-gallery-stack .cw-gimg{opacity:0!important;visibility:hidden!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;}
+  html body #client .cw-gallery-stack .cw-gimg.cw-gimg-active,
+  html body #client .cw-gallery-stack .cw-gimg:first-of-type{opacity:1!important;visibility:visible!important;position:absolute!important;}
+
+  /* Modal: when a project has several images, arrows/dots must stay usable */
+  html body.pj-multi #pj-prev,
+  html body.pj-multi #pj-next{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+  html body.pj-multi #pj-dots{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+  html body.pj-single #pj-prev,
+  html body.pj-single #pj-next,
+  html body.pj-single #pj-dots{display:none!important;}
+</style>
+<script id="yoaz-final-client-gallery-modal-only-js">
+(function(){
+  'use strict';
+
+  var FIX_DATA = {
+    'fortune': {
+      client:'Fortune', year:'2021', tags:['Portrait','Magazine','Editorial'],
+      title:{fr:'Fortune — Portrait Elon Musk',en:'Fortune — Elon Musk Portrait',nl:'Fortune — Portret Elon Musk',es:'Fortune — Retrato Elon Musk'},
+      desc:{fr:'Portrait éditorial d’Elon Musk pour Fortune Magazine.',en:'Editorial portrait of Elon Musk for Fortune Magazine.',nl:'Redactioneel portret van Elon Musk voor Fortune Magazine.',es:'Retrato editorial de Elon Musk para Fortune Magazine.'},
+      images:[{src:'images/client-warner.jpg',alt:'Fortune — Portrait Elon Musk'}]
+    },
+    'fortune-bezos': {
+      client:'Fortune', year:'2021', tags:['Portrait','Magazine','Editorial'],
+      title:{fr:'Fortune — Portrait Jeff Bezos',en:'Fortune — Jeff Bezos Portrait',nl:'Fortune — Portret Jeff Bezos',es:'Fortune — Retrato Jeff Bezos'},
+      desc:{fr:'Portrait éditorial de Jeff Bezos pour Fortune Magazine.',en:'Editorial portrait of Jeff Bezos for Fortune Magazine.',nl:'Redactioneel portret van Jeff Bezos voor Fortune Magazine.',es:'Retrato editorial de Jeff Bezos para Fortune Magazine.'},
+      images:[{src:'images/client-nike.jpg',alt:'Fortune — Portrait Jeff Bezos'}]
+    },
+    'fast-company': {
+      client:'Fast Company', year:'2020', tags:['Article','Editorial','Illustration'],
+      title:{fr:'Fast Company — Article Meta',en:'Fast Company — Meta Article',nl:'Fast Company — Meta Artikel',es:'Fast Company — Artículo Meta'},
+      desc:{fr:'Illustration éditoriale pour un article Fast Company / Meta.',en:'Editorial illustration for a Fast Company / Meta article.',nl:'Redactionele illustratie voor een Fast Company / Meta-artikel.',es:'Ilustración editorial para un artículo de Fast Company / Meta.'},
+      images:[{src:'images/client-cadillac.jpg',alt:'Fast Company — Article Meta, illustration éditoriale'}]
+    },
+    'kraken': {
+      client:'Kraken', year:'2021', tags:['Post Facebook','Social','Illustration'],
+      title:{fr:'Kraken — Post Facebook',en:'Kraken — Facebook Post',nl:'Kraken — Facebook Post',es:'Kraken — Post Facebook'},
+      desc:{fr:'Artwork violet psychédélique pour un post Facebook Kraken.',en:'Purple psychedelic artwork for a Kraken Facebook post.',nl:'Paars psychedelisch artwork voor een Facebook-post van Kraken.',es:'Artwork psicodélico violeta para un post de Facebook de Kraken.'},
+      images:[{src:'images/client-fortune.jpg',alt:'Kraken — Post Facebook, artwork violet'}]
+    },
+    'mira': {
+      client:'Mira Brasserie', year:'2020', tags:['Label','Packaging','Brasserie'],
+      title:{fr:'Mira Brasserie — Label & Packaging',en:'Mira Brasserie — Label & Packaging',nl:'Mira Brasserie — Label & Packaging',es:'Mira Brasserie — Label & Packaging'},
+      desc:{fr:'Label et packaging illustrés pour Mira Brasserie.',en:'Illustrated label and packaging for Mira Brasserie.',nl:'Geïllustreerd label en packaging voor Mira Brasserie.',es:'Etiqueta y packaging ilustrados para Mira Brasserie.'},
+      images:[
+        {src:'images/client-fast-company.jpg',alt:'Mira Brasserie — bouteilles et packaging'},
+        {src:'images/client-asics.jpg',alt:'Mira Brasserie — label illustration'}
+      ]
+    }
+  };
+
+  function ensureData(){
+    window.PJ_DATA = window.PJ_DATA || {};
+    Object.keys(FIX_DATA).forEach(function(pid){ window.PJ_DATA[pid] = FIX_DATA[pid]; });
+  }
+
+  function pictureHTML(src, alt){
+    var webp = src.replace(/\.jpg$/i,'.webp').replace(/\.png$/i,'.webp');
+    return '<picture><source srcset="'+webp+'" type="image/webp"><img decoding="async" src="'+src+'" loading="eager" alt="'+alt.replace(/"/g,'&quot;')+'" width="700" height="500"></picture>';
+  }
+
+  function setSingleCard(pid, src, client, type, alt){
+    var card=document.querySelector('#client .cw-card[data-pid="'+pid+'"]');
+    if(!card) return;
+    card.classList.add('cw-has-proj');
+    card.classList.remove('cw-gallery-card');
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','button');
+    card.setAttribute('aria-haspopup','dialog');
+    card.setAttribute('data-pid',pid);
+    Array.prototype.slice.call(card.children).forEach(function(ch){ if(!ch.classList || !ch.classList.contains('cw-info')) ch.remove(); });
+    card.insertAdjacentHTML('afterbegin', pictureHTML(src, alt));
+    var info=card.querySelector('.cw-info');
+    if(!info){ info=document.createElement('div'); info.className='cw-info'; card.appendChild(info); }
+    info.innerHTML='<span class="cw-client">'+client+'</span><span class="cw-type" data-fr="'+type+'" data-en="'+type+'" data-nl="'+type+'" data-es="'+type+'">'+type+'</span>';
+  }
+
+  function setGalleryCard(pid, items, client, type){
+    var card=document.querySelector('#client .cw-card[data-pid="'+pid+'"]');
+    if(!card) return;
+    card.classList.add('cw-has-proj','cw-gallery-card');
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','button');
+    card.setAttribute('aria-haspopup','dialog');
+    card.setAttribute('data-count',String(items.length));
+    Array.prototype.slice.call(card.children).forEach(function(ch){ if(!ch.classList || !ch.classList.contains('cw-info')) ch.remove(); });
+    var stack='<div class="cw-gallery-stack">'+items.map(function(it,i){return '<img class="cw-gimg '+(i===0?'cw-gimg-active':'')+'" src="'+it.src+'" alt="'+it.alt.replace(/"/g,'&quot;')+'" loading="eager" width="700" height="500" decoding="async">';}).join('')+'</div><div class="cw-gallery-count"><span>'+items.length+'</span> photos</div>';
+    card.insertAdjacentHTML('afterbegin', stack);
+    var info=card.querySelector('.cw-info');
+    if(!info){ info=document.createElement('div'); info.className='cw-info'; card.appendChild(info); }
+    info.innerHTML='<span class="cw-client">'+client+'</span><span class="cw-type" data-fr="'+type+'" data-en="'+type+'" data-nl="'+type+'" data-es="'+type+'">'+type+'</span>';
+  }
+
+  function ensureCards(){
+    setSingleCard('fortune','images/client-warner.jpg','Fortune','Portrait Elon Musk','Fortune — Portrait Elon Musk');
+    setSingleCard('fortune-bezos','images/client-nike.jpg','Fortune','Portrait Jeff Bezos','Fortune — Portrait Jeff Bezos');
+    setSingleCard('fast-company','images/client-cadillac.jpg','Fast Company','Article Meta — Illustration éditoriale','Fast Company — Article Meta');
+    setSingleCard('kraken','images/client-fortune.jpg','Kraken','Post Facebook','Kraken — Post Facebook artwork violet');
+    setGalleryCard('mira',FIX_DATA.mira.images,'Mira Brasserie','Label & Packaging');
+  }
+
+  function init(){
+    ensureData();
+    ensureCards();
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  window.addEventListener('load',init);
+  [150,500,1200,2400].forEach(function(t){setTimeout(init,t);});
+})();
+</script>
+
+
+
+<!-- YOAZ FINAL SURGICAL FIX: client project modal only, hero untouched -->
+<style id="yoaz-final-client-modal-counter-fix">
+  /* Hero untouched. Only client project modal + gallery controls are changed. */
+  html body #client .cw-card[data-pid]{cursor:pointer!important;pointer-events:auto!important;}
+  html body #client .cw-card[data-pid] *{pointer-events:none!important;}
+  html body #client .cw-card[data-pid] img{opacity:1!important;visibility:visible!important;}
+
+  html body #pj-dots,
+  html body .pj-dots,
+  html body .pj-dot{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
+
+  html body.pj-open #pj-modal{display:flex!important;visibility:visible!important;opacity:1!important;z-index:2147483000!important;}
+  html body.pj-open #pj-modal .pj-slider{position:relative!important;overflow:hidden!important;background:#050505!important;}
+  html body.pj-open #pj-modal #pj-track{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:inherit!important;
+    transform:none!important;
+    transition:none!important;
+    overflow:hidden!important;
+    background:#050505!important;
+  }
+  html body.pj-open #pj-modal #pj-track img{
+    display:none!important;
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    padding:0!important;
+    margin:0!important;
+    background:#050505!important;
+    opacity:1!important;
+    visibility:visible!important;
+    transform:none!important;
+    transition:none!important;
+  }
+  html body.pj-open #pj-modal #pj-track img.yoaz-pj-active{display:block!important;}
+
+  html body .yoaz-pj-counter{
+    position:absolute!important;left:50%!important;bottom:14px!important;transform:translateX(-50%)!important;
+    z-index:2147483003!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    min-width:54px!important;height:30px!important;padding:0 12px!important;border-radius:999px!important;
+    background:rgba(5,5,5,.72)!important;border:1px solid rgba(255,255,255,.18)!important;color:#fff!important;
+    font-family:Inter,Arial,sans-serif!important;font-size:12px!important;letter-spacing:.08em!important;line-height:1!important;
+    backdrop-filter:blur(8px)!important;box-shadow:0 8px 24px rgba(0,0,0,.22)!important;
+  }
+  html body.pj-single .yoaz-pj-counter{display:none!important;}
+  html body.pj-single #pj-prev,
+  html body.pj-single #pj-next{display:none!important;}
+  html body.pj-multi #pj-prev,
+  html body.pj-multi #pj-next{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+
+  @media(max-width:699px){
+    html body.pj-open #pj-modal .pj-modal-body{overflow:hidden!important;}
+    html body.pj-open #pj-modal .pj-slider{height:62dvh!important;min-height:340px!important;flex:0 0 auto!important;}
+    html body.pj-open #pj-modal .pj-detail{overflow:auto!important;}
+  }
+</style>
+<script id="yoaz-final-client-modal-counter-fix-js">
+(function(){
+  'use strict';
+  function $(id){return document.getElementById(id);} 
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function lang(){var l=(document.documentElement.lang||'fr').slice(0,2);return ['fr','en','nl','es'].indexOf(l)>-1?l:'fr';}
+  function titleOf(p,l){return (p.title&&(p.title[l]||p.title.fr))||p.client||'';}
+  function descOf(p,l){return (p.desc&&(p.desc[l]||p.desc.fr))||'';}
+
+  function patchLabels(){
+    var kr=document.querySelector('#client .cw-card[data-pid="kraken"] .cw-type');
+    if(kr){kr.textContent='Post Facebook';['fr','en','nl','es'].forEach(function(l){kr.setAttribute('data-'+l,'Post Facebook');});}
+    var cv=document.querySelector('#client .cw-card[data-pid="converse"] .cw-type');
+    if(cv){cv.textContent='Campagne Paris';['fr','en','nl','es'].forEach(function(l){cv.setAttribute('data-'+l,'Campagne Paris');});}
+  }
+
+  function ensureData(){
+    window.PJ_DATA=window.PJ_DATA||{};
+    var d=window.PJ_DATA;
+    d.fortune=Object.assign(d.fortune||{}, {
+      client:'Fortune', year:(d.fortune&&d.fortune.year)||'2022', tags:(d.fortune&&d.fortune.tags)||['Editorial','Portrait'],
+      title:Object.assign((d.fortune&&d.fortune.title)||{}, {fr:'Fortune — Portrait Elon Musk', en:'Fortune — Elon Musk Portrait'}),
+      images:[{src:'images/client-warner.jpg',alt:'Fortune — Portrait Elon Musk'}]
+    });
+    d['fortune-bezos']=Object.assign(d['fortune-bezos']||{}, {
+      client:'Fortune', year:(d['fortune-bezos']&&d['fortune-bezos'].year)||'2021', tags:(d['fortune-bezos']&&d['fortune-bezos'].tags)||['Editorial','Portrait'],
+      title:Object.assign((d['fortune-bezos']&&d['fortune-bezos'].title)||{}, {fr:'Fortune — Portrait Jeff Bezos', en:'Fortune — Jeff Bezos Portrait'}),
+      images:[{src:'images/client-nike.jpg',alt:'Fortune — Portrait Jeff Bezos'}]
+    });
+    d['fast-company']=Object.assign(d['fast-company']||{}, {
+      client:'Fast Company', year:(d['fast-company']&&d['fast-company'].year)||'2021', tags:(d['fast-company']&&d['fast-company'].tags)||['Editorial','Article'],
+      title:Object.assign((d['fast-company']&&d['fast-company'].title)||{}, {fr:'Fast Company — Illustration éditoriale', en:'Fast Company — Editorial Illustration'}),
+      images:[
+        {src:'images/client-cadillac.jpg',alt:'Fast Company — Article Meta / illustration éditoriale'},
+        {src:'images/projects/fast-company-01.jpg',alt:'Fast Company — Artwork 01'},
+        {src:'images/projects/fast-company-02.jpg',alt:'Fast Company — Artwork 02'},
+        {src:'images/projects/fast-company-03.jpg',alt:'Fast Company — Artwork 03'},
+        {src:'images/projects/fast-company-04.jpg',alt:'Fast Company — Artwork 04'}
+      ]
+    });
+    d.kraken=Object.assign(d.kraken||{}, {
+      client:'Kraken', year:(d.kraken&&d.kraken.year)||'2021', tags:(d.kraken&&d.kraken.tags)||['Post Facebook','Artwork','Social'],
+      title:{fr:'Kraken — Post Facebook',en:'Kraken — Post Facebook',nl:'Kraken — Post Facebook',es:'Kraken — Post Facebook'},
+      desc:{fr:'Artwork psychédélique violet pour un post Facebook Kraken, pensé pour les réseaux sociaux et l’identité visuelle de la marque.',en:'Purple psychedelic artwork for a Kraken Facebook post, designed for social content and brand expression.'},
+      images:[{src:'images/client-fortune.jpg',alt:'Kraken — Post Facebook artwork violet'}]
+    });
+    d.mira=Object.assign(d.mira||{}, {
+      client:'Mira Brasserie', year:(d.mira&&d.mira.year)||'2019', tags:(d.mira&&d.mira.tags)||['Label','Packaging'],
+      title:Object.assign((d.mira&&d.mira.title)||{}, {fr:'Mira Brasserie — Label & Packaging', en:'Mira Brasserie — Label & Packaging'}),
+      images:[{src:'images/client-fast-company.jpg',alt:'Mira Brasserie — Label'}, {src:'images/client-asics.jpg',alt:'Mira Brasserie — Packaging bouteilles'}]
+    });
+    if(d.converse){
+      d.converse.title=d.converse.title||{};
+      d.converse.title.fr='Converse × Citadium — Campagne Paris'; d.converse.title.en='Converse × Citadium — Paris Campaign';
+      d.converse.title.nl='Converse × Citadium — Campagne Parijs'; d.converse.title.es='Converse × Citadium — Campaña París';
+    }
+  }
+
+  var state={pid:null,idx:0,images:[]};
+  var refs={};
+  function cloneControl(id){var old=$(id); if(!old) return null; var n=old.cloneNode(true); old.parentNode.replaceChild(n,old); return n;}
+  function initRefs(){
+    refs.modal=$('pj-modal'); refs.track=$('pj-track'); refs.dots=$('pj-dots'); refs.scrim=$('pj-scrim');
+    if(!refs.modal||!refs.track) return false;
+    refs.prev=cloneControl('pj-prev'); refs.next=cloneControl('pj-next'); refs.close=cloneControl('pj-close');
+    refs.client=$('pj-d-client'); refs.title=$('pj-modal-title'); refs.tags=$('pj-d-tags'); refs.year=$('pj-d-year'); refs.desc=$('pj-d-desc');
+    var slider=refs.modal.querySelector('.pj-slider')||refs.track.parentNode;
+    refs.counter=refs.modal.querySelector('.yoaz-pj-counter');
+    if(!refs.counter){refs.counter=document.createElement('div'); refs.counter.className='yoaz-pj-counter'; refs.counter.setAttribute('aria-hidden','true'); slider.appendChild(refs.counter);}
+    if(refs.dots){refs.dots.innerHTML='';refs.dots.hidden=true;refs.dots.style.display='none';}
+    if(refs.prev) refs.prev.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go(-1);});
+    if(refs.next) refs.next.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go(1);});
+    if(refs.close) refs.close.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();close();});
+    if(refs.scrim){var ns=refs.scrim.cloneNode(true);refs.scrim.parentNode.replaceChild(ns,refs.scrim);refs.scrim=ns;refs.scrim.addEventListener('click',close);}
+    return true;
+  }
+  function projectImages(pid,p){
+    var imgs=(p&&Array.isArray(p.images)?p.images:[]).filter(function(i){return i&&i.src;});
+    if(imgs.length) return imgs;
+    var card=document.querySelector('#client .cw-card[data-pid="'+(window.CSS&&CSS.escape?CSS.escape(pid):pid)+'"]');
+    if(card){
+      imgs=Array.prototype.slice.call(card.querySelectorAll('img')).map(function(im){return {src:im.currentSrc||im.getAttribute('src'),alt:im.getAttribute('alt')||pid};}).filter(function(i){return i.src;});
+    }
+    return imgs;
+  }
+  function update(){
+    var total=state.images.length;
+    if(state.idx<0) state.idx=total-1;
+    if(state.idx>=total) state.idx=0;
+    Array.prototype.forEach.call(refs.track.querySelectorAll('img'),function(img,i){img.classList.toggle('yoaz-pj-active',i===state.idx);});
+    document.body.classList.toggle('pj-single',total<=1);
+    document.body.classList.toggle('pj-multi',total>1);
+    if(refs.counter){refs.counter.textContent=(state.idx+1)+' / '+total;refs.counter.style.display=total>1?'inline-flex':'none';}
+    [refs.prev,refs.next].forEach(function(b){if(b){b.hidden=total<=1;b.style.display=total<=1?'none':'flex';}});
+  }
+  function go(delta){if(state.images.length<=1)return;state.idx+=delta;update();}
+  function open(pid){
+    ensureData(); patchLabels(); if(!initRefs()) return;
+    var p=window.PJ_DATA[pid]||{}; var l=lang(); var imgs=projectImages(pid,p);
+    if(!imgs.length) return;
+    state={pid:pid,idx:0,images:imgs};
+    refs.track.innerHTML=imgs.map(function(im,i){return '<img class="'+(i===0?'yoaz-pj-active':'')+'" src="'+esc(im.src)+'" alt="'+esc(im.alt||p.client||pid)+'" loading="eager" decoding="async">';}).join('');
+    if(refs.client) refs.client.textContent=p.client||'';
+    if(refs.title) refs.title.textContent=titleOf(p,l)||pid;
+    if(refs.year) refs.year.textContent=p.year||'';
+    if(refs.desc) refs.desc.textContent=descOf(p,l)||'';
+    if(refs.tags) refs.tags.innerHTML=(p.tags||[]).map(function(t){return '<li>'+esc(t)+'</li>';}).join('');
+    if(refs.dots){refs.dots.innerHTML='';refs.dots.hidden=true;refs.dots.style.display='none';}
+    document.body.classList.add('pj-open'); document.documentElement.style.overflow='hidden'; document.body.style.overflow='hidden';
+    update();
+  }
+  function close(){document.body.classList.remove('pj-open','pj-single','pj-multi');document.documentElement.style.overflow='';document.body.style.overflow='';}
+  window.pjOpen=open;
+  function bind(){
+    patchLabels(); ensureData(); initRefs();
+    document.querySelectorAll('#client .cw-card[data-pid]').forEach(function(card){
+      card.setAttribute('role','button'); card.setAttribute('tabindex','0');
+      card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(card.getAttribute('data-pid'));}},true);
+    });
+  }
+  document.addEventListener('click',function(e){
+    var card=e.target.closest&&e.target.closest('#client .cw-card[data-pid]');
+    if(card){e.preventDefault();e.stopImmediatePropagation();open(card.getAttribute('data-pid'));return false;}
+    if(e.target.closest&&e.target.closest('#pj-close')){e.preventDefault();e.stopImmediatePropagation();close();return false;}
+    if(e.target.closest&&e.target.closest('#pj-prev')){e.preventDefault();e.stopImmediatePropagation();go(-1);return false;}
+    if(e.target.closest&&e.target.closest('#pj-next')){e.preventDefault();e.stopImmediatePropagation();go(1);return false;}
+  },true);
+  document.addEventListener('keydown',function(e){if(!document.body.classList.contains('pj-open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1);},true);
+  var sx=0;document.addEventListener('touchstart',function(e){if(document.body.classList.contains('pj-open')&&state.images.length>1&&e.touches.length)sx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(!document.body.classList.contains('pj-open')||state.images.length<=1||!e.changedTouches.length)return;var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>45)go(dx<0?1:-1);},{passive:true});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+  setTimeout(bind,600);setTimeout(bind,1600);
+})();
+</script>
+
+<style id="yoaz-final-modal-no-beige-bar-only">
+/* Final surgical fix: remove beige strip/dot row from project modal only. Hero and page layout untouched. */
+html body.pj-open #pj-modal,
+html body.pj-open #pj-modal .pj-modal-body,
+html body.pj-open #pj-modal .pj-slider,
+html body.pj-open #pj-modal #pj-track,
+html body.pj-open #pj-modal #pj-track picture {
+  background:#050505!important;
+}
+html body.pj-open #pj-modal .pj-modal-body,
+html body.pj-open #pj-modal .pj-slider,
+html body.pj-open #pj-modal #pj-track {
+  padding-top:0!important;
+  margin-top:0!important;
+}
+html body.pj-open #pj-modal .pj-dots,
+html body.pj-open #pj-modal #pj-dots,
+html body.pj-open #pj-modal .pj-dot,
+html body.pj-open #pj-modal .pj-drag-bar {
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  pointer-events:none!important;
+}
+html body.pj-open #pj-modal .pj-slider::before,
+html body.pj-open #pj-modal .pj-slider::after,
+html body.pj-open #pj-modal .pj-modal-body::before,
+html body.pj-open #pj-modal .pj-modal-body::after,
+html body.pj-open #pj-modal #pj-track::before,
+html body.pj-open #pj-modal #pj-track::after {
+  content:none!important;
+  display:none!important;
+}
+html body.pj-open #pj-modal #pj-track img {
+  background:#050505!important;
+  padding:0!important;
+}
+@media(max-width:699px){
+  html body.pj-open #pj-modal .pj-slider{
+    height:62dvh!important;
+    min-height:340px!important;
+  }
+}
+</style>
 
 </body></html>
 
@@ -14717,7 +15153,7 @@ html body .social-linktree::before{
 <script id="yoaz-hotfix-kraken-hero-no-crop-js">
 (function(){
   'use strict';
-  var KRAKEN_HTML='<picture><source srcset="images/client-kraken.webp" type="image/webp"><img decoding="async" src="images/client-kraken.jpg" loading="lazy" alt="Kraken — packaging design Yoaz" width="700" height="700"></picture>';
+  var KRAKEN_HTML='<picture><source srcset="images/client-fortune.webp" type="image/webp"><img decoding="async" src="images/client-fortune.jpg" loading="lazy" alt="Kraken — Post Facebook artwork Yoaz" width="700" height="700"></picture>';
   function setText(el,txt){if(el){el.textContent=txt;el.setAttribute('data-fr',txt);el.setAttribute('data-en',txt);el.setAttribute('data-nl',txt);el.setAttribute('data-es',txt);}}
   function fixKraken(){
     var card=document.querySelector('#client .cw-card[data-pid="kraken"]');
@@ -14728,11 +15164,11 @@ html body .social-linktree::before{
       card.querySelectorAll('picture,img,.cw-gallery-stack').forEach(function(n){ if(!n.closest('.cw-info')) n.remove(); });
       card.insertAdjacentHTML('afterbegin',KRAKEN_HTML);
       setText(card.querySelector('.cw-client'),'Kraken');
-      setText(card.querySelector('.cw-type'),'Packaging design');
+      setText(card.querySelector('.cw-type'),'Post Facebook');
       if(!badge){card.insertAdjacentHTML('beforeend','<span class="cw-proj-badge">VOIR LE PROJET →</span>');}
     }
     if(window.CLIENT_PROJECTS && window.CLIENT_PROJECTS.kraken){
-      window.CLIENT_PROJECTS.kraken.images=[{src:'images/client-kraken.jpg',alt:'Kraken — packaging design Yoaz'}];
+      window.CLIENT_PROJECTS.kraken.images=[{src:'images/client-fortune.jpg',alt:'Kraken — Post Facebook artwork Yoaz'}];
       window.CLIENT_PROJECTS.kraken.client='Kraken';
     }
   }
@@ -14843,13 +15279,13 @@ html body .social-linktree::before{
     setSingleCard('fortune-bezos','client-nike','Fortune','Portrait Jeff Bezos','Fortune Magazine — portrait Jeff Bezos Yoaz',false);
     setSingleCard('fast-company','client-cadillac','Fast Company','Illustration éditoriale','Fast Company — article Meta illustration Yoaz',false);
     /* Kraken: user requested octopus/tentacular drawing, not the Affinity/product mockup. Use the colorful tentacular artwork, not client-kraken discs. */
-    setSingleCard('kraken','client-mira','Kraken','Packaging design','Kraken — dessin tentaculaire psychédélique Yoaz',false);
+    setSingleCard('kraken','client-fortune','Kraken','Post Facebook','Kraken — Post Facebook artwork violet psychédélique Yoaz',false);
     setMira();
     if(window.PJ_DATA){
       if(window.PJ_DATA.fortune){window.PJ_DATA.fortune.client='Fortune';window.PJ_DATA.fortune.title.fr='Fortune — Portrait Elon Musk';window.PJ_DATA.fortune.images=[{src:'images/client-warner.jpg',alt:'Fortune — portrait Elon Musk'}];}
       if(window.PJ_DATA['fortune-bezos']){window.PJ_DATA['fortune-bezos'].client='Fortune';window.PJ_DATA['fortune-bezos'].title.fr='Fortune — Portrait Jeff Bezos';window.PJ_DATA['fortune-bezos'].images=[{src:'images/client-nike.jpg',alt:'Fortune — portrait Jeff Bezos'}];}
       if(window.PJ_DATA['fast-company']){window.PJ_DATA['fast-company'].client='Fast Company';window.PJ_DATA['fast-company'].images=[{src:'images/client-cadillac.jpg',alt:'Fast Company — article Meta illustration'},{src:'images/projects/fast-company-01.jpg',alt:'Fast Company — portrait detail'},{src:'images/projects/fast-company-02.jpg',alt:'Fast Company — editorial illustration'}];}
-      if(window.PJ_DATA.kraken){window.PJ_DATA.kraken.client='Kraken';window.PJ_DATA.kraken.images=[{src:'images/client-mira.jpg',alt:'Kraken — dessin tentaculaire psychédélique'}];}
+      if(window.PJ_DATA.kraken){window.PJ_DATA.kraken.client='Kraken';window.PJ_DATA.kraken.images=[{src:'images/client-fortune.jpg',alt:'Kraken — Post Facebook artwork violet psychédélique'}];}
       if(window.PJ_DATA.mira){window.PJ_DATA.mira.client='Mira Brasserie';window.PJ_DATA.mira.images=[{src:'images/client-fast-company.jpg',alt:'Mira Brasserie — bouteilles et packaging'},{src:'images/client-asics.jpg',alt:'Mira Brasserie — label'}];}
       delete window.PJ_DATA.cadillac;
     }
