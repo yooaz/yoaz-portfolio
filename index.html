@@ -14201,6 +14201,134 @@ html body.pj-open #pj-modal #pj-track img {
 }
 </style>
 
+
+
+<!-- YOAZ GLOBAL STABILITY FIX — 2026-07-09
+     Scope volontairement limité : stabilité hero text + cartes client fragiles.
+     Ne modifie pas le layout, le shop, les logos, ni les images existantes. -->
+<style id="yoaz-global-stability-fix-20260709">
+  html body #hero .hdesc,
+  html body #hero .hdesc *,
+  html body #yoaz-mobile-hero .yoaz-mobile-desc,
+  html body #yoaz-mobile-hero .yoaz-mobile-desc *{
+    opacity:1!important;
+    visibility:visible!important;
+    animation:none!important;
+    transition:none!important;
+    transform:none!important;
+  }
+  html body #hero .hdesc .hero-style,
+  html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-style{
+    display:block!important;
+    white-space:normal!important;
+    overflow:visible!important;
+  }
+  html body #hero .hdesc .hero-place,
+  html body #yoaz-mobile-hero .yoaz-mobile-desc .hero-place{
+    display:block!important;
+    margin-top:.45rem!important;
+    white-space:nowrap!important;
+  }
+  @media(max-width:900px){
+    html body #yoaz-mobile-hero .yoaz-mobile-desc{
+      min-height:4.2em!important;
+      line-height:1.42!important;
+      contain:layout style!important;
+    }
+  }
+
+  /* Cartes travaux clients qui scintillaient : rendu statique, pas de transition image. */
+  html body #client .cw-card[data-pid="fortune"],
+  html body #client .cw-card[data-pid="fortune-bezos"],
+  html body #client .cw-card[data-pid="fast-company"],
+  html body #client .cw-card[data-pid="kraken"],
+  html body #client .cw-card[data-pid="mira"]{
+    cursor:pointer!important;
+    pointer-events:auto!important;
+    animation:none!important;
+    will-change:auto!important;
+    transform:none!important;
+    backface-visibility:hidden!important;
+  }
+  html body #client .cw-card[data-pid="fortune"] picture,
+  html body #client .cw-card[data-pid="fortune-bezos"] picture,
+  html body #client .cw-card[data-pid="fast-company"] picture,
+  html body #client .cw-card[data-pid="kraken"] picture,
+  html body #client .cw-card[data-pid="mira"] picture,
+  html body #client .cw-card[data-pid="fortune"] img,
+  html body #client .cw-card[data-pid="fortune-bezos"] img,
+  html body #client .cw-card[data-pid="fast-company"] img,
+  html body #client .cw-card[data-pid="kraken"] img,
+  html body #client .cw-card[data-pid="mira"] img{
+    opacity:1!important;
+    visibility:visible!important;
+    display:block!important;
+    animation:none!important;
+    transition:none!important;
+    transform:none!important;
+    filter:none!important;
+    will-change:auto!important;
+    backface-visibility:hidden!important;
+  }
+  html body #client .cw-card[data-pid="mira"] .cw-gallery-stack .cw-gimg:not(.cw-gimg-active){
+    opacity:0!important;
+    visibility:hidden!important;
+  }
+  html body #pj-modal #pj-track img{
+    animation:none!important;
+    transition:none!important;
+    backface-visibility:hidden!important;
+  }
+</style>
+<script id="yoaz-global-stability-fix-20260709-js">
+(function(){
+  'use strict';
+  var fragile=['fortune','fortune-bezos','fast-company','kraken','mira'];
+  function stableHeroText(){
+    document.querySelectorAll('#hero .hdesc,#yoaz-mobile-hero .yoaz-mobile-desc,[data-key="hero_desc"]').forEach(function(el){
+      el.style.setProperty('opacity','1','important');
+      el.style.setProperty('visibility','visible','important');
+      el.style.setProperty('animation','none','important');
+      el.style.setProperty('transition','none','important');
+      el.style.setProperty('transform','none','important');
+      var style=el.querySelector('.hero-style');
+      var place=el.querySelector('.hero-place');
+      if(style){style.style.setProperty('display','block','important');style.style.setProperty('white-space','normal','important');}
+      if(place){place.style.setProperty('display','block','important');place.style.setProperty('white-space','nowrap','important');}
+    });
+  }
+  function stableClientCards(){
+    fragile.forEach(function(pid){
+      var card=document.querySelector('#client .cw-card[data-pid="'+pid+'"]');
+      if(!card) return;
+      card.classList.add('yoaz-stable-client-card');
+      card.setAttribute('tabindex','0');
+      card.setAttribute('role','button');
+      card.setAttribute('aria-haspopup','dialog');
+      card.style.setProperty('pointer-events','auto','important');
+      card.style.setProperty('animation','none','important');
+      card.style.setProperty('will-change','auto','important');
+      card.querySelectorAll('img').forEach(function(img,idx){
+        img.setAttribute('decoding','sync');
+        if(pid==='fortune'||pid==='fortune-bezos'||pid==='fast-company'||pid==='kraken') img.setAttribute('loading','eager');
+        img.style.setProperty('opacity','1','important');
+        img.style.setProperty('visibility','visible','important');
+        img.style.setProperty('animation','none','important');
+        img.style.setProperty('transition','none','important');
+        img.style.setProperty('transform','none','important');
+        img.style.setProperty('will-change','auto','important');
+      });
+    });
+    var mira=document.querySelector('#client .cw-card[data-pid="mira"]');
+    if(mira){mira.classList.add('cw-gallery-card');mira.setAttribute('data-count','2');}
+  }
+  function apply(){stableHeroText();stableClientCards();}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',apply); else apply();
+  window.addEventListener('load',apply,{once:true});
+  [250,900,1800,3600].forEach(function(t){setTimeout(apply,t);});
+})();
+</script>
+
 </body></html>
 
 <!-- YOAZ V3.4 — final mobile hero top-safe + Facebook social lock -->
