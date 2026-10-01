@@ -1,0 +1,3 @@
+# Keep the existing front-end endpoints working after the Netlify -> Cloudflare Pages migration.
+/.netlify/functions/instagram-feed /api/instagram-feed 200
+/.netlify/functions/create-checkout /api/create-checkout 200
