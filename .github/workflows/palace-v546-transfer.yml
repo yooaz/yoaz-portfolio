@@ -1,0 +1,25 @@
+name: Palace V546 Drive Transfer
+on:
+  push:
+    branches:
+      - palace-preview
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Palace V546 package
+        run: |
+          test -f palace-v546/PALACE_OF_SIGNS_V546_GAME_2026-10-17.zip
+          unzip -t palace-v546/PALACE_OF_SIGNS_V546_GAME_2026-10-17.zip
+          sha256sum palace-v546/PALACE_OF_SIGNS_V546_GAME_2026-10-17.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PALACE_OF_SIGNS_V546_GAME_2026-10-17
+          path: palace-v546/PALACE_OF_SIGNS_V546_GAME_2026-10-17.zip
+          retention-days: 3
