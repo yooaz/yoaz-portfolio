@@ -1,0 +1,1 @@
+Trigger Palace V546 artifact packaging after workflow installation.
