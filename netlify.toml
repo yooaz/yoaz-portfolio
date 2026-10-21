@@ -116,6 +116,15 @@
   status = 301
   force = true
 
+# Exclude a source backup that remains preserved in Git history.
+# Netlify needs force=true because the file exists in publish=".".
+# Exact match only: do not alter routes to the live portfolio or shop.
+[[redirects]]
+  from = "/index.html.v3backup"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Fallback 404 (si aucune page match)
 [[redirects]]
   from = "/*"
