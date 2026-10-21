@@ -1,42 +1,50 @@
-# Instagram feed setup — Yoaz
+# Instagram feed — YoAz (professional API migration, October 2026)
 
-The website now uses a real backend endpoint:
+The Netlify endpoint /.netlify/functions/instagram-feed only returns real posts.
+This is a migration candidate, not proof that the current Netlify token works.
 
-`/.netlify/functions/instagram-feed`
+## Prerequisite
 
-It never displays fake/local artworks as Instagram posts.
+The account must be Instagram Business or Creator. Instagram Basic Display
+was retired on December 4, 2024 and cannot be used for personal accounts.
 
-## Netlify environment variables
+## Mode A — Instagram API with Facebook Login
 
-Add these in Netlify → Site configuration → Environment variables:
+Configure a Facebook Page/User token authorized for the Instagram professional
+account and supply the professional Instagram account ID:
 
-```bash
-INSTAGRAM_ACCESS_TOKEN=YOUR_LONG_LIVED_META_OR_INSTAGRAM_TOKEN
-INSTAGRAM_LIMIT=9
-```
+- INSTAGRAM_ACCESS_TOKEN = valid Facebook Graph token
+- INSTAGRAM_USER_ID = Instagram professional account ID
+- INSTAGRAM_LIMIT = optional number from 1 to 24 (default 9)
 
-Recommended for Instagram Business / Creator accounts:
+Endpoint: https://graph.facebook.com/v26.0/{INSTAGRAM_USER_ID}/media
 
-```bash
-INSTAGRAM_USER_ID=YOUR_INSTAGRAM_BUSINESS_USER_ID
-```
+## Mode B — Instagram API with Instagram Login
 
-If `INSTAGRAM_USER_ID` is provided, the function uses Meta Graph API:
+Use an Instagram professional account token with the required media read
+permissions. Omit INSTAGRAM_USER_ID entirely:
 
-`https://graph.facebook.com/v20.0/{INSTAGRAM_USER_ID}/media`
+- INSTAGRAM_ACCESS_TOKEN = valid Instagram Login token
+- INSTAGRAM_LIMIT = optional number from 1 to 24
 
-If not, it tries Instagram Basic Display:
+Endpoint: https://graph.instagram.com/v26.0/me/media
 
-`https://graph.instagram.com/me/media`
+Never mix the token types. A failed request does not retry the other mode.
 
-## Required Meta setup
+## Security and migration notes
 
-1. Instagram account must be Creator or Business.
-2. Link it to a Facebook Page.
-3. Create a Meta Developer app.
-4. Generate a long-lived token with the correct Instagram permissions.
-5. Add the token to Netlify and redeploy.
+- Graph API v20.0 ended support in September 2026; the candidate targets v26.0.
+- Missing credentials return an unconfigured response without a network call.
+- Public errors are generic and do not echo the provider response or token.
+- Upstream timeout: nine seconds; HTTPS media validation; cached per token/account/limit.
+- No live Meta requests, Netlify preview or production deployment were run.
 
-## Expected result
+## Manual approval gate
 
-The Instagram section shows only real latest posts from `@iamyoaz`. If the token is missing or expired, it shows a clean setup message instead of fake images.
+1. Verify an Instagram Business or Creator account and API permissions.
+2. Store valid credentials as Netlify secrets; never commit them.
+3. Test a current real post (media URL, timestamp, permalink) in a supervised environment.
+4. Check expiration, empty feed, 401/403 behavior and token redaction.
+5. Confirm current Meta API compatibility before deploying.
+
+The retired Instagram Basic Display fallback must not be reintroduced.
