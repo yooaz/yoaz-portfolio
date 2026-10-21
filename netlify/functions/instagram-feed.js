@@ -6,9 +6,9 @@
 //
 // Works in two modes:
 // 1) Meta Graph API for Business/Creator accounts:
-//    https://graph.facebook.com/v20.0/{INSTAGRAM_USER_ID}/media
-// 2) Instagram Basic Display fallback for tokens that support /me/media:
-//    https://graph.instagram.com/me/media
+//    https://graph.facebook.com/v26.0/{INSTAGRAM_USER_ID}/media
+// 2) Instagram API with Instagram Login (professional accounts only):
+//    https://graph.instagram.com/v26.0/me/media
 //
 // The front-end never displays fake/local drawings as Instagram content.
 
@@ -94,14 +94,15 @@ exports.handler = async function () {
   if (userId && userId !== 'me') {
     sources.push({
       name: 'meta-graph-api',
-      url: `https://graph.facebook.com/v20.0/${encodeURIComponent(userId)}/media?fields=${encodeURIComponent(fields)}&limit=${encodeURIComponent(limit)}&access_token=${encodeURIComponent(token)}`,
+      url: `https://graph.facebook.com/v26.0/${encodeURIComponent(userId)}/media?fields=${encodeURIComponent(fields)}&limit=${encodeURIComponent(limit)}&access_token=${encodeURIComponent(token)}`,
+    });
+  } else {
+    // Instagram Login requires a professional account and matching Instagram token.
+    sources.push({
+    name: 'instagram-login-api',
+    url: `https://graph.instagram.com/v26.0/me/media?fields=${encodeURIComponent(fields)}&limit=${encodeURIComponent(limit)}&access_token=${encodeURIComponent(token)}`,
     });
   }
-
-  sources.push({
-    name: 'instagram-basic-display',
-    url: `https://graph.instagram.com/me/media?fields=${encodeURIComponent(fields)}&limit=${encodeURIComponent(limit)}&access_token=${encodeURIComponent(token)}`,
-  });
 
   let lastError = null;
   for (const source of sources) {
