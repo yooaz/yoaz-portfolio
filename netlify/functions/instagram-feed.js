@@ -20,7 +20,7 @@ function json(statusCode, body, extraHeaders = {}) {
     statusCode,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=300, s-maxage=900',
+      'Cache-Control': statusCode >= 400 ? 'no-store' : 'public, max-age=300, s-maxage=900',
       ...extraHeaders,
     },
     body: JSON.stringify(body),
@@ -44,7 +44,8 @@ function normalizeItems(data) {
 }
 
 async function fetchJson(url) {
-  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  // Bound upstream waiting time; every provider attempt may otherwise hang.
+  const res = await fetch(url, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(8000) });
   const data = await res.json();
   if (!res.ok || data.error) {
     const message = data && data.error ? data.error.message : `Instagram API HTTP ${res.status}`;
@@ -59,13 +60,14 @@ async function fetchJson(url) {
 exports.handler = async function () {
   const token = process.env.INSTAGRAM_ACCESS_TOKEN || process.env.IG_GRAPH_ACCESS_TOKEN || '';
   const userId = process.env.INSTAGRAM_USER_ID || process.env.IG_USER_ID || '';
-  const limit = Math.max(1, Math.min(Number(process.env.INSTAGRAM_LIMIT || 9), 24));
+  const rawLimit = Number(process.env.INSTAGRAM_LIMIT || 9);
+  const limit = Number.isFinite(rawLimit) ? Math.max(1, Math.min(Math.trunc(rawLimit), 24)) : 9;
 
   if (!token) {
     return json(503, {
       ok: false,
       configured: false,
-      error: 'INSTAGRAM_ACCESS_TOKEN missing',
+      error: 'Instagram feed not configured',
       items: [],
     });
   }
@@ -109,7 +111,8 @@ exports.handler = async function () {
   return json(502, {
     ok: false,
     configured: true,
-    error: lastError && lastError.message ? lastError.message : 'Instagram fetch failed',
+    // Upstream/network errors can contain the token embedded in request URLs.
+    error: 'Instagram feed temporarily unavailable',
     items: [],
   });
 };
