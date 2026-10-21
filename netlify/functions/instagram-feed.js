@@ -27,24 +27,35 @@ function json(statusCode, body, extraHeaders = {}) {
   };
 }
 
+function safeHttpsUrl(value) {
+  if (typeof value !== 'string') return '';
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && !url.username && !url.password ? url.toString() : '';
+  } catch {
+    return '';
+  }
+}
+
 function normalizeItems(data) {
-  return (data || [])
+  return (Array.isArray(data) ? data : [])
     .filter((item) => item && (item.media_url || item.thumbnail_url) && item.permalink)
     .filter((item) => item.media_type !== 'CAROUSEL_ALBUM' || item.media_url || item.thumbnail_url)
     .map((item) => ({
       id: item.id,
       caption: item.caption || '',
       media_type: item.media_type || 'IMAGE',
-      media_url: item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url,
-      thumbnail_url: item.thumbnail_url || '',
-      permalink: item.permalink,
+      media_url: safeHttpsUrl(item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url),
+      thumbnail_url: safeHttpsUrl(item.thumbnail_url || ''),
+      permalink: safeHttpsUrl(item.permalink),
       timestamp: item.timestamp || '',
       username: item.username || 'iamyoaz',
-    }));
+    }))
+    .filter((item) => item.media_url && item.permalink);
 }
 
 async function fetchJson(url) {
-  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  const res = await fetch(url, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(9000) });
   const data = await res.json();
   if (!res.ok || data.error) {
     const message = data && data.error ? data.error.message : `Instagram API HTTP ${res.status}`;
@@ -59,7 +70,9 @@ async function fetchJson(url) {
 exports.handler = async function () {
   const token = process.env.INSTAGRAM_ACCESS_TOKEN || process.env.IG_GRAPH_ACCESS_TOKEN || '';
   const userId = process.env.INSTAGRAM_USER_ID || process.env.IG_USER_ID || '';
-  const limit = Math.max(1, Math.min(Number(process.env.INSTAGRAM_LIMIT || 9), 24));
+  const limitValue = String(process.env.INSTAGRAM_LIMIT || '9');
+  const limit = /^\d{1,4}$/.test(limitValue) ? Math.max(1, Math.min(Number(limitValue), 24)) : 9;
+  const cacheScope = [token, userId, limit].join('\u0000');
 
   if (!token) {
     return json(503, {
@@ -71,7 +84,7 @@ exports.handler = async function () {
   }
 
   const now = Date.now();
-  if (memoryCache && now - memoryCache.createdAt < CACHE_MS) {
+  if (memoryCache && memoryCache.scope === cacheScope && now - memoryCache.createdAt < CACHE_MS) {
     return json(200, { ok: true, cached: true, source: memoryCache.source, items: memoryCache.items });
   }
 
@@ -99,7 +112,7 @@ exports.handler = async function () {
         lastError = new Error('Instagram API returned no displayable media');
         continue;
       }
-      memoryCache = { createdAt: now, source: source.name, items };
+      memoryCache = { createdAt: now, scope: cacheScope, source: source.name, items };
       return json(200, { ok: true, cached: false, source: source.name, items });
     } catch (err) {
       lastError = err;
@@ -109,7 +122,7 @@ exports.handler = async function () {
   return json(502, {
     ok: false,
     configured: true,
-    error: lastError && lastError.message ? lastError.message : 'Instagram fetch failed',
+    error: 'Instagram feed temporarily unavailable',
     items: [],
   });
 };
