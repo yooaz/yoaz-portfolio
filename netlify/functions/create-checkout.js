@@ -31,17 +31,32 @@ function json(statusCode, body) {
 }
 
 function cleanUrl(value) {
-  const url = String(value || '').trim();
-  if (!/^https:\/\//i.test(url)) return '';
-  return url;
+  const raw = typeof value === 'string' ? value.trim() : '';
+  if (!raw) return '';
+  try {
+    const parsed = new URL(raw);
+    if (parsed.protocol !== 'https:' || !parsed.hostname || parsed.username || parsed.password) return '';
+    return parsed.toString();
+  } catch {
+    return '';
+  }
 }
 
 exports.handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
 
-    const { slug } = JSON.parse(event.body || '{}');
-    if (!PRODUCTS[slug]) return json(400, { error: 'Unknown product' });
+    let request;
+    try {
+      request = JSON.parse(event.body || '{}');
+    } catch {
+      return json(400, { error: 'Invalid JSON body', code: 'INVALID_JSON' });
+    }
+    // Do not accept inherited keys such as "__proto__" or "constructor".
+    const slug = request && !Array.isArray(request) && typeof request === 'object' ? request.slug : null;
+    if (typeof slug !== 'string' || !Object.hasOwn(PRODUCTS, slug)) {
+      return json(400, { error: 'Unknown product', code: 'UNKNOWN_PRODUCT' });
+    }
 
     // Payment Link mode: price is controlled in Stripe, not by browser input.
     const specific = cleanUrl(process.env[PRODUCT_ENV[slug]]);
@@ -92,6 +107,7 @@ exports.handler = async (event) => {
 
     return json(200, { url: session.url, mode: 'checkout_session' });
   } catch (err) {
-    return json(500, { error: err && err.message ? err.message : 'Checkout error' });
+    // Never return Stripe's raw error message (potential configuration or customer data).
+    return json(502, { error: 'Checkout temporarily unavailable', code: 'CHECKOUT_ERROR' });
   }
 };
