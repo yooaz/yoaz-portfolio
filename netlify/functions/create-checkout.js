@@ -40,8 +40,18 @@ exports.handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
 
-    const { slug } = JSON.parse(event.body || '{}');
-    if (!PRODUCTS[slug]) return json(400, { error: 'Unknown product' });
+    // Reject malformed/oversized bodies before any Stripe request.
+    // Product and price must always come from this server-side allowlist.
+    const rawBody = event.body || '';
+    if (typeof rawBody !== 'string') return json(400, { error: 'Invalid request body' });
+    if (Buffer.byteLength(rawBody, 'utf8') > 2048) return json(413, { error: 'Request body too large' });
+    let payload;
+    try { payload = JSON.parse(rawBody || '{}'); }
+    catch { return json(400, { error: 'Invalid JSON' }); }
+    const slug = payload && typeof payload === 'object' && !Array.isArray(payload) ? payload.slug : null;
+    if (typeof slug !== 'string' || !Object.prototype.hasOwnProperty.call(PRODUCTS, slug)) {
+      return json(400, { error: 'Unknown product' });
+    }
 
     // Payment Link mode: price is controlled in Stripe, not by browser input.
     const specific = cleanUrl(process.env[PRODUCT_ENV[slug]]);
@@ -92,6 +102,7 @@ exports.handler = async (event) => {
 
     return json(200, { url: session.url, mode: 'checkout_session' });
   } catch (err) {
-    return json(500, { error: err && err.message ? err.message : 'Checkout error' });
+    // Do not expose Stripe SDK internals, API errors or configuration secrets.
+    return json(500, { error: 'Checkout temporarily unavailable' });
   }
 };
