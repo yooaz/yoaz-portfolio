@@ -35,7 +35,10 @@ function cleanUrl(value) {
   if (!raw) return '';
   try {
     const parsed = new URL(raw);
-    if (parsed.protocol !== 'https:' || !parsed.hostname || parsed.username || parsed.password) return '';
+    // Payment links must be hosted by Stripe, not by a lookalike checkout site.
+    const allowedHosts = new Set(['buy.stripe.com', 'checkout.stripe.com']);
+    if (parsed.protocol !== 'https:' || !allowedHosts.has(parsed.hostname.toLowerCase()) ||
+        parsed.username || parsed.password || parsed.port || parsed.pathname === '/') return '';
     return parsed.toString();
   } catch {
     return '';
