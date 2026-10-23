@@ -38,7 +38,7 @@ function scoreOrderRisk(order) {
   if ((order.previousFailedAttempts || 0) >= 2) { score += 30; reasons.push('Multiple failed payment attempts'); }
 
   const line1 = String(order.shippingAddress?.line1 || '').toLowerCase();
-  if (/p\.?1?o\.?1? box|parcel|locker|forwarder|reship/.test(line1)) {
+  if (/\b(?:p\.?\s*o\.?\s*box|post\s+office\s+box|parcel\s+(?:locker|point)|locker|forwarder|reship)\b/.test(line1)) {
     score += 20; reasons.push('Possible PO box / forwarding address');
   }
 
