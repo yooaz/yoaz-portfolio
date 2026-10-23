@@ -40,8 +40,16 @@ exports.handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
 
-    const { slug } = JSON.parse(event.body || '{}');
-    if (!PRODUCTS[slug]) return json(400, { error: 'Unknown product' });
+    let requestBody;
+    try {
+      requestBody = JSON.parse(event.body || '{}');
+    } catch {
+      return json(400, { error: 'Invalid JSON body' });
+    }
+    const slug = requestBody && requestBody.slug;
+    if (typeof slug !== 'string' || !Object.prototype.hasOwnProperty.call(PRODUCTS, slug)) {
+      return json(400, { error: 'Unknown product' });
+    }
 
     // Payment Link mode: price is controlled in Stripe, not by browser input.
     const specific = cleanUrl(process.env[PRODUCT_ENV[slug]]);
@@ -92,6 +100,6 @@ exports.handler = async (event) => {
 
     return json(200, { url: session.url, mode: 'checkout_session' });
   } catch (err) {
-    return json(500, { error: err && err.message ? err.message : 'Checkout error' });
+    return json(500, { error: 'Checkout temporarily unavailable' });
   }
 };
