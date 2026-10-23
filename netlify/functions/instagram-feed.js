@@ -12,6 +12,8 @@
 //
 // The front-end never displays fake/local drawings as Instagram content.
 
+const { createHash } = require('node:crypto');
+
 let memoryCache = null;
 const CACHE_MS = 10 * 60 * 1000;
 
@@ -20,7 +22,7 @@ function json(statusCode, body, extraHeaders = {}) {
     statusCode,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=300, s-maxage=900',
+      'Cache-Control': statusCode === 200 ? 'public, max-age=300, s-maxage=900' : 'no-store',
       ...extraHeaders,
     },
     body: JSON.stringify(body),
@@ -59,7 +61,10 @@ async function fetchJson(url) {
 exports.handler = async function () {
   const token = process.env.INSTAGRAM_ACCESS_TOKEN || process.env.IG_GRAPH_ACCESS_TOKEN || '';
   const userId = process.env.INSTAGRAM_USER_ID || process.env.IG_USER_ID || '';
-  const limit = Math.max(1, Math.min(Number(process.env.INSTAGRAM_LIMIT || 9), 24));
+  const requestedLimit = Number(process.env.INSTAGRAM_LIMIT || 9);
+  const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1
+    ? Math.min(24, Math.floor(requestedLimit))
+    : 9;
 
   if (!token) {
     return json(503, {
@@ -71,7 +76,9 @@ exports.handler = async function () {
   }
 
   const now = Date.now();
-  if (memoryCache && now - memoryCache.createdAt < CACHE_MS) {
+  // Isolate warm-instance cache across token, account and requested limit changes.
+  const cacheKey = createHash('sha256').update(JSON.stringify([token, userId, limit])).digest('hex');
+  if (memoryCache && memoryCache.key === cacheKey && now - memoryCache.createdAt < CACHE_MS) {
     return json(200, { ok: true, cached: true, source: memoryCache.source, items: memoryCache.items });
   }
 
@@ -90,26 +97,24 @@ exports.handler = async function () {
     url: `https://graph.instagram.com/me/media?fields=${encodeURIComponent(fields)}&limit=${encodeURIComponent(limit)}&access_token=${encodeURIComponent(token)}`,
   });
 
-  let lastError = null;
   for (const source of sources) {
     try {
       const data = await fetchJson(source.url);
       const items = normalizeItems(data.data).slice(0, limit);
       if (!items.length) {
-        lastError = new Error('Instagram API returned no displayable media');
         continue;
       }
-      memoryCache = { createdAt: now, source: source.name, items };
+      memoryCache = { key: cacheKey, createdAt: now, source: source.name, items };
       return json(200, { ok: true, cached: false, source: source.name, items });
-    } catch (err) {
-      lastError = err;
+    } catch {
+      // Never expose provider errors that may contain credentials or account details.
     }
   }
 
   return json(502, {
     ok: false,
     configured: true,
-    error: lastError && lastError.message ? lastError.message : 'Instagram fetch failed',
+    error: 'Instagram feed temporarily unavailable',
     items: [],
   });
 };
