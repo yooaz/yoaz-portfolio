@@ -1,0 +1,76 @@
+'use strict';
+
+// Offline, read-only release preflight for the public poster catalogue.
+// No checkout, provider API calls, file writes or deployment.
+const fs = require('node:fs');
+const path = require('node:path');
+
+function safeUrl(value, host, prefix) {
+  if (typeof value !== 'string' || /[\u0000-\u001f\u007f]/.test(value)) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname === host &&
+      !url.username && !url.password && !url.port &&
+      url.pathname.startsWith(prefix) &&
+      !/(?:^|[?&])(?:token|access_token|api_key|key|password)=/i.test(url.search);
+  } catch { return false; }
+}
+
+function auditCatalog(rows) {
+  const failures = [];
+  if (!Array.isArray(rows) || rows.length === 0) {
+    return { ok: false, count: 0, failures: ['CATALOG_NOT_NONEMPTY_ARRAY'] };
+  }
+  const ids = new Set();
+  const slugs = new Set();
+  rows.forEach((row, index) => {
+    const mark = code => failures.push('row ' + (index + 1) + ': ' + code);
+    if (!row || typeof row !== 'object' || Array.isArray(row)) {
+      mark('INVALID_PRODUCT'); return;
+    }
+    if (typeof row.id !== 'string' || !/^[a-z0-9_-]{1,80}$/.test(row.id)) mark('INVALID_ID');
+    else if (ids.has(row.id)) mark('DUPLICATE_ID');
+    else ids.add(row.id);
+
+    if (typeof row.slug !== 'string' || !/^[a-z0-9-]{1,100}$/.test(row.slug)) mark('INVALID_SLUG');
+    else if (slugs.has(row.slug)) mark('DUPLICATE_SLUG');
+    else slugs.add(row.slug);
+
+    if (typeof row.title !== 'string' || !row.title.trim()) mark('MISSING_TITLE');
+    if (typeof row.alt !== 'string' || !row.alt.trim()) mark('MISSING_IMAGE_ALT');
+    if (typeof row.active !== 'boolean' || typeof row.featured !== 'boolean' || (row.featured && !row.active)) mark('INVALID_VISIBILITY');
+    if (row.currency !== 'EUR' || typeof row.priceFrom !== 'number' || !Number.isFinite(row.priceFrom) ||
+        row.priceFrom <= 0 || row.priceFrom > 100000 ||
+        Math.abs(row.priceFrom * 100 - Math.round(row.priceFrom * 100)) > 1e-7) mark('INVALID_EUR_PRICE');
+    if (!Array.isArray(row.sizes) || row.sizes.length === 0 ||
+        row.sizes.some(v => typeof v !== 'string' || !v.trim() || v.length > 120) ||
+        new Set(row.sizes).size !== row.sizes.length) mark('INVALID_SIZES');
+
+    if (!safeUrl(row.image, 'cdn.shopify.com', '/s/files/')) mark('UNTRUSTED_IMAGE_URL');
+    if (!safeUrl(row.shopifyProductUrl, 'yoaz-art.myshopify.com', '/products/') ||
+        (typeof row.slug === 'string' &&
+         row.shopifyProductUrl !== 'https://yoaz-art.myshopify.com/products/' + row.slug)) mark('UNTRUSTED_PRODUCT_URL');
+
+    // Never publish source-resolution print files in this public JSON.
+    if (row.printFileUrl !== '' && row.printFileUrl !== null && row.printFileUrl !== undefined) mark('PUBLIC_PRINT_SOURCE');
+  });
+  return { ok: failures.length === 0, count: rows.length, failures };
+}
+
+function run(file = path.resolve(__dirname, '../shop/posters.json')) {
+  try {
+    const result = auditCatalog(JSON.parse(fs.readFileSync(file, 'utf8')));
+    if (!result.ok) {
+      console.error('HOLD_SHOP_CATALOG: ' + result.failures.join('; '));
+      return 1;
+    }
+    console.log('PASS_SHOP_CATALOG: ' + result.count + ' entries checked offline');
+    return 0;
+  } catch {
+    console.error('HOLD_SHOP_CATALOG: missing or malformed JSON');
+    return 1;
+  }
+}
+
+if (require.main === module) process.exitCode = run(process.argv[2]);
+module.exports = { auditCatalog, run };
