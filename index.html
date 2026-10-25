@@ -8616,6 +8616,7 @@ body{background:var(--v3-ivory)!important;color:var(--v3-ink)!important}nav{back
 @media(max-width:1100px){.edition-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:768px){nav{height:86px!important;background:rgba(251,248,241,.94)!important}.desktop-hero-selector,#hero.hero-desktop-only{display:none!important}.yoaz-mobile-hero-final{display:block!important;background:var(--v3-ivory)!important;overflow:hidden!important;border-bottom:1px solid var(--v3-line)!important}.yoaz-mobile-hero-image{height:58vh!important;min-height:400px!important;max-height:560px!important;background:var(--v3-ivory)!important;overflow:hidden!important}.yoaz-mobile-hero-image img{width:112vw!important;max-width:none!important;height:100%!important;object-fit:cover!important;object-position:38% center!important;margin-left:-8vw!important;display:block!important}.yoaz-mobile-hero-copy{background:#fff!important;width:calc(100% - 32px)!important;margin:-70px 16px 0!important;padding:24px 22px 28px!important;box-shadow:0 18px 55px rgba(22,22,17,.1)!important;position:relative!important;z-index:2!important}.yoaz-mobile-kicker{color:var(--v3-gold)!important;letter-spacing:.22em!important}.yoaz-mobile-title{font-family:Georgia,'Times New Roman',serif!important;font-weight:400!important;text-transform:none!important;letter-spacing:-.055em!important;font-size:clamp(3.8rem,16vw,5.4rem)!important;line-height:.88!important;color:var(--v3-ink)!important}.yoaz-mobile-title span{display:block!important;color:var(--v3-ink)!important}.yoaz-mobile-desc{font-family:Georgia,'Times New Roman',serif!important;color:var(--v3-muted)!important;font-size:1.12rem!important}.edition-grid{grid-template-columns:1fr!important;padding:0 1rem!important}.editions-head{text-align:left!important;padding:0 1rem!important}.editions-head h2{font-size:clamp(3.2rem,15vw,4.8rem)!important}.editions-process{justify-content:flex-start!important}.sec-title,.section-mega-title{font-size:clamp(3.2rem,14vw,5rem)!important}.client-logo-strip{overflow-x:auto!important;justify-content:flex-start!important;flex-wrap:nowrap!important}}
 </style>
+<script src="scripts/instagram-safe-tiles.js"></script>
 <script id="yoaz-stripe-shop-v1">
 (function(){
   const STRIPE_LINKS = {
@@ -11676,14 +11677,6 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
     if(mobile) mobile.innerHTML=socialsHTML(false);
   }
   function statusHTML(message){return '<div class="ig-api-state" role="status"><p>'+message+'</p></div>';}
-  function instagramTile(item,i){
-    var img=item.media_url || item.thumbnail_url || '';
-    var href=item.permalink || 'https://www.instagram.com/iamyoaz/';
-    var alt=(item.caption||'Instagram @iamyoaz').replace(/[<>]/g,'').slice(0,140) || 'Instagram @iamyoaz';
-    if(!img) return '';
-    return '<a class="ig-tile '+(i===0?'ig-latest ':'')+'reveal" data-ig-rank="'+(i+1)+'" href="'+href+'" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Instagram @iamyoaz">'+
-      '<img src="'+img+'" alt="'+alt.replace(/"/g,'&quot;')+'" loading="'+(i<2?'eager':'lazy')+'" decoding="async" width="900" height="900"></a>';
-  }
   async function loadInstagram(){
     var grid=document.getElementById('ig-grid');
     if(!grid) return;
@@ -11691,13 +11684,12 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
     grid.classList.remove('instagram-grid--featured');
     grid.setAttribute('data-ig-feed','instagram-graph-api');
     try{
-      var response=await fetch('/.netlify/functions/instagram-feed',{headers:{Accept:'application/json'},cache:'no-store'});
-      var data=await response.json().catch(function(){return {};});
-      if(!response.ok || !data.ok || !Array.isArray(data.items) || !data.items.length){
+      var data=await window.yoazFetchInstagramFeed();
+      if(!data.ok || !Array.isArray(data.items) || !data.items.length){
         grid.innerHTML=statusHTML('Le feed est maintenant branché sur l’API Instagram officielle. Ajoute <strong>INSTAGRAM_ACCESS_TOKEN</strong> dans Netlify pour afficher automatiquement les vrais posts de <a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">@iamyoaz</a>. Aucun faux dessin n’est affiché.');
         return;
       }
-      grid.innerHTML=data.items.slice(0,9).map(instagramTile).join('');
+      window.yoazRenderInstagramTiles(grid, data.items);
       grid.classList.add('ig-grid--loaded','instagram-grid--real');
       var follow=document.querySelector('#instagram .ig-follow span');
       if(follow) follow.textContent=({fr:'VOIR @IAMYOAZ SUR INSTAGRAM →',en:'VIEW @IAMYOAZ ON INSTAGRAM →',nl:'BEKIJK @IAMYOAZ OP INSTAGRAM →',es:'VER @IAMYOAZ EN INSTAGRAM →'})[getLang()]||'VOIR @IAMYOAZ SUR INSTAGRAM →';
@@ -12952,14 +12944,10 @@ html,body{max-width:100%;overflow-x:hidden!important;background:#f7f3ea!importan
   function instagramFeed(){
     var grid=document.getElementById('ig-grid'); if(!grid)return;
     grid.innerHTML='<div class="ig-status"><strong>Chargement Instagram…</strong><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Voir @iamyoaz</a></div>';
-    fetch('/.netlify/functions/instagram-feed',{headers:{'Accept':'application/json'}})
-      .then(function(r){return r.ok?r.json():Promise.reject();})
+    window.yoazFetchInstagramFeed()
       .then(function(data){
         if(!data||!data.ok||!data.items||!data.items.length)throw new Error('empty');
-        grid.innerHTML=data.items.slice(0,9).map(function(item,i){
-          var img=item.media_url||item.thumbnail_url; var link=item.permalink||'https://www.instagram.com/iamyoaz/';
-          return '<a class="ig-tile reveal" data-ig-rank="'+(i+1)+'" href="'+link+'" target="_blank" rel="noopener" role="listitem" aria-label="Instagram @iamyoaz"><img src="'+img+'" alt="Instagram @iamyoaz" loading="'+(i<2?'eager':'lazy')+'" decoding="async"></a>';
-        }).join('');
+        window.yoazRenderInstagramTiles(grid, data.items);
       })
       .catch(function(){
         grid.innerHTML='<div class="ig-status"><strong>Feed Instagram indisponible pour le moment.</strong><br><span>Configure INSTAGRAM_ACCESS_TOKEN et INSTAGRAM_USER_ID dans Netlify pour afficher le vrai feed.</span><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Suivre @iamyoaz</a></div>';
@@ -15432,12 +15420,9 @@ html body .social-linktree::before{
   function instagram(){
     var grid=document.getElementById('ig-grid'); if(!grid) return;
     grid.innerHTML='<div class="ig-status"><strong>Chargement du vrai feed Instagram…</strong><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Voir @iamyoaz</a></div>';
-    fetch('/.netlify/functions/instagram-feed',{headers:{Accept:'application/json'}}).then(function(r){return r.ok?r.json():Promise.reject(new Error('api'));}).then(function(data){
+    window.yoazFetchInstagramFeed().then(function(data){
       if(!data || !data.ok || !data.items || !data.items.length) throw new Error('empty');
-      grid.innerHTML=data.items.slice(0,9).map(function(item,i){
-        var img=item.media_url || item.thumbnail_url; var url=item.permalink || 'https://www.instagram.com/iamyoaz/';
-        return '<a class="ig-tile '+(i===0?'ig-latest ':'')+'reveal" href="'+url+'" target="_blank" rel="noopener" role="listitem" aria-label="Instagram @iamyoaz"><img src="'+img+'" alt="Instagram @iamyoaz" loading="'+(i<2?'eager':'lazy')+'" decoding="async"></a>';
-      }).join('');
+      window.yoazRenderInstagramTiles(grid, data.items);
     }).catch(function(){
       grid.innerHTML='<div class="ig-status"><strong>Feed Instagram indisponible.</strong><br><span>Ajoute INSTAGRAM_ACCESS_TOKEN et INSTAGRAM_USER_ID dans Netlify pour afficher le vrai feed.</span><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Suivre @iamyoaz</a></div>';
     });
