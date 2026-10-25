@@ -57,22 +57,39 @@
   let inFlight = null;
   let cached = null;
   const FEED_CACHE_MS = 60 * 1000;
+  const FEED_TIMEOUT_MS = 8000;
 
   async function fetchFeed() {
     const now = Date.now();
     if (cached && now >= cached.at && now - cached.at < FEED_CACHE_MS) return cached.data;
     if (inFlight) return inFlight;
     const pending = (async function () {
-      const response = await fetch('/.netlify/functions/instagram-feed', {
-        headers: { Accept: 'application/json' }, cache: 'no-store'
+      const controller = typeof AbortController === 'function' ? new AbortController() : null;
+      let timer;
+      const deadline = new Promise(function (_resolve, reject) {
+        timer = setTimeout(function () {
+          reject(new Error('HOLD_INSTAGRAM_TIMEOUT'));
+          if (controller) controller.abort();
+        }, FEED_TIMEOUT_MS);
       });
-      if (!response || !response.ok) throw new Error('HOLD_INSTAGRAM_HTTP');
-      const data = await response.json();
-      if (!data || data.ok !== true || !Array.isArray(data.items) || !data.items.length) {
-        throw new Error('HOLD_INSTAGRAM_RESPONSE');
+      const request = (async function () {
+        const options = { headers: { Accept: 'application/json' }, cache: 'no-store' };
+        if (controller) options.signal = controller.signal;
+        const response = await fetch('/.netlify/functions/instagram-feed', options);
+        if (!response || !response.ok) throw new Error('HOLD_INSTAGRAM_HTTP');
+        const data = await response.json();
+        if (!data || data.ok !== true || !Array.isArray(data.items) || !data.items.length) {
+          throw new Error('HOLD_INSTAGRAM_RESPONSE');
+        }
+        return data;
+      })();
+      try {
+        const data = await Promise.race([request, deadline]);
+        cached = { at: Date.now(), data };
+        return data;
+      } finally {
+        clearTimeout(timer);
       }
-      cached = { at: Date.now(), data };
-      return data;
     })();
     inFlight = pending;
     try {
