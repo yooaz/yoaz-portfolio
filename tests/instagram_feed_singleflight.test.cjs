@@ -8,7 +8,7 @@ const code=fs.readFileSync(path.join(__dirname,'../scripts/instagram-safe-tiles.
 const good = { ok:true, items:[{media_url:'https://scontent.cdninstagram.com/a.jpg',permalink:'https://www.instagram.com/p/123/'}]};
 function setup(fetchImpl, clock=()=>1000) {
   const window={};
-  vm.runInNewContext(code,{window,URL,fetch:fetchImpl,Date:{now:clock}}, {timeout:1000});
+  vm.runInNewContext(code,{window,URL,fetch:fetchImpl,Date:{now:clock},setTimeout,clearTimeout,AbortController}, {timeout:1000});
   return window.yoazFetchInstagramFeed;
 }
 
