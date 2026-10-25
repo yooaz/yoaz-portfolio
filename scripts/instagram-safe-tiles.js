@@ -52,5 +52,36 @@
     grid.replaceChildren(fragment);
     return count;
   }
+  // A single, in-memory request shared by legacy Instagram widgets.
+  // No storage, token handling, paid API, background refresh or retry loop.
+  let inFlight = null;
+  let cached = null;
+  const FEED_CACHE_MS = 60 * 1000;
+
+  async function fetchFeed() {
+    const now = Date.now();
+    if (cached && now >= cached.at && now - cached.at < FEED_CACHE_MS) return cached.data;
+    if (inFlight) return inFlight;
+    const pending = (async function () {
+      const response = await fetch('/.netlify/functions/instagram-feed', {
+        headers: { Accept: 'application/json' }, cache: 'no-store'
+      });
+      if (!response || !response.ok) throw new Error('HOLD_INSTAGRAM_HTTP');
+      const data = await response.json();
+      if (!data || data.ok !== true || !Array.isArray(data.items) || !data.items.length) {
+        throw new Error('HOLD_INSTAGRAM_RESPONSE');
+      }
+      cached = { at: Date.now(), data };
+      return data;
+    })();
+    inFlight = pending;
+    try {
+      return await pending;
+    } finally {
+      if (inFlight === pending) inFlight = null;
+    }
+  }
+
+  root.yoazFetchInstagramFeed = fetchFeed;
   root.yoazRenderInstagramTiles = render;
 })(window);
