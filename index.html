@@ -11684,9 +11684,8 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
     grid.classList.remove('instagram-grid--featured');
     grid.setAttribute('data-ig-feed','instagram-graph-api');
     try{
-      var response=await fetch('/.netlify/functions/instagram-feed',{headers:{Accept:'application/json'},cache:'no-store'});
-      var data=await response.json().catch(function(){return {};});
-      if(!response.ok || !data.ok || !Array.isArray(data.items) || !data.items.length){
+      var data=await window.yoazFetchInstagramFeed();
+      if(!data.ok || !Array.isArray(data.items) || !data.items.length){
         grid.innerHTML=statusHTML('Le feed est maintenant branché sur l’API Instagram officielle. Ajoute <strong>INSTAGRAM_ACCESS_TOKEN</strong> dans Netlify pour afficher automatiquement les vrais posts de <a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">@iamyoaz</a>. Aucun faux dessin n’est affiché.');
         return;
       }
@@ -12945,8 +12944,7 @@ html,body{max-width:100%;overflow-x:hidden!important;background:#f7f3ea!importan
   function instagramFeed(){
     var grid=document.getElementById('ig-grid'); if(!grid)return;
     grid.innerHTML='<div class="ig-status"><strong>Chargement Instagram…</strong><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Voir @iamyoaz</a></div>';
-    fetch('/.netlify/functions/instagram-feed',{headers:{'Accept':'application/json'}})
-      .then(function(r){return r.ok?r.json():Promise.reject();})
+    window.yoazFetchInstagramFeed()
       .then(function(data){
         if(!data||!data.ok||!data.items||!data.items.length)throw new Error('empty');
         window.yoazRenderInstagramTiles(grid, data.items);
@@ -15422,7 +15420,7 @@ html body .social-linktree::before{
   function instagram(){
     var grid=document.getElementById('ig-grid'); if(!grid) return;
     grid.innerHTML='<div class="ig-status"><strong>Chargement du vrai feed Instagram…</strong><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Voir @iamyoaz</a></div>';
-    fetch('/.netlify/functions/instagram-feed',{headers:{Accept:'application/json'}}).then(function(r){return r.ok?r.json():Promise.reject(new Error('api'));}).then(function(data){
+    window.yoazFetchInstagramFeed().then(function(data){
       if(!data || !data.ok || !data.items || !data.items.length) throw new Error('empty');
       window.yoazRenderInstagramTiles(grid, data.items);
     }).catch(function(){
