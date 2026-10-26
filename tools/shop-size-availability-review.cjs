@@ -4,6 +4,9 @@
 // This does NOT establish that a variant is available or unavailable at Shopify.
 const fs = require('node:fs');
 const path = require('node:path');
+const MAX_POSTERS = 500;
+const MAX_VARIANTS = 100;
+const MAX_INPUT_BYTES = 1048576;
 
 function dimensionCm(value) {
   if (typeof value !== 'string' || value.length > 120) return null;
@@ -19,6 +22,10 @@ function reviewPosterSizes(rows) {
   if (!Array.isArray(rows) || rows.length === 0) {
     return { status: 'HOLD_INVALID_CATALOG', audited: 0,
       findings: [{ id: null, code: 'INVALID_CATALOG' }] };
+  }
+  if (rows.length > MAX_POSTERS) {
+    return { status: 'HOLD_INVALID_CATALOG', audited: 0,
+      findings: [{ id: null, code: 'CATALOG_TOO_LARGE' }] };
   }
   const findings = [];
   let audited = 0;
@@ -39,6 +46,10 @@ function reviewPosterSizes(rows) {
     const add = code => findings.push({ id, index, code });
     const defaultDimension = dimensionCm(row.defaultSize);
     if (!defaultDimension) add('DEFAULT_SIZE_UNRECOGNIZED');
+    if (Array.isArray(row.sizes) && row.sizes.length > MAX_VARIANTS) {
+      add('TOO_MANY_VARIANTS');
+      continue;
+    }
     if (!Array.isArray(row.sizes) || row.sizes.length === 0 ||
       row.sizes.some(v => typeof v !== 'string' || !v.trim())) {
       add('NO_DECLARED_SIZES');
@@ -62,7 +73,13 @@ function reviewPosterSizes(rows) {
 function run(file = path.resolve(__dirname, '../shop/posters.json'), output = console) {
   let report;
   try {
-    report = reviewPosterSizes(JSON.parse(fs.readFileSync(file, 'utf8')));
+    // A bounded offline gate must not parse arbitrarily large catalogue files.
+    if (fs.statSync(file).size > MAX_INPUT_BYTES) {
+      report = {status:'HOLD_INVALID_CATALOG', audited:0,
+        findings:[{id:null,code:'CATALOG_FILE_TOO_LARGE'}]};
+    } else {
+      report = reviewPosterSizes(JSON.parse(fs.readFileSync(file, 'utf8')));
+    }
   } catch {
     // Never print file contents or paths, even when invalid/private.
     report = {status:'HOLD_INVALID_CATALOG', audited:0,
