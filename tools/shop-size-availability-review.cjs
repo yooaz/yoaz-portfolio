@@ -27,10 +27,15 @@ function reviewPosterSizes(rows) {
       findings.push({ id: null, index, code: 'INVALID_PRODUCT' });
       continue;
     }
-    // Only claim inconsistencies on publicly active products. Others remain pending.
+    // Only claim variant consistency on publicly active products.
+    if (typeof row.active !== 'boolean') {
+      findings.push({ id: null, index, code: 'INVALID_VISIBILITY' });
+      continue;
+    }
     if (row.active !== true) continue;
     audited++;
-    const id = typeof row.id === 'string' ? row.id : null;
+    // Report row indices only; never echo untrusted product IDs or possible tokens.
+    const id = null;
     const add = code => findings.push({ id, index, code });
     const defaultDimension = dimensionCm(row.defaultSize);
     if (!defaultDimension) add('DEFAULT_SIZE_UNRECOGNIZED');
@@ -49,6 +54,7 @@ function reviewPosterSizes(rows) {
       if (defaultDimension && !parsed.includes(defaultDimension)) add('DEFAULT_NOT_IN_DECLARED_SIZES');
     }
   }
+  if (audited === 0) findings.push({ id: null, code: 'NO_ACTIVE_PRODUCTS' });
   return { status: findings.length ? 'HOLD_REVIEW_REQUIRED' : 'CONSISTENT_LOCAL_CLAIMS',
     audited, findings };
 }
