@@ -2,7 +2,7 @@
 
 // Offline, read-only release preflight for the public poster catalogue.
 // No checkout, provider API calls, file writes or deployment.
-const fs = require('node:fs');
+const {readBoundedCatalogFile} = require('./catalog-file-io.cjs');
 const path = require('node:path');
 
 function safeUrl(value, host, prefix) {
@@ -67,7 +67,9 @@ function auditCatalog(rows) {
 
 function run(file = path.resolve(__dirname, '../shop/posters.json')) {
   try {
-    const result = auditCatalog(JSON.parse(fs.readFileSync(file, 'utf8')));
+    const loaded = readBoundedCatalogFile(file);
+    if (!loaded.ok) throw new Error('UNTRUSTED_CATALOG_FILE');
+    const result = auditCatalog(JSON.parse(loaded.text));
     if (!result.ok) {
       console.error('HOLD_SHOP_CATALOG: ' + result.failures.join('; '));
       return 1;
