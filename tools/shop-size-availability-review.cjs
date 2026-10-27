@@ -70,15 +70,42 @@ function reviewPosterSizes(rows) {
     audited, findings };
 }
 
+function readBoundedCatalogFile(file) {
+  // An offline audit must not follow a link or block on a FIFO/device.
+  if (typeof file !== 'string' || !file || file.includes('\0') ||
+      !Number.isInteger(fs.constants.O_NOFOLLOW)) return {ok:false, code:'CATALOG_UNREADABLE'};
+  let fd;
+  try {
+    fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NONBLOCK | fs.constants.O_NOFOLLOW);
+    const before = fs.fstatSync(fd);
+    if (!before.isFile()) return {ok:false, code:'CATALOG_UNREADABLE'};
+    if (before.size > MAX_INPUT_BYTES) return {ok:false, code:'CATALOG_FILE_TOO_LARGE'};
+    const bytes = Buffer.alloc(before.size + 1);
+    let count = 0;
+    while (count < bytes.length) {
+      const read = fs.readSync(fd, bytes, count, bytes.length - count, count);
+      if (read === 0) break;
+      count += read;
+    }
+    if (count !== before.size || fs.fstatSync(fd).size !== before.size)
+      return {ok:false, code:'CATALOG_UNREADABLE'};
+    return {ok:true, text:new TextDecoder('utf-8', {fatal:true}).decode(bytes.subarray(0,count))};
+  } catch {
+    return {ok:false, code:'CATALOG_UNREADABLE'};
+  } finally {
+    if (fd !== undefined) fs.closeSync(fd);
+  }
+}
+
 function run(file = path.resolve(__dirname, '../shop/posters.json'), output = console) {
   let report;
   try {
-    // A bounded offline gate must not parse arbitrarily large catalogue files.
-    if (fs.statSync(file).size > MAX_INPUT_BYTES) {
+    const loaded = readBoundedCatalogFile(file);
+    if (!loaded.ok) {
       report = {status:'HOLD_INVALID_CATALOG', audited:0,
-        findings:[{id:null,code:'CATALOG_FILE_TOO_LARGE'}]};
+        findings:[{id:null,code:loaded.code}]};
     } else {
-      report = reviewPosterSizes(JSON.parse(fs.readFileSync(file, 'utf8')));
+      report = reviewPosterSizes(JSON.parse(loaded.text));
     }
   } catch {
     // Never print file contents or paths, even when invalid/private.
