@@ -24,6 +24,15 @@ function safeUrl(value, host, prefix) {
   } catch { return false; }
 }
 
+// Published shop/posters.json is a public file. Unexpected fields can expose
+// internal API identifiers or unpublished source metadata even if unused by UI.
+const PUBLIC_POSTER_FIELDS = new Set([
+  'id','handle','title','displayTitle','slug','category','active','featured',
+  'priceFrom','currency','defaultSize','sizes','image','alt','description',
+  'shopifyProductUrl','stripePriceId','gelatoProductUid','printFileUrl',
+  'provider','riskNotes',
+]);
+
 function auditCatalog(rows) {
   const failures = [];
   if (!Array.isArray(rows) || rows.length === 0) {
@@ -36,6 +45,14 @@ function auditCatalog(rows) {
     if (!row || typeof row !== 'object' || Array.isArray(row)) {
       mark('INVALID_PRODUCT'); return;
     }
+    // Fail closed on unknown keys without printing the key or its value.
+    if (Object.keys(row).some(key => !PUBLIC_POSTER_FIELDS.has(key))) mark('UNEXPECTED_PUBLIC_FIELD');
+    // These metadata keys are not payment/fulfilment API authorization. Do not
+    // silently publish provider references or internal review notes in static JSON.
+    if (row.riskNotes !== undefined &&
+        (!Array.isArray(row.riskNotes) || row.riskNotes.length !== 0)) mark('PUBLIC_INTERNAL_NOTES');
+    if (![undefined, null, ''].includes(row.gelatoProductUid) ||
+        ![undefined, null, ''].includes(row.stripePriceId)) mark('PUBLIC_PROVIDER_IDENTIFIER');
     if (typeof row.id !== 'string' || !/^[a-z0-9_-]{1,80}$/.test(row.id)) mark('INVALID_ID');
     else if (ids.has(row.id)) mark('DUPLICATE_ID');
     else ids.add(row.id);
