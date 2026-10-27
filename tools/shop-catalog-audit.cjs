@@ -15,7 +15,7 @@ function safeUrl(value, host, prefix) {
     const queryAt = value.indexOf('?');
     const rawQuery = queryAt < 0 ? null : value.slice(queryAt);
     const safeQuery = host === 'cdn.shopify.com'
-      ? (rawQuery === null || /^\?v=[0-9]{9,13}$/.test(rawQuery))
+      ? (rawQuery === null || /^\?v=[0-9]{1,13}$/.test(rawQuery))
       : rawQuery === null;
     return url.protocol === 'https:' && url.hostname === host &&
       value.trim() === value && !value.includes('#') &&
