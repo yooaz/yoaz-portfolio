@@ -11,10 +11,14 @@ function safeUrl(value, host, prefix) {
     const url = new URL(value);
     // Only Shopify's public numeric CDN cache version is accepted.
     // Unknown or percent-encoded query names can carry secrets into public JSON.
+    // Inspect raw delimiters too: WHATWG URL erases trailing '?' and '#'.
+    const queryAt = value.indexOf('?');
+    const rawQuery = queryAt < 0 ? null : value.slice(queryAt);
     const safeQuery = host === 'cdn.shopify.com'
-      ? (url.search === '' || /^\?v=[0-9]{9,13}$/.test(url.search))
-      : url.search === '';
+      ? (rawQuery === null || /^\?v=[0-9]{9,13}$/.test(rawQuery))
+      : rawQuery === null;
     return url.protocol === 'https:' && url.hostname === host &&
+      value.trim() === value && !value.includes('#') &&
       !url.username && !url.password && !url.port && !url.hash &&
       url.pathname.startsWith(prefix) && safeQuery;
   } catch { return false; }
