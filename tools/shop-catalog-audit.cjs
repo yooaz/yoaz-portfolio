@@ -9,10 +9,14 @@ function safeUrl(value, host, prefix) {
   if (typeof value !== 'string' || /[\u0000-\u001f\u007f]/.test(value)) return false;
   try {
     const url = new URL(value);
+    // Only Shopify's public numeric CDN cache version is accepted.
+    // Unknown or percent-encoded query names can carry secrets into public JSON.
+    const safeQuery = host === 'cdn.shopify.com'
+      ? (url.search === '' || /^\?v=[0-9]{9,13}$/.test(url.search))
+      : url.search === '';
     return url.protocol === 'https:' && url.hostname === host &&
-      !url.username && !url.password && !url.port &&
-      url.pathname.startsWith(prefix) &&
-      !/(?:^|[?&])(?:token|access_token|api_key|key|password)=/i.test(url.search);
+      !url.username && !url.password && !url.port && !url.hash &&
+      url.pathname.startsWith(prefix) && safeQuery;
   } catch { return false; }
 }
 
