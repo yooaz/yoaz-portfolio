@@ -21,3 +21,6 @@ for(const [name,image] of [
 test('retain existing numeric Shopify CDN version',()=>assert.deepEqual(auditCatalog([valid()]).failures,[]));
 test('allow public Shopify CDN image without query parameters',()=>assert.deepEqual(auditCatalog([valid('https://cdn.shopify.com/s/files/1/example.webp')]).failures,[]));
 test('still reject untrusted external host',()=>assert.match(reasons('https://cdn.shopify.com.evil.invalid/s/files/1/test.webp?v=1773251789'),/UNTRUSTED_IMAGE_URL/));
+test('reject empty query delimiter after image filename',()=>assert.match(reasons('https://cdn.shopify.com/s/files/1/example.webp?'),/UNTRUSTED_IMAGE_URL/));
+test('reject empty fragment delimiter after image filename',()=>assert.match(reasons('https://cdn.shopify.com/s/files/1/example.webp#'),/UNTRUSTED_IMAGE_URL/));
+test('reject double query delimiters before public version',()=>assert.match(reasons('https://cdn.shopify.com/s/files/1/example.webp??v=1773251789'),/UNTRUSTED_IMAGE_URL/));
