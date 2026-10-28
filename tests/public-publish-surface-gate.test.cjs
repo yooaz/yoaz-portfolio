@@ -131,3 +131,96 @@ test('known local credential file names must be rejected without opening them', 
     assert.ok(result.findings.some(f=>f.path===name && f.code==='SECRET_OR_DATABASE_FILE'),name);
   }
 }));
+
+test('root supplied as a symlink is HOLD before any publishing inspection', () => fixture(root => {
+  touch(root, 'index.html');
+  const aliasDir = fs.mkdtempSync(path.join(os.tmpdir(), 'yoaz-root-alias-'));
+  const alias = path.join(aliasDir, 'linked-root');
+  fs.symlinkSync(root, alias, 'dir');
+  try {
+    const result = inspectPublishSurface(alias);
+    assert.equal(result.status, 'HOLD', 'do not follow an untrusted root symlink');
+    assert.equal(result.networkUsed, false);
+  } finally { fs.rmSync(aliasDir, {recursive:true, force:true}); }
+}));
+
+test('netlify.toml replaced with symlink after initial stat is HOLD', () => fixture(root => {
+  touch(root, 'index.html');
+  const cfg = path.join(root, 'netlify.toml');
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'yoaz-external-config-'));
+  const other = path.join(outside, 'external.toml');
+  fs.writeFileSync(other, '[build]\npublish = "."\n# fictitious external config\n');
+  const original = fs.lstatSync;
+  const originalRead = fs.readFileSync;
+  let followedOutsideConfig = false;
+  fs.readFileSync = function (...args) {
+    if (args[0] === cfg && fs.existsSync(cfg) && original.call(fs,cfg).isSymbolicLink()) followedOutsideConfig = true;
+    return originalRead.apply(this,args);
+  };
+  let replaced = false;
+  fs.lstatSync = function (...args) {
+    const result = original.apply(this,args);
+    if (args[0] === cfg && !replaced) {
+      replaced = true;
+      fs.renameSync(cfg, cfg + '.previous');
+      fs.symlinkSync(other, cfg);
+    }
+    return result;
+  };
+  try {
+    const result = inspectPublishSurface(root);
+    assert.equal(replaced, true);
+    assert.equal(result.status, 'HOLD', 'never read an external config via a swapped symlink');
+    assert.equal(followedOutsideConfig, false, 'external config target must never be opened');
+  } finally {
+    fs.readFileSync = originalRead;
+    fs.lstatSync = original;
+    fs.rmSync(outside, {recursive:true, force:true});
+  }
+}));
+
+test('invalid UTF-8 in an ignored TOML comment is HOLD, not silent replacement', () => fixture(root => {
+  touch(root, 'index.html');
+  fs.writeFileSync(path.join(root,'netlify.toml'), Buffer.concat([
+    Buffer.from('[build]\npublish = "."\n# comment '), Buffer.from([0xff,0xfe])
+  ]));
+  assert.equal(inspectPublishSurface(root).status,'HOLD');
+}));
+
+test('same-size in-place config rewrite during bounded descriptor read is HOLD', () => fixture(root => {
+  touch(root, 'index.html');
+  const cfg = path.join(root, 'netlify.toml');
+  const raw = fs.readFileSync(cfg, 'utf8');
+  const updated = raw.replace('publish = "."', 'publish = "x"');
+  assert.equal(Buffer.byteLength(raw), Buffer.byteLength(updated));
+  const original = fs.readSync;
+  let changed = false;
+  fs.readSync = function(...args) {
+    const n = original.apply(this,args);
+    if (n > 0 && !changed) {
+      changed = true;
+      fs.writeFileSync(cfg,updated);
+      const t = Date.now()/1000+6;
+      fs.utimesSync(cfg,t,t);
+    }
+    return n;
+  };
+  try {
+    const result = inspectPublishSurface(root);
+    assert.equal(changed,true,'reader must use a bounded opened descriptor');
+    assert.equal(result.status,'HOLD','ignore mutated config rather than trusting stale bytes');
+  } finally { fs.readSync = original; }
+}));
+
+test('symlink in intermediate component of nested publish path is HOLD', () => fixture(root => {
+  touch(root, 'index.html');
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'yoaz-publish-outside-'));
+  const target = path.join(outside,'site');
+  fs.mkdirSync(target);
+  touch(outside, 'site/index.html');
+  fs.symlinkSync(outside, path.join(root,'assets'), 'dir');
+  fs.writeFileSync(path.join(root,'netlify.toml'), '[build]\npublish = "assets/site"\n');
+  try {
+    assert.equal(inspectPublishSurface(root).status, 'HOLD');
+  } finally { fs.rmSync(outside,{recursive:true,force:true}); }
+}));

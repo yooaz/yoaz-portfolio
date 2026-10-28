@@ -46,15 +46,50 @@ function inspectPublishSurface(root) {
     hold('INVALID_ROOT'); return {status:'HOLD', inspected, findings, networkUsed:false, wroteFiles:false};
   }
   const absolute = path.resolve(root);
+  // Do not follow a symlink supplied as the checkout root: even a safe
+  // publish="site" could otherwise inspect files outside the selected tree.
+  try {
+    if (!fs.lstatSync(absolute).isDirectory()) throw Error('NOT_A_REAL_DIRECTORY');
+  } catch {
+    hold('MISSING_OR_UNSAFE_ROOT');
+    return {status:'HOLD', inspected, findings, networkUsed:false, wroteFiles:false};
+  }
   let config;
+  let fd;
   try {
     const cfg = path.join(absolute, 'netlify.toml');
-    const stat = fs.lstatSync(cfg);
-    if (!stat.isFile() || stat.size > MAX_CONFIG_BYTES) throw Error('CONFIG_INVALID');
-    config = fs.readFileSync(cfg, 'utf8');
+    // Open with O_NOFOLLOW and inspect the same descriptor throughout the read.
+    // The old lstatSync -> readFileSync sequence could follow a symlink swapped
+    // into place after the initial validation, reading an unrelated config.
+    if (typeof fs.constants.O_NOFOLLOW !== 'number') throw Error('NO_NOFOLLOW');
+    const stat = fs.lstatSync(cfg, {bigint:true});
+    if (!stat.isFile() || stat.size > BigInt(MAX_CONFIG_BYTES)) throw Error('CONFIG_INVALID');
+    fd = fs.openSync(cfg, fs.constants.O_RDONLY | fs.constants.O_NONBLOCK | fs.constants.O_NOFOLLOW);
+    const opened = fs.fstatSync(fd, {bigint:true});
+    if (!opened.isFile() || opened.dev!==stat.dev || opened.ino!==stat.ino ||
+        opened.size!==stat.size || opened.mtimeNs!==stat.mtimeNs || opened.ctimeNs!==stat.ctimeNs)
+      throw Error('CONFIG_SWAPPED');
+    const buf = Buffer.alloc(MAX_CONFIG_BYTES+1);
+    let count = 0;
+    while (count < buf.length) {
+      const n = fs.readSync(fd, buf, count, buf.length-count, count);
+      if (n===0) break;
+      count += n;
+    }
+    const after = fs.fstatSync(fd, {bigint:true});
+    const named = fs.lstatSync(cfg, {bigint:true});
+    if (count > MAX_CONFIG_BYTES || BigInt(count)!==stat.size ||
+        after.dev!==opened.dev || after.ino!==opened.ino || after.size!==opened.size ||
+        after.mtimeNs!==opened.mtimeNs || after.ctimeNs!==opened.ctimeNs ||
+        !named.isFile() || named.dev!==after.dev || named.ino!==after.ino ||
+        named.size!==after.size || named.mtimeNs!==after.mtimeNs || named.ctimeNs!==after.ctimeNs)
+      throw Error('CONFIG_CHANGED_DURING_READ');
+    config = new TextDecoder('utf-8', {fatal:true}).decode(buf.subarray(0,count));
   } catch {
     hold('MISSING_OR_UNREADABLE_NETLIFY_CONFIG');
     return {status:'HOLD', inspected, findings, networkUsed:false, wroteFiles:false};
+  } finally {
+    if (fd!==undefined) fs.closeSync(fd);
   }
   const relPublish = strictPublishDir(config);
   if (relPublish === null) {
@@ -105,8 +140,20 @@ function inspectPublishSurface(root) {
       } else hold('PUBLISH_ENTRY_CHANGED_DURING_SCAN', r);
     }
   }
-  try { if (!fs.lstatSync(publishRoot).isDirectory()) throw Error('NOT_DIR'); }
-  catch { hold('MISSING_PUBLISH_DIRECTORY'); return {status:'HOLD', inspected, findings, networkUsed:false, wroteFiles:false}; }
+  // A nested `publish="folder/site"` path must not cross a symlinked parent.
+  // lstat on only the final directory would transparently follow that parent.
+  try {
+    let step = absolute;
+    const parts = relPublish === '.' ? [] : relPublish.split('/');
+    for (const part of parts) {
+      step = path.join(step,part);
+      if (!fs.lstatSync(step).isDirectory()) throw Error('UNSAFE_PUBLISH_COMPONENT');
+    }
+    if (!fs.lstatSync(publishRoot).isDirectory()) throw Error('NOT_DIR');
+  } catch {
+    hold('MISSING_OR_UNSAFE_PUBLISH_DIRECTORY');
+    return {status:'HOLD', inspected, findings, networkUsed:false, wroteFiles:false};
+  }
   scan(publishRoot, '', 0);
   return {status: findings.length ? 'HOLD' : 'REVIEW_ONLY', publish:relPublish,
     inspected, findings, networkUsed:false, wroteFiles:false};
