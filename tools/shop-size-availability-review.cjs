@@ -2,7 +2,7 @@
 
 // REVIEW ONLY. Detect contradictory claims in the checked-in catalogue.
 // This does NOT establish that a variant is available or unavailable at Shopify.
-const {readBoundedCatalogFile} = require('./catalog-file-io.cjs');
+const {readBoundedCatalogFile,parseStrictCatalogJson} = require('./catalog-file-io.cjs');
 const path = require('node:path');
 const MAX_POSTERS = 500;
 const MAX_VARIANTS = 100;
@@ -78,7 +78,13 @@ function run(file = path.resolve(__dirname, '../shop/posters.json'), output = co
       report = {status:'HOLD_INVALID_CATALOG', audited:0,
         findings:[{id:null,code:loaded.code}]};
     } else {
-      report = reviewPosterSizes(JSON.parse(loaded.text));
+      const parsed = parseStrictCatalogJson(loaded.text);
+      if (!parsed.ok) {
+        report = {status:'HOLD_INVALID_CATALOG',audited:0,
+          findings:[{id:null,code:parsed.code}]};
+      } else {
+        report = reviewPosterSizes(parsed.value);
+      }
     }
   } catch {
     // Never print file contents or paths, even when invalid/private.

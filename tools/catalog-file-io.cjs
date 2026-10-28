@@ -34,4 +34,89 @@ function readBoundedCatalogFile(file) {
   }
 }
 
-module.exports = {readBoundedCatalogFile};
+
+// JSON.parse silently takes the last occurrence of an object key. That is
+// unsafe for an audit of public source JSON: an ignored earlier value remains
+// present in the bytes published to visitors. Validate tokens and all key
+// occurrences (including JSON-escaped equivalents) before JSON.parse.
+function parseStrictCatalogJson(source) {
+  if (typeof source !== 'string' || Buffer.byteLength(source, 'utf8') > MAX_INPUT_BYTES)
+    return {ok:false,code:'CATALOG_UNREADABLE'};
+  const MAX_DEPTH = 32;
+  const MAX_NODES = 40000;
+  let position = 0, nodes = 0;
+  const reject = code => { throw {code}; };
+  const whitespace = () => {
+    while (position < source.length && /[\t\r\n ]/.test(source[position])) position++;
+  };
+  const readString = () => {
+    if (source[position] !== '"') reject('CATALOG_INVALID_JSON');
+    const start = position++;
+    while (position < source.length) {
+      const ch = source[position++];
+      if (ch === '"') {
+        try { return JSON.parse(source.slice(start,position)); }
+        catch { reject('CATALOG_INVALID_JSON'); }
+      }
+      if (ch === '\\') {
+        const escaped = source[position++];
+        if (escaped === 'u') {
+          if (!/^[0-9a-fA-F]{4}$/.test(source.slice(position,position+4)))
+            reject('CATALOG_INVALID_JSON');
+          position += 4;
+        } else if (!'"\\/bfnrt'.includes(escaped || '')) reject('CATALOG_INVALID_JSON');
+      } else if (ch.charCodeAt(0) < 0x20) reject('CATALOG_INVALID_JSON');
+    }
+    reject('CATALOG_INVALID_JSON');
+  };
+  const readValue = depth => {
+    if (++nodes > MAX_NODES || depth > MAX_DEPTH) reject('CATALOG_COMPLEXITY_LIMIT');
+    whitespace();
+    const ch = source[position];
+    if (ch === '{') {
+      position++; whitespace();
+      const seen = new Set();
+      if (source[position] === '}') { position++; return; }
+      while (true) {
+        whitespace();
+        const key = readString();
+        if (seen.has(key)) reject('DUPLICATE_JSON_KEY');
+        seen.add(key);
+        whitespace();
+        if (source[position++] !== ':') reject('CATALOG_INVALID_JSON');
+        readValue(depth+1);
+        whitespace();
+        const sep = source[position++];
+        if (sep === '}') return;
+        if (sep !== ',') reject('CATALOG_INVALID_JSON');
+      }
+    }
+    if (ch === '[') {
+      position++; whitespace();
+      if (source[position] === ']') { position++; return; }
+      while (true) {
+        readValue(depth+1);
+        whitespace();
+        const sep = source[position++];
+        if (sep === ']') return;
+        if (sep !== ',') reject('CATALOG_INVALID_JSON');
+      }
+    }
+    if (ch === '"') { readString(); return; }
+    for (const literal of ['true','false','null']) {
+      if (source.startsWith(literal,position)) { position+=literal.length; return; }
+    }
+    const number = /^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(source.slice(position));
+    if (number) { position+=number[0].length; return; }
+    reject('CATALOG_INVALID_JSON');
+  };
+  try {
+    whitespace(); readValue(0); whitespace();
+    if (position !== source.length) reject('CATALOG_INVALID_JSON');
+    return {ok:true,value:JSON.parse(source)};
+  } catch(error) {
+    return {ok:false,code:typeof error?.code==='string'?error.code:'CATALOG_INVALID_JSON'};
+  }
+}
+
+module.exports = {readBoundedCatalogFile,parseStrictCatalogJson};
