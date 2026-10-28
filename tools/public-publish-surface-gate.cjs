@@ -6,7 +6,20 @@ const path = require('node:path');
 const MAX_CONFIG_BYTES = 64 * 1024;
 const MAX_ENTRIES = 20000;
 const MAX_DEPTH = 24;
-const IGNORE_INFRA_DIRS = new Set(['.git', 'node_modules', '.netlify']);
+// These directories have legitimate uses in the repository, but a static
+// publish root containing them requires a human packaging review. Never
+// silently ignore their filenames in an otherwise REVIEW_ONLY result.
+const MANUAL_REVIEW_DIRS = new Set(['.git', 'node_modules', '.netlify', '.github', 'tests', 'tools']);
+
+function hasSymlinkedAncestor(absolute) {
+  let current = path.parse(absolute).root;
+  for (const component of path.relative(current, absolute).split(path.sep).filter(Boolean)) {
+    current = path.join(current, component);
+    const entry = fs.lstatSync(current);
+    if (!entry.isDirectory()) return true; // symlink or non-directory
+  }
+  return false;
+}
 
 function strictPublishDir(config) {
   if (typeof config !== 'string' || Buffer.byteLength(config, 'utf8') > MAX_CONFIG_BYTES) return null;
@@ -49,7 +62,7 @@ function inspectPublishSurface(root) {
   // Do not follow a symlink supplied as the checkout root: even a safe
   // publish="site" could otherwise inspect files outside the selected tree.
   try {
-    if (!fs.lstatSync(absolute).isDirectory()) throw Error('NOT_A_REAL_DIRECTORY');
+    if (hasSymlinkedAncestor(absolute) || !fs.lstatSync(absolute).isDirectory()) throw Error('NOT_A_REAL_DIRECTORY');
   } catch {
     hold('MISSING_OR_UNSAFE_ROOT');
     return {status:'HOLD', inspected, findings, networkUsed:false, wroteFiles:false};
@@ -131,7 +144,8 @@ function inspectPublishSurface(root) {
         hold('SYMLINK_UNSAFE_TO_ASSUME', r); continue;
       }
       if (e.isDirectory() && current.isDirectory()) {
-        if (!IGNORE_INFRA_DIRS.has(e.name)) scan(path.join(dir, e.name), r, depth+1);
+        if (MANUAL_REVIEW_DIRS.has(e.name)) hold('DEVELOPMENT_DIRECTORY_IN_PUBLISH_TREE', r);
+        else scan(path.join(dir, e.name), r, depth+1);
       } else if (e.isFile() && current.isFile()) {
         const code = categoryFor(e.name);
         if (code) hold(code, r);

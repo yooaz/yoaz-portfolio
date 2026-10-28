@@ -224,3 +224,38 @@ test('symlink in intermediate component of nested publish path is HOLD', () => f
     assert.equal(inspectPublishSurface(root).status, 'HOLD');
   } finally { fs.rmSync(outside,{recursive:true,force:true}); }
 }));
+
+test('release root reached through a symlinked parent is HOLD', () => fixture(root => {
+  touch(root,'index.html');
+  const external = fs.mkdtempSync(path.join(os.tmpdir(), 'yoaz-parent-alias-'));
+  const alias = path.join(external, 'alias');
+  fs.symlinkSync(root, alias, 'dir');
+  const sub = path.join(root, 'sub');
+  fs.mkdirSync(sub);
+  fs.writeFileSync(path.join(sub,'netlify.toml'),'[build]\npublish = "."\n');
+  touch(sub,'index.html');
+  try {
+    const result = inspectPublishSurface(path.join(alias,'sub'));
+    assert.equal(result.status, 'HOLD', 'do not trust symlinked ancestors of an explicit checkout root');
+  } finally {fs.rmSync(external, {recursive:true,force:true});}
+}));
+
+test('publishing developer source directories needs review, even if entries look harmless', () => fixture(root => {
+  touch(root,'index.html');
+  touch(root,'tests/fixture.txt');
+  touch(root,'tools/preflight.cjs');
+  const result = inspectPublishSurface(root);
+  assert.equal(result.status,'HOLD');
+  assert.ok(result.findings.some(f => f.path==='tests' && f.code==='DEVELOPMENT_DIRECTORY_IN_PUBLISH_TREE'));
+  assert.ok(result.findings.some(f => f.path==='tools' && f.code==='DEVELOPMENT_DIRECTORY_IN_PUBLISH_TREE'));
+}));
+
+test('infrastructure directories cannot be silently ignored under publish root', () => fixture(root => {
+  touch(root,'index.html');
+  for (const name of ['.git','node_modules','.netlify','.github']) touch(root,name+'/test.txt');
+  const result=inspectPublishSurface(root);
+  assert.equal(result.status,'HOLD');
+  for (const name of ['.git','node_modules','.netlify','.github']) {
+    assert.ok(result.findings.some(f => f.path===name && f.code==='DEVELOPMENT_DIRECTORY_IN_PUBLISH_TREE'),name);
+  }
+}));
