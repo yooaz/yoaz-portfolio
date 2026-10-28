@@ -69,3 +69,65 @@ test('missing root and bad argument fail closed', () => {
   assert.equal(inspectPublishSurface('').status,'HOLD');
   assert.equal(inspectPublishSurface('/nonexistent/yoaz-public-root').status,'HOLD');
 });
+
+test('nested directory swap cannot inspect entries from outside publish root', () => fixture(root => {
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'yoaz-private-outside-'));
+  const nested = path.join(root, 'assets');
+  fs.mkdirSync(nested);
+  touch(root, 'index.html');
+  fs.writeFileSync(path.join(outside, '.env'), 'FICTIONAL_NEVER_REAL');
+  const original = fs.readdirSync;
+  let swapped = false;
+  fs.readdirSync = function (...args) {
+    if (args[0] === nested && !swapped) {
+      swapped = true;
+      fs.renameSync(nested, nested + '.previous');
+      fs.symlinkSync(outside, nested, 'dir');
+    }
+    return original.apply(this, args);
+  };
+  try {
+    const result = inspectPublishSurface(root);
+    assert.equal(swapped, true);
+    assert.equal(result.status, 'HOLD');
+    assert.ok(result.findings.some(f => f.code === 'PUBLISH_DIRECTORY_CHANGED_DURING_SCAN'));
+    assert.equal(JSON.stringify(result).includes('.env'), false,
+      'private outside-root filenames must not enter audit output');
+  } finally {
+    fs.readdirSync = original;
+    fs.rmSync(outside, {recursive:true, force:true});
+  }
+}));
+
+test('file replaced by symbolic link after directory enumeration is HOLD', () => fixture(root => {
+  const normal = path.join(root,'index.html');
+  touch(root,'index.html');
+  const original = fs.readdirSync;
+  let swapped = false;
+  fs.readdirSync = function (...args) {
+    const entries = original.apply(this,args);
+    if (args[0] === root && !swapped) {
+      swapped = true;
+      fs.renameSync(normal, normal + '.before');
+      fs.symlinkSync(normal + '.before',normal);
+    }
+    return entries;
+  };
+  try {
+    const result=inspectPublishSurface(root);
+    assert.equal(swapped,true);
+    assert.equal(result.status,'HOLD');
+    assert.ok(result.findings.some(f => f.code === 'PUBLISH_DIRECTORY_CHANGED_DURING_SCAN' ||
+      (f.code === 'SYMLINK_UNSAFE_TO_ASSUME' && f.path === 'index.html')));
+  } finally { fs.readdirSync=original; }
+}));
+
+test('known local credential file names must be rejected without opening them', () => fixture(root => {
+  const names = ['.npmrc','.netrc','.htpasswd','creds/credentials.json','creds/service-account.json'];
+  names.forEach(name=>touch(root,name));
+  const result=inspectPublishSurface(root);
+  assert.equal(result.status,'HOLD');
+  for (const name of names) {
+    assert.ok(result.findings.some(f=>f.path===name && f.code==='SECRET_OR_DATABASE_FILE'),name);
+  }
+}));

@@ -29,7 +29,7 @@ function strictPublishDir(config) {
 
 function categoryFor(name) {
   const lower = name.toLowerCase();
-  if (/^\.env(?:\..*)?$/.test(lower) || /^(?:id_rsa|id_ed25519)(?:\.pub)?$/.test(lower) ||
+  if (/^\.env(?:\..*)?$/.test(lower) || /^(?:\.npmrc|\.netrc|\.htpasswd|credentials\.json|service-account\.json)$/.test(lower) || /^(?:id_rsa|id_ed25519)(?:\.pub)?$/.test(lower) ||
       /\.(?:pem|p12|pfx|key|sqlite|sqlite3|db)$/.test(lower)) return 'SECRET_OR_DATABASE_FILE';
   if (/\.(?:bak|backup|orig|old|swp|swo)$/.test(lower) || /~$/.test(lower) ||
       /\.v\d+backup(?:\..*)?$/.test(lower)) return 'BACKUP_FILE';
@@ -68,21 +68,41 @@ function inspectPublishSurface(root) {
   }
   function scan(dir, rel, depth) {
     if (depth > MAX_DEPTH || inspected >= MAX_ENTRIES) { hold('SCAN_LIMIT_REACHED'); return; }
+    // Verify the directory before AND after enumeration. Dirent objects alone
+    // are stale after a rename: processing them could traverse outside root.
     let entries;
-    try { entries = fs.readdirSync(dir, {withFileTypes:true}); }
-    catch { hold('UNREADABLE_PUBLISH_DIRECTORY', rel); return; }
+    try {
+      const before = fs.lstatSync(dir, {bigint:true});
+      if (!before.isDirectory()) { hold('PUBLISH_DIRECTORY_CHANGED_DURING_SCAN', rel); return; }
+      entries = fs.readdirSync(dir, {withFileTypes:true});
+      const after = fs.lstatSync(dir, {bigint:true});
+      if (!after.isDirectory() || before.dev!==after.dev || before.ino!==after.ino ||
+          before.mtimeNs!==after.mtimeNs || before.ctimeNs!==after.ctimeNs) {
+        hold('PUBLISH_DIRECTORY_CHANGED_DURING_SCAN', rel); return;
+      }
+    } catch { hold('UNREADABLE_PUBLISH_DIRECTORY', rel); return; }
     entries.sort((a,b) => a.name.localeCompare(b.name));
     for (const e of entries) {
       if (++inspected > MAX_ENTRIES) { hold('SCAN_LIMIT_REACHED'); return; }
       if (e.name === '.' || e.name === '..') continue;
       const r = rel ? rel + '/' + e.name : e.name;
-      if (e.isSymbolicLink()) { hold('SYMLINK_UNSAFE_TO_ASSUME', r); continue; }
-      if (e.isDirectory()) {
+      // Refuse entries swapped after enumeration, especially symlink swaps.
+      // This does not provide a race-free FS snapshot; it fails closed when
+      // an observable change occurs and avoids reading file contents.
+      let current;
+      try { current = fs.lstatSync(path.join(dir, e.name), {bigint:true}); }
+      catch { hold('PUBLISH_ENTRY_CHANGED_DURING_SCAN', r); continue; }
+      if (current.isSymbolicLink() || e.isSymbolicLink()) {
+        hold('SYMLINK_UNSAFE_TO_ASSUME', r); continue;
+      }
+      if (e.isDirectory() && current.isDirectory()) {
         if (!IGNORE_INFRA_DIRS.has(e.name)) scan(path.join(dir, e.name), r, depth+1);
-      } else if (e.isFile()) {
+      } else if (e.isFile() && current.isFile()) {
         const code = categoryFor(e.name);
         if (code) hold(code, r);
-      } else hold('NONREGULAR_PUBLISH_ENTRY', r);
+      } else if (!e.isFile() && !e.isDirectory() && !current.isFile() && !current.isDirectory()) {
+        hold('NONREGULAR_PUBLISH_ENTRY', r);
+      } else hold('PUBLISH_ENTRY_CHANGED_DURING_SCAN', r);
     }
   }
   try { if (!fs.lstatSync(publishRoot).isDirectory()) throw Error('NOT_DIR'); }
