@@ -41,7 +41,7 @@ function strictPublishDir(config) {
 }
 
 function categoryFor(name) {
-  const lower = name.toLowerCase();
+  const lower = name.normalize('NFKC').toLowerCase();
   if (/^\.env(?:\..*)?$/.test(lower) || /^(?:\.npmrc|\.netrc|\.htpasswd|credentials\.json|service-account\.json)$/.test(lower) || /^(?:id_rsa|id_ed25519)(?:\.pub)?$/.test(lower) ||
       /\.(?:pem|p12|pfx|key|sqlite|sqlite3|db)$/.test(lower)) return 'SECRET_OR_DATABASE_FILE';
   if (/\.(?:bak|backup|orig|old|swp|swo)$/.test(lower) || /~$/.test(lower) ||
@@ -144,7 +144,7 @@ function inspectPublishSurface(root) {
         hold('SYMLINK_UNSAFE_TO_ASSUME', r); continue;
       }
       if (e.isDirectory() && current.isDirectory()) {
-        if (MANUAL_REVIEW_DIRS.has(e.name)) hold('DEVELOPMENT_DIRECTORY_IN_PUBLISH_TREE', r);
+        if (MANUAL_REVIEW_DIRS.has(e.name.normalize('NFKC').toLowerCase())) hold('DEVELOPMENT_DIRECTORY_IN_PUBLISH_TREE', r);
         else scan(path.join(dir, e.name), r, depth+1);
       } else if (e.isFile() && current.isFile()) {
         const code = categoryFor(e.name);
@@ -167,6 +167,17 @@ function inspectPublishSurface(root) {
   } catch {
     hold('MISSING_OR_UNSAFE_PUBLISH_DIRECTORY');
     return {status:'HOLD', inspected, findings, networkUsed:false, wroteFiles:false};
+  }
+  // The scanner starts *inside* the publish root, so it cannot see the
+  // name of that root (or any ancestor directory selected by publish=).
+  // Never mark a selected source/infra directory as REVIEW_ONLY.
+  const publishParts = relPublish === '.' ? [] : relPublish.split('/');
+  for (let i = 0; i < publishParts.length; i++) {
+    if (MANUAL_REVIEW_DIRS.has(publishParts[i].normalize('NFKC').toLowerCase())) {
+      hold('DEVELOPMENT_DIRECTORY_AS_PUBLISH_ROOT', publishParts.slice(0, i + 1).join('/'));
+      return {status:'HOLD', publish:relPublish, inspected, findings,
+        networkUsed:false, wroteFiles:false};
+    }
   }
   scan(publishRoot, '', 0);
   return {status: findings.length ? 'HOLD' : 'REVIEW_ONLY', publish:relPublish,
