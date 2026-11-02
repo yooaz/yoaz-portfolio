@@ -78,3 +78,14 @@ Le rapport est bien celui de yoaz.fr selon l'utilisateur : 246 sessions Direct, 
 - Les tests restent `node --test tests/yoaz-current.test.cjs`, sans navigateur ni API externe; leur exécution via GitHub Actions n'est pas encore confirmée ici.
 
 **Limites :** la résolution réelle des Pretty URLs devra être contrôlée lors d'un futur déploiement autorisé, tout comme la connexion Meta/Instagram réelle, Stripe, Formspree, l'analyse de performance dans un navigateur et le consentement GA4/GTM.
+
+## Passe de reprise — accessibilité des pages projets (2 novembre 2026)
+
+Branche de travail **isolée** : `work/yoaz-qa-mobile-no-deploy-20261102` (créée depuis `d6ab344a571d67e337fbb9dc0bbdc7d42af97794`). Ne pas confondre avec l'ancienne refonte éditoriale abandonnée.
+
+- `assets/css/yoaz-case-studies.css` : titres longs pouvant revenir à la ligne sur téléphone, entête qui s'adapte sous 520 px, CTA tactile ≥ 48 px, contraste plus fort sur les petits textes et navigation clavier plus visible. L'accueil, les logos et les illustrations ne sont pas modifiés.
+- `tests/yoaz-case-pages.test.cjs` : QA sans accès réseau des **10 pages projets FR/EN**, balises canoniques, alternates, Open Graph, structure accessible, images, légendes et liens internes ; vérification statique des styles mobiles.
+- `package.json` : `npm test` exécute maintenant les tests existants et les nouveaux tests, au lieu d'afficher « no test specified ».
+- Vérification des contenus GitHub par lecture seule : **10/10 pages**, **40 figures**, **120 balises de lien** contrôlées sans incohérence sur les critères vérifiés. La syntaxe JavaScript du nouveau test a été vérifiée.
+- **Non réalisé :** exécution native de `npm test` sur un checkout complet, revue visuelle Chrome/Safari/iPhone, vérification Instagram Meta/Stripe/Formspree réelle, Lighthouse et validation des DNS/Pretty URLs.
+- **Aucune PR, fusion, suppression d'œuvre, commande Netlify ou déploiement volontaire** dans cette passe. La production et `main` ne sont pas modifiées.
