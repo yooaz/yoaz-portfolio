@@ -63,8 +63,10 @@ test('new scripts and functions are valid JavaScript', () => {
 test('static project pages and sitemap are complete', () => {
   const xml = read('sitemap.xml');
   assert.doesNotMatch(xml, /https:\/\/yoaz\.fr\/#/);
+  assert.doesNotMatch(xml, /<loc>[^<]+\.html<\/loc>/);
+  assert.match(read('netlify.toml'), /pretty_urls\s*=\s*true/);
   for (const slug of caseNames) {
-    assert.match(home, new RegExp('href="/projets/' + slug + '\\.html"'));
+    assert.ok(home.includes('href="/projets/' + slug + '/"'), 'Home lacks canonical project link: ' + slug);
     for (const [locale, filepath] of [['fr', 'projets/' + slug + '.html'], ['en', 'en/projects/' + slug + '.html']]) {
       const page = read(filepath);
       assert.match(page, /<h1>/);
@@ -79,7 +81,10 @@ test('static project pages and sitemap are complete', () => {
         assert.ok(src.startsWith('/images/'), src);
         assert.ok(fs.existsSync(path.join(root, src)), 'Missing project image: ' + src);
       }
-      assert.ok(xml.includes('https://yoaz.fr/' + filepath));
+      const canonical = 'https://yoaz.fr/' + filepath.replace(/\.html$/, '/');
+      assert.ok(xml.includes(canonical), 'Sitemap missing ' + canonical);
+      assert.ok(page.includes('<link rel="canonical" href="' + canonical + '">'), 'Wrong canonical ' + filepath);
+      assert.ok(page.includes('<meta property="og:url" content="' + canonical + '">'), 'Wrong Open Graph URL');
     }
   }
 });
