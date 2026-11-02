@@ -32,3 +32,7 @@ Cette passe poursuit la V5 et respecte les retours de l'artiste : **le design d'
 Sur GitHub, ouvrir le fichier V6 dans la branche `work/yoaz-qa-mobile-no-deploy-20261102`, choisir **Download raw file**, enregistrer le fichier `.html` puis l'ouvrir avec Safari ou Chrome. La page inclut les images : aucun téléchargement d'images supplémentaire n'est nécessaire.
 
 **Ne pas déclencher Netlify, merge dans main, ni déploiement, sans autorisation explicite.**
+
+## Correction de validation des images
+
+Le fichier source `images/projects/converse-01.jpg` est en réalité encodé en **WebP** (signature `RIFF/WEBP`). La V6 embarque désormais le fichier original avec `data:image/webp` sans le renommer ni le modifier. Nouveau contrôle de l'ensemble des 27 ressources : correspondance entre déclaration de type et signature binaire **PASS** ; références des 36 placements d'images **PASS**. Il s'agit de contrôles statiques, et non d'un rendu testé dans un vrai navigateur.
