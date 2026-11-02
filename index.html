@@ -2049,6 +2049,10 @@ html body #instagram .ig-tile{background:#11110d!important;}
 }
 </script>
 
+  <!-- Stable Instagram owner flag prevents legacy scripts from replacing the feed. -->
+  <script>window.YOAZ_INSTAGRAM_MANAGED = true;</script>
+  <script src="/assets/js/yoaz-instagram-stable.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/yoaz-current-polish.css">
 </head><body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLJNC5JN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -2286,6 +2290,14 @@ html body #instagram .ig-tile{background:#11110d!important;}
       <span class="cw-proj-badge">VOIR LA SÉRIE →</span>
     </div>
   </div>
+  <nav class="yoaz-project-detail-links" aria-label="Études de projets de YOAZ">
+    <span class="yoaz-project-detail-label">EXPLORER LES PROJETS EN DÉTAIL</span>
+    <a href="/projets/adobe-max.html">Adobe MAX <span aria-hidden="true">↗</span></a>
+    <a href="/projets/playstation-god-of-war.html">PlayStation <span aria-hidden="true">↗</span></a>
+    <a href="/projets/adidas-paris.html">Adidas Paris <span aria-hidden="true">↗</span></a>
+    <a href="/projets/converse-citadium.html">Converse <span aria-hidden="true">↗</span></a>
+    <a href="/projets/relic-cipher.html">Relic <span aria-hidden="true">↗</span></a>
+  </nav>
 </section>
 
 <section class="yoaz-home-trust yoaz-after-client-gallery" aria-label="Clients et outils utilisés">
@@ -6104,112 +6116,7 @@ body {
 }
 </style>
 
-<script>
-/* Instagram — Portfolio Yoaz<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function postTime(p){
-    var t=Date.parse(p.timestamp||p.takenAt||p.created_time||'');
-    if(!isNaN(t)&&t>0)return t;
-    var id=parseInt(String(p.id||'').replace(/\D/g,''),10);
-    return isNaN(id)?0:id;
-  }
-  function sortPostsNewestFirst(posts){
-    return posts.slice().sort(function(a,b){
-      var tb=new Date(b.timestamp||b.takenAt||0).getTime();
-      var ta=new Date(a.timestamp||a.takenAt||0).getTime();
-      if(!isNaN(tb)&&!isNaN(ta)&&tb!==ta)return tb-ta;
-      var diff=postTime(b)-postTime(a);
-      if(diff!==0)return diff;
-      return String(b.id||'').localeCompare(String(a.id||''));
-    });
-  }
-  function pickImage(p,idx){
-    if(idx===0&&p.sizes){
-      if(p.sizes.full&&p.sizes.full.mediaUrl)return p.sizes.full.mediaUrl;
-      if(p.sizes.large&&p.sizes.large.mediaUrl)return p.sizes.large.mediaUrl;
-    }
-    if(p.sizes){
-      if(p.sizes.medium&&p.sizes.medium.mediaUrl)return p.sizes.medium.mediaUrl;
-      if(p.sizes.small&&p.sizes.small.mediaUrl)return p.sizes.small.mediaUrl;
-    }
-    return p.mediaUrl||'';
-  }
-  function postsWithImages(posts){
-    return posts.filter(function(p,idx){return !!pickImage(p,idx);});
-  }
-  function setFeedMode(mode){
-    feedMode=mode==='live'?'live':'curated';
-    if(section)section.setAttribute('data-ig-feed-mode',feedMode);
-    if(titleEl){
-      var lang=(typeof window._lang==='string'&&window._lang)||(typeof curLang==='string'&&curLang)||'fr';
-      var pack=(typeof I18N!=='undefined'&&I18N[lang])?I18N[lang]:(typeof I18N!=='undefined'?I18N.fr:{});
-      var key=feedMode==='live'?'ig_title':'ig_title_curated';
-      if(pack[key])titleEl.innerHTML=pack[key];
-      titleEl.setAttribute('data-key',key);
-    }
-  }
-  window.yoazIgApplyTitle=function(){setFeedMode(feedMode);};
-  window.yoazIgFeedMode=function(){return feedMode;};
-
-  function renderLive(sorted){
-    if(!sorted||!sorted.length)return false;
-    var html=sorted.map(function(p,idx){
-      var img=pickImage(p,idx);
-      if(!img)return '';
-      var alt=(p.altText||p.prunedCaption||p.caption||'Post Instagram Yoaz').replace(/\s+/g,' ').trim().slice(0,120);
-      var link=p.permalink||IG_PROFILE;
-      var cls='ig-tile reveal'+(idx===0?' ig-latest':'');
-      var rank=idx+1;
-      var load=idx===0?'eager':'lazy';
-      var ts=postTime(p);
-      return '<a class="'+cls+'" data-ig-rank="'+rank+'"'+(ts?' data-ig-ts="'+ts+'"':'')+' href="'+esc(link)+'" target="_blank" rel="noopener" role="listitem" aria-label="'+esc(alt)+'">'
-        +'<span class="ig-tile-media"><img src="'+esc(img)+'" alt="'+esc(alt)+'" loading="'+load+'" decoding="async" width="800" height="800"></span>'
-        +'</a>';
-    }).filter(Boolean).join('');
-    if(!html)return false;
-    setFeedMode('live');
-    grid.innerHTML=html;
-    grid.setAttribute('data-ig-feed','behold-live');
-    grid.classList.remove('ig-grid--pending');
-    if(typeof window.initReveal==='function')window.initReveal();
-    return true;
-  }
-  function restoreStaticFallback(){
-    setFeedMode('curated');
-    grid.innerHTML=fallbackHTML;
-    var tiles=[].slice.call(grid.querySelectorAll('.ig-tile'));
-    tiles.sort(function(a,b){
-      return (+a.getAttribute('data-ig-rank')||99)-(+b.getAttribute('data-ig-rank')||99);
-    });
-    tiles.forEach(function(t,i){
-      t.classList.remove('ig-latest','ig-featured');
-      if(i===0)t.classList.add('ig-latest');
-      grid.appendChild(t);
-    });
-    grid.setAttribute('data-ig-feed','curated-local');
-    grid.classList.remove('ig-grid--pending');
-  }
-  setFeedMode('curated');
-  grid.classList.add('ig-grid--pending');
-  grid.classList.add('instagram-grid--featured');
-  function fetchLive(retry){
-    fetch(BEHOLD_FEED_URL+'?t='+Date.now(),{headers:{'Accept':'application/json'},cache:'no-store'})
-      .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
-      .then(function(d){
-        var sorted=sortPostsNewestFirst(postsWithImages(d.posts||[])).slice(0,IG_MAX);
-        if(sorted.length<1)throw new Error('empty');
-        if(!renderLive(sorted))throw new Error('render');
-      })
-      .catch(function(){
-        if(retry){
-          setTimeout(function(){fetchLive(false);},1200);
-          return;
-        }
-        restoreStaticFallback();
-      });
-  }
-  fetchLive(true);
-})();
-</script>
+<!-- Legacy Behold Instagram runtime retired: #ig-grid is owned by assets/js/yoaz-instagram-stable.js -->
 
 <style id="yoaz-ig-pending">
 #ig-grid.ig-grid--pending {
@@ -11342,7 +11249,7 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
     set('.tools-title',dict.tools);
     applySocials();
   }
-  function improveInstagram(){
+  function improveInstagram(){ if (window.YOAZ_INSTAGRAM_MANAGED) return;
     const grid=d.getElementById('ig-grid'); if(!grid)return;
     const works=[
       ['gallery-cite-psychedelique','Cité psychédélique — illustration géométrique Yoaz'],
@@ -11526,7 +11433,7 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
   function tile(item,i){
     return '<a class="ig-tile '+(i===0?'ig-latest ':'')+'reveal" data-ig-rank="'+(i+1)+'" href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener" role="listitem" aria-label="Instagram — '+item[2]+'"><picture><source srcset="'+item[0]+'" type="image/webp"><img src="'+item[1]+'" alt="'+item[2]+'" loading="'+(i===0?'eager':'lazy')+'" decoding="async" width="900" height="900"></picture></a>';
   }
-  function ensureInstagramFallback(){
+  function ensureInstagramFallback(){ if (window.YOAZ_INSTAGRAM_MANAGED) return;
     var grid=document.getElementById('ig-grid'); if(!grid) return;
     var imgs=grid.querySelectorAll('img');
     var broken=false;
@@ -11537,7 +11444,7 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
     if(grid.children.length<6 || broken){ grid.innerHTML=IG.map(tile).join(''); }
     grid.classList.remove('ig-grid--pending'); grid.classList.add('ig-grid--loaded','instagram-grid--featured');
   }
-  ensureInstagramFallback.force=function(){var grid=document.getElementById('ig-grid'); if(grid){grid.innerHTML=IG.map(tile).join(''); grid.classList.remove('ig-grid--pending'); grid.classList.add('ig-grid--loaded','instagram-grid--featured');}};
+  ensureInstagramFallback.force=function(){ if (window.YOAZ_INSTAGRAM_MANAGED) return;var grid=document.getElementById('ig-grid'); if(grid){grid.innerHTML=IG.map(tile).join(''); grid.classList.remove('ig-grid--pending'); grid.classList.add('ig-grid--loaded','instagram-grid--featured');}};
 
   var STRIPE_PAYMENT_LINKS={
     'chaos-horse':'',
@@ -11684,7 +11591,7 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
     return '<a class="ig-tile '+(i===0?'ig-latest ':'')+'reveal" data-ig-rank="'+(i+1)+'" href="'+href+'" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Instagram @iamyoaz">'+
       '<img src="'+img+'" alt="'+alt.replace(/"/g,'&quot;')+'" loading="'+(i<2?'eager':'lazy')+'" decoding="async" width="900" height="900"></a>';
   }
-  async function loadInstagram(){
+  async function loadInstagram(){ if (window.YOAZ_INSTAGRAM_MANAGED) return;
     var grid=document.getElementById('ig-grid');
     if(!grid) return;
     grid.innerHTML=statusHTML('Connexion au flux Instagram officiel de <a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">@iamyoaz</a>…');
@@ -12949,7 +12856,7 @@ html,body{max-width:100%;overflow-x:hidden!important;background:#f7f3ea!importan
     setCard('fast-company','client-fast-company','Fast Company','Illustration éditoriale','Fast Company — illustration éditoriale Yoaz');
     setCard('kraken','client-fortune','Kraken','Post Facebook','Kraken — Post Facebook artwork violet psychédélique Yoaz');
   }
-  function instagramFeed(){
+  function instagramFeed(){ if (window.YOAZ_INSTAGRAM_MANAGED) return;
     var grid=document.getElementById('ig-grid'); if(!grid)return;
     grid.innerHTML='<div class="ig-status"><strong>Chargement Instagram…</strong><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Voir @iamyoaz</a></div>';
     fetch('/.netlify/functions/instagram-feed',{headers:{'Accept':'application/json'}})
@@ -15429,7 +15336,7 @@ html body .social-linktree::before{
       img.style.setProperty('object-position','center center','important');
     });
   }
-  function instagram(){
+  function instagram(){ if (window.YOAZ_INSTAGRAM_MANAGED) return;
     var grid=document.getElementById('ig-grid'); if(!grid) return;
     grid.innerHTML='<div class="ig-status"><strong>Chargement du vrai feed Instagram…</strong><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Voir @iamyoaz</a></div>';
     fetch('/.netlify/functions/instagram-feed',{headers:{Accept:'application/json'}}).then(function(r){return r.ok?r.json():Promise.reject(new Error('api'));}).then(function(data){
