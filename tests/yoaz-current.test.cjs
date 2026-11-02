@@ -27,6 +27,16 @@ test('preserve homepage structure, assets and commercial elements', () => {
   assert.equal((home.match(/class="edition-card"/g) || []).length, 5);
 });
 
+test('single stable contact and Stripe controllers without duplicate handlers', () => {
+  assert.match(home, /assets\/js\/yoaz-contact-stable\.js/);
+  assert.match(home, /assets\/js\/yoaz-checkout-stable\.js/);
+  assert.match(home, /window\.YOAZ_CHECKOUT_MANAGED = true/);
+  assert.doesNotMatch(home, /document\.getElementById\('contact-form'\)\.addEventListener\('submit'/);
+  assert.equal((home.match(/id="contact-form"/g) || []).length, 1);
+  assert.match(home, /formspree\.io\/f\/xlgpnrze/);
+  assert.ok((home.match(/YOAZ_CHECKOUT_MANAGED\) return/g) || []).length >= 4);
+});
+
 test('one Instagram renderer, retired Behold and old scripts gated', () => {
   assert.doesNotMatch(home, /BEHOLD_FEED_URL/);
   assert.match(home, /YOAZ_INSTAGRAM_MANAGED = true/);
@@ -45,6 +55,7 @@ test('one Instagram renderer, retired Behold and old scripts gated', () => {
 test('new scripts and functions are valid JavaScript', () => {
   for (const filename of [
     'assets/js/yoaz-instagram-stable.js', 'assets/js/yoaz-case-navigation.js',
+    'assets/js/yoaz-contact-stable.js', 'assets/js/yoaz-checkout-stable.js',
     'netlify/functions/instagram-feed.js', 'netlify/functions/create-checkout.js'
   ]) assert.doesNotThrow(() => new vm.Script(read(filename), {filename}));
 });
