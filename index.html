@@ -2051,9 +2051,11 @@ html body #instagram .ig-tile{background:#11110d!important;}
 
   <!-- Stable Instagram owner flag prevents legacy scripts from replacing the feed. -->
   <script>window.YOAZ_INSTAGRAM_MANAGED = true;</script>
+  <script>window.YOAZ_CHECKOUT_MANAGED = true;</script>
   <script src="/assets/js/yoaz-instagram-stable.js" defer></script>
   <script src="/assets/js/yoaz-case-navigation.js" defer></script>
   <script src="/assets/js/yoaz-contact-stable.js" defer></script>
+  <script src="/assets/js/yoaz-checkout-stable.js" defer></script>
   <link rel="stylesheet" href="/assets/css/yoaz-current-polish.css">
 </head><body>
 <!-- Google Tag Manager (noscript) -->
@@ -8516,7 +8518,7 @@ body{background:var(--v3-ivory)!important;color:var(--v3-ink)!important}nav{back
     }
     msg.textContent='Paiement Stripe bientôt disponible. Ajoute STRIPE_SECRET_KEY ou STRIPE_UNIVERSAL_PAYMENT_LINK dans Netlify pour activer le bouton Acheter.';
   }
-  document.addEventListener('click',function(e){
+  document.addEventListener('click',function(e){ if (window.YOAZ_CHECKOUT_MANAGED) return;
     const buy=e.target.closest('[data-buy]');
     if(!buy) return;
     e.preventDefault();
@@ -11428,7 +11430,7 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
     'cite-psychedelique':''
   };
   window.YOAZ_STRIPE_PAYMENT_LINKS=window.YOAZ_STRIPE_PAYMENT_LINKS||STRIPE_PAYMENT_LINKS;
-  function setupStripePlaceholders(){
+  function setupStripePlaceholders(){ if (window.YOAZ_CHECKOUT_MANAGED) return;
     document.querySelectorAll('.edition-buy[data-buy]').forEach(function(btn){
       var key=btn.getAttribute('data-buy');
       var url=(window.YOAZ_STRIPE_PAYMENT_LINKS||{})[key]||'';
@@ -12858,7 +12860,7 @@ html,body{max-width:100%;overflow-x:hidden!important;background:#f7f3ea!importan
 
 <script id="yoaz-final-stripe-capture">
 (function(){
-  document.addEventListener('click',function(e){
+  document.addEventListener('click',function(e){ if (window.YOAZ_CHECKOUT_MANAGED) return;
     var btn=e.target.closest && e.target.closest('.edition-buy[data-buy]');
     if(!btn) return;
     e.preventDefault();
@@ -15323,7 +15325,7 @@ html body .social-linktree::before{
       grid.innerHTML='<div class="ig-status"><strong>Feed Instagram indisponible.</strong><br><span>Ajoute INSTAGRAM_ACCESS_TOKEN et INSTAGRAM_USER_ID dans Netlify pour afficher le vrai feed.</span><br><a href="https://www.instagram.com/iamyoaz/" target="_blank" rel="noopener">Suivre @iamyoaz</a></div>';
     });
   }
-  function stripe(){
+  function stripe(){ if (window.YOAZ_CHECKOUT_MANAGED) return;
     document.querySelectorAll('#shop .edition-buy[data-buy]').forEach(function(btn){btn.setAttribute('data-stripe-ready','true');});
   }
   function init(){ensureLogoRow();patchProjects();stopHeroGlitch();stripe();instagram();}
