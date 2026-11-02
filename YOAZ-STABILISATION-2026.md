@@ -112,3 +112,13 @@ Lecture de la branche GitHub et vérifications statiques en mémoire : **12 page
 
 - Les 5 pages projets anglaises préexistantes avaient chacune 4 images dont les descriptions alternatives et légendes étaient encore en français. Les **20 images** ont désormais leurs alt et légendes traduits en anglais sans changer les fichiers images ni le contenu des pages françaises. La sixième page Fast Company possède déjà sa version localisée.
 - Test de non-régression ajouté à `tests/yoaz-case-pages.test.cjs` pour contrôler la traduction des **24 images** de la galerie anglaise. Examen statique des sources ; exécution native `npm test` toujours à confirmer.
+
+### Accessibilité du modal et du menu — passe complémentaire
+
+- Nouvelle ressource `assets/js/yoaz-accessibility-stable.js` (chargée une seule fois via `defer`) : le focus entre dans le modal projets, `Tab` et `Shift+Tab` restent dans la fenêtre, et le focus revient à la carte projet ouverte à la fermeture. Il s'agit d'un complément au moteur existant, sans remplacer les galeries ou le script de traduction.
+- Le menu mobile peut maintenant être refermé avec `Escape` (focus rendu au bouton) et par clic à l'extérieur. Les attributs ARIA du menu et du bouton de fermeture sont explicitement présents dans le HTML initial.
+- Règles ciblées `:focus-visible` et `prefers-reduced-motion` ajoutées au fichier `assets/css/yoaz-current-polish.css`. Aucun changement des œuvres, logos, produits ou ordre de présentation.
+- `tests/yoaz-accessibility.test.cjs` : **4 scénarios exécutés dans un environnement Node 22.16.0 isolé, 4/4 PASS** (fonctions de sélection, fermeture menu, ouverture/fermeture du modal, cyclage Tab), avant ajout d'un cinquième contrôle statique ARIA/CSS. Après écriture sur GitHub : contrôles statiques du code publiés PASS, syntaxe JS PASS. Le cinquième scénario et l'ensemble de `npm test` n'ont pas encore été exécutés nativement sur un checkout complet.
+- Un audit sans réseau dans `docs/YOAZ_ANALYTICS_REVIEW_20261102.md` confirme la présence simultanée de GTM et `gtag.js`, mais **pas un double comptage avéré**. Aucun tracker ou consentement n'a été modifié sans vérification du conteneur distant.
+
+**Limites inchangées :** ni publication Netlify, ni tests de rendu Safari/Chrome réels, ni test de paiement ou e-mail, ni modification de `main` ou du site public.
