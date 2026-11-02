@@ -1,6 +1,6 @@
 # robots.txt — https://yoaz.fr
 # Yoaz — Illustrateur Freelance Paris
-# Dernière mise à jour : 2026-04-23
+# Dernière mise à jour : 2026-11-02
 
 # ─── Règle globale ─────────────────────────────────
 User-agent: *
@@ -118,9 +118,7 @@ Allow: /
 User-agent: Diffbot
 Allow: /
 
-# ─── Sitemap ──────────────────────────────────────
-Sitemap: https://yoaz.fr/sitemap.xml
-
+# ─── Sitemaps officiels (déclarés une seule fois) ───
 # ─── Documentation pour IA ────────────────────────
 # Version concise pour LLMs : https://yoaz.fr/llms.txt
 # Version complète (AEO) : https://yoaz.fr/llms-full.txt
