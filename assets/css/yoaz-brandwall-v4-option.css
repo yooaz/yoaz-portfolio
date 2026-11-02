@@ -1,0 +1,77 @@
+/* YOAZ V4 / OPT-IN logo wall. Requires artist approval before including in index.html.
+   Original eleven image files, original client order and current homepage remain untouched.
+   Visual emphasis: editorial logo wall below client projects, not artificial typography. */
+:root{--yoaz-v4-rule:rgba(255,255,255,.17);}
+html body .yoaz-home-trust.yoaz-after-client-gallery{
+  position:relative!important;
+  isolation:isolate;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos{
+  width:100%!important;
+  max-width:none!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+  margin:clamp(18px,3vw,44px) 0!important;
+  padding:0!important;
+  border-top:1px solid var(--yoaz-v4-rule)!important;
+  border-left:1px solid var(--yoaz-v4-rule)!important;
+  overflow:visible!important;
+  white-space:normal!important;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  position:relative!important;
+  min-width:0!important;
+  width:auto!important;
+  max-width:none!important;
+  height:clamp(88px,10vw,134px)!important;
+  margin:0!important;
+  padding:clamp(12px,2vw,22px)!important;
+  border-right:1px solid var(--yoaz-v4-rule)!important;
+  border-bottom:1px solid var(--yoaz-v4-rule)!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo img{
+  display:block!important;
+  width:auto!important;
+  max-width:87%!important;
+  max-height:46px!important;
+  height:auto!important;
+  opacity:1!important;
+  object-fit:contain!important;
+  transform:none!important;
+  filter:none!important;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo:hover{
+  background:rgba(255,255,255,.035)!important;
+}
+@media(max-width:850px){
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo{
+    height:clamp(85px,13vw,115px)!important;
+    padding:12px!important;
+  }
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo img{
+    max-height:36px!important;
+  }
+}
+@media(max-width:360px){
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo{
+    height:82px!important;
+  }
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo img{
+    max-height:28px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo{transition:none!important;}
+}
