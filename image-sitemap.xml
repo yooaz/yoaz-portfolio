@@ -1,9 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url><loc>https://yoaz.fr/</loc>
-    <image:image><image:loc>https://yoaz.fr/images/hero.webp</image:loc><image:title>Yoaz geometric psychedelic illustration</image:title></image:image>
-    <image:image><image:loc>https://yoaz.fr/images/gallery-cite-psychedelique.webp</image:loc><image:title>Cité psychédélique by Yoaz</image:title></image:image>
-    <image:image><image:loc>https://yoaz.fr/images/gallery-temple-solaire.webp</image:loc><image:title>Temple solaire by Yoaz</image:title></image:image>
-    <image:image><image:loc>https://yoaz.fr/images/gallery-jungle.webp</image:loc><image:title>Jungle by Yoaz</image:title></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/hero.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/gallery-cite-psychedelique.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/gallery-temple-solaire.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/gallery-jungle.webp</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/projets/adobe-max/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-nasdaq.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-04.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/en/projects/adobe-max/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-nasdaq.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adobe-max-04.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/projets/playstation-god-of-war/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/client-playstation-metro.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/psa-gow-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/psa-gow-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/psa-gow-01.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/en/projects/playstation-god-of-war/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/client-playstation-metro.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/psa-gow-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/psa-gow-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/psa-gow-01.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/projets/adidas-paris/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/client-adidas-paris.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adidas-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adidas-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adidas-03.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/en/projects/adidas-paris/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/client-adidas-paris.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adidas-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adidas-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/adidas-03.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/projets/converse-citadium/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-04.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/en/projects/converse-citadium/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/converse-04.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/projets/relic-cipher/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-04.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/en/projects/relic-cipher/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/relic-04.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/projets/fast-company/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/client-fast-company.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/fast-company-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/fast-company-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/fast-company-04.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/en/projects/fast-company/</loc>
+    <image:image><image:loc>https://yoaz.fr/images/client-fast-company.webp</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/fast-company-02.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/fast-company-03.jpg</image:loc></image:image>
+    <image:image><image:loc>https://yoaz.fr/images/projects/fast-company-04.jpg</image:loc></image:image>
   </url>
 </urlset>
