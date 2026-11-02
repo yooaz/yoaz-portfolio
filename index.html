@@ -15640,7 +15640,8 @@ html body .social-linktree::before{
   window.addEventListener('load', fixTrustPosition);
   [50,150,350,700,1200,2200].forEach(function(t){setTimeout(fixTrustPosition,t);});
   try{
-    new MutationObserver(function(){fixTrustPosition();}).observe(document.documentElement,{childList:true,subtree:true});
+    var parent=document.querySelector('#client')?.parentElement;
+    if(parent) new MutationObserver(function(){fixTrustPosition();}).observe(parent,{childList:true});
   }catch(e){}
 })();
 </script>
@@ -15814,7 +15815,12 @@ html body .social-linktree::before{
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', ensureTrust); else ensureTrust();
   window.addEventListener('load', ensureTrust);
-  [50,150,350,700,1200,2200].forEach(function(t){setTimeout(ensureTrust,t);});
-  try{new MutationObserver(function(){ensureTrust();}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+  [150,700,2200].forEach(function(t){setTimeout(ensureTrust,t);});
+  try{
+    var projectRoot=document.querySelector('#client')?.parentElement;
+    var trust=document.querySelector('.yoaz-home-trust.yoaz-after-client-gallery');
+    if(projectRoot) new MutationObserver(function(){ensureTrust();}).observe(projectRoot,{childList:true});
+    if(trust) new MutationObserver(function(){ensureTrust();}).observe(trust,{childList:true});
+  }catch(e){}
 })();
 </script>
