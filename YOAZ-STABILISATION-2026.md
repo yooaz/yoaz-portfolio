@@ -63,3 +63,18 @@ hero → travaux clients → outils/logos → posters → travaux personnels →
 Le rapport est bien celui de yoaz.fr selon l'utilisateur : 246 sessions Direct, 7 AI Assistant et 3 Organic Search (période affichée sur la capture). Les priorités SEO sont : indexation des nouvelles pages, impressions des requêtes hors marque, clics organiques, trafic d'images, sollicitations via contact.
 
 **Statut : changements réels sur GitHub, pas de publication ni d'essai d'intégration live.**
+
+## Passe de vérification complémentaire (2 novembre 2026, après la première stabilisation)
+
+- **99 sur 99 références d'images statiques** `src` / `srcset` de l'accueil ont un fichier existant dans le dépôt (vérification GitHub de chaque chemin). Test automatique correspondant ajouté.
+- **Erreur de performance supprimée :** l'ancien observateur `yoaz-user-final-correction-2026-06-30-js` observait `document.documentElement` en profondeur puis reconstruisait plusieurs cartes clients avec `innerHTML`, ce qui pouvait redéclencher son propre observateur. La boucle a été supprimée ; les initialisations ponctuelles restent.
+- Le contrôleur du feed Instagram isole désormais les caches par empreinte SHA-256 de la configuration token/compte. Un test avec requêtes simulées a confirmé cache hit, renouvellement de jeton et rechargement (3 cas).
+- Les 10 pages projets sont cohérentes avec le paramètre Netlify existant `pretty_urls = true` : URLs canoniques `/projets/slug/` et `/en/projects/slug/` pour éviter la duplication `.html`. Les fichiers source restent `slug.html`, sans nouveau déploiement.
+- Les liens de détail sous la galerie clients utilisent `role=navigation` sur un conteneur `div` pour éviter les règles globales appliquées aux balises `nav` du site historique.
+- Typographie mobile : sélecteurs rendus assez précis pour éviter qu'un ancien patch les écrase.
+- Les liens internes `#shop` de la FAQ restent dans la même fenêtre en FR/EN/NL/ES.
+- Un attribut `id` dupliqué a été corrigé et la vérification des IDs est intégrée aux tests.
+- Les couvertures *Fortune*, *Fast Company* et les visuels Mira ont été examinés visuellement et correspondent au projet affiché malgré le nom inhabituel de certains fichiers. Ne pas les réassigner automatiquement.
+- Les tests restent `node --test tests/yoaz-current.test.cjs`, sans navigateur ni API externe; leur exécution via GitHub Actions n'est pas encore confirmée ici.
+
+**Limites :** la résolution réelle des Pretty URLs devra être contrôlée lors d'un futur déploiement autorisé, tout comme la connexion Meta/Instagram réelle, Stripe, Formspree, l'analyse de performance dans un navigateur et le consentement GA4/GTM.
