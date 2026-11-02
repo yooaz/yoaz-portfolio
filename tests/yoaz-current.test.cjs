@@ -10,7 +10,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const read = p => fs.readFileSync(path.join(root, p), 'utf8');
 const home = read('index.html');
-const caseNames = ['adobe-max','playstation-god-of-war','adidas-paris','converse-citadium','relic-cipher'];
+const caseNames = ['adobe-max','playstation-god-of-war','adidas-paris','converse-citadium','relic-cipher','fast-company'];
 
 test('preserve homepage structure, assets and commercial elements', () => {
   const ids = ['hero','client','shop','gallery','video','about','instagram','faq','contact'];
