@@ -66,7 +66,8 @@
     };
     const updateTitle = () => {
       if (heading) {
-        heading.textContent = (isLive ? liveLabels : fallbackLabels)[language()];
+        const desired = (isLive ? liveLabels : fallbackLabels)[language()];
+        if (heading.textContent !== desired) heading.textContent = desired;
         heading.removeAttribute('data-key');
       }
     };
@@ -88,6 +89,8 @@
     fallback();
     /* Existing language switch updates <html lang>. No polling or per-second timers. */
     new MutationObserver(updateTitle).observe(document.documentElement, { attributes:true, attributeFilter:['lang'] });
+    // Legacy translation scripts sometimes rewrite this heading after language changes.
+    if (heading) new MutationObserver(updateTitle).observe(heading, {childList:true, subtree:true, characterData:true});
     const aborter = new AbortController();
     const timeout = setTimeout(() => aborter.abort(), 8000);
     fetch(API, { headers:{ Accept:'application/json' }, cache:'no-store', signal:aborter.signal })
