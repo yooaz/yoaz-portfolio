@@ -73,7 +73,7 @@ test('new scripts and functions are valid JavaScript', () => {
 
 test('all static homepage images and brand logos resolve locally', () => {
   const imagePaths = [...new Set(
-    [...home.matchAll(/(?:src|srcset)\\s*=\\s*["'](images\\/[A-Za-z0-9_./-]+\\.(?:jpe?g|png|webp|svg))["']/gi)]
+    [...home.matchAll(/(?:src|srcset)\s*=\s*["'](images\/[A-Za-z0-9_./-]+\.(?:jpe?g|png|webp|svg))["']/gi)]
       .map(m => m[1])
   )];
   assert.ok(imagePaths.length >= 90, 'Unexpectedly low image coverage');
