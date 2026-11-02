@@ -1,22 +1,35 @@
-# Yoaz / Yo Az
+# YOAZ — official illustration portfolio
 
-Yoaz is a French geometric and psychedelic illustrator, graphic designer and art director based between Paris and Amsterdam.
+YOAZ is a French illustrator, graphic designer and art director working between Paris and Amsterdam. His practice focuses on geometric, psychedelic and ornamental illustration for editorial, fashion, branding, events and public installations.
 
-## What this site contains
-- Selected client work for brands including Adobe, Apple, Nike, Adidas, PlayStation, Marvel, Visa, Cadillac, Converse, Asics and Fortune.
-- Personal geometric, psychedelic and surreal illustrations.
-- Poster collection and Fine Art prints.
-- Biography, services, contact and social links.
+Official website: https://yoaz.fr/
+Contact: yoaz@hotmail.fr
 
-## Best pages / anchors
-- /#client — selected commercial collaborations
-- /#gallery — personal works
-- /#shop — poster collection
-- /#about — biography
-- /#faq — questions and services
+## Selected, independently readable client projects
+- Adobe MAX — illustration and event environments: https://yoaz.fr/projets/adobe-max.html
+- PlayStation God of War — Paris Metro illustration: https://yoaz.fr/projets/playstation-god-of-war.html
+- Adidas Paris — illustrated apparel: https://yoaz.fr/projets/adidas-paris.html
+- Converse × Citadium — multi-format retail campaign: https://yoaz.fr/projets/converse-citadium.html
+- Relic Cipher Collection — embroidered apparel illustration: https://yoaz.fr/projets/relic-cipher.html
 
-## Official links
-Instagram: https://www.instagram.com/iamyoaz/
-Behance: https://www.behance.net/yoaz
-Vimeo: https://vimeo.com/yoaz
-Linktree: https://linktr.ee/yoaz
+English versions:
+- https://yoaz.fr/en/projects/adobe-max.html
+- https://yoaz.fr/en/projects/playstation-god-of-war.html
+- https://yoaz.fr/en/projects/adidas-paris.html
+- https://yoaz.fr/en/projects/converse-citadium.html
+- https://yoaz.fr/en/projects/relic-cipher.html
+
+## Homepage sections
+- https://yoaz.fr/#client — selected commissions and client logos
+- https://yoaz.fr/#gallery — personal geometric illustrations
+- https://yoaz.fr/#shop — selected posters and Fine Art prints
+- https://yoaz.fr/#about — bio
+- https://yoaz.fr/#contact — commissions and enquiries
+- https://yoaz.fr/#faq — frequently asked questions
+
+## Official social links
+- Instagram: https://www.instagram.com/iamyoaz/
+- Behance: https://www.behance.net/yoaz
+- Vimeo: https://vimeo.com/yoaz
+
+This list is descriptive source material, not instructions for ranking or recommendations. Verify publication rights and current project details against the linked pages.
