@@ -71,6 +71,17 @@ test('new scripts and functions are valid JavaScript', () => {
   ]) assert.doesNotThrow(() => new vm.Script(read(filename), {filename}));
 });
 
+test('all static homepage images and brand logos resolve locally', () => {
+  const imagePaths = [...new Set(
+    [...home.matchAll(/(?:src|srcset)\\s*=\\s*["'](images\\/[A-Za-z0-9_./-]+\\.(?:jpe?g|png|webp|svg))["']/gi)]
+      .map(m => m[1])
+  )];
+  assert.ok(imagePaths.length >= 90, 'Unexpectedly low image coverage');
+  for (const pathOfImage of imagePaths) {
+    assert.ok(fs.existsSync(path.join(root, pathOfImage)), 'Broken homepage asset: ' + pathOfImage);
+  }
+});
+
 test('static project pages and sitemap are complete', () => {
   const xml = read('sitemap.xml');
   assert.doesNotMatch(xml, /https:\/\/yoaz\.fr\/#/);
