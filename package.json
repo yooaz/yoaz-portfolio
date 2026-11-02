@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node --test tests/yoaz-current.test.cjs tests/yoaz-case-pages.test.cjs tests/yoaz-sitemaps.test.cjs tests/yoaz-accessibility.test.cjs tests/yoaz-visual-option.test.cjs tests/yoaz-editorial-v3.test.cjs tests/yoaz-brandwall-v4.test.cjs tests/yoaz-v5-offline-preview.test.cjs tests/yoaz-v6-offline-preview.test.cjs tests/yoaz-editorial-v6-option.test.cjs"
+    "test": "node --test tests/yoaz-current.test.cjs tests/yoaz-case-pages.test.cjs tests/yoaz-sitemaps.test.cjs tests/yoaz-accessibility.test.cjs tests/yoaz-visual-option.test.cjs tests/yoaz-editorial-v3.test.cjs tests/yoaz-brandwall-v4.test.cjs tests/yoaz-v5-offline-preview.test.cjs tests/yoaz-v6-offline-preview.test.cjs tests/yoaz-editorial-v6-option.test.cjs tests/yoaz-v8-seo-visual.test.cjs"
   },
   "repository": {
     "type": "git",
