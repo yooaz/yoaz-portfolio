@@ -31,17 +31,30 @@ function json(statusCode, body) {
 }
 
 function cleanUrl(value) {
-  const url = String(value || '').trim();
-  if (!/^https:\/\//i.test(url)) return '';
-  return url;
+  try {
+    const url = new URL(String(value || '').trim());
+    if (url.protocol !== 'https:' || url.username || url.password) return '';
+    // Checkout destinations are restricted to the trusted Stripe domains.
+    const domain = url.hostname.toLowerCase();
+    if (!['buy.stripe.com', 'checkout.stripe.com', 'pay.stripe.com'].includes(domain)) return '';
+    return url.href;
+  } catch (_) { return ''; }
 }
 
 exports.handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
 
-    const { slug } = JSON.parse(event.body || '{}');
-    if (!PRODUCTS[slug]) return json(400, { error: 'Unknown product' });
+    if (typeof event.body !== 'string' || event.body.length > 2048) {
+      return json(413, { error: 'Request too large or missing body' });
+    }
+    let data;
+    try { data = JSON.parse(event.body); }
+    catch (_) { return json(400, { error: 'Invalid JSON request' }); }
+    const slug = data && data.slug;
+    if (typeof slug !== 'string' || !Object.prototype.hasOwnProperty.call(PRODUCTS, slug)) {
+      return json(400, { error: 'Unknown product' });
+    }
 
     // Payment Link mode: price is controlled in Stripe, not by browser input.
     const specific = cleanUrl(process.env[PRODUCT_ENV[slug]]);
@@ -92,6 +105,7 @@ exports.handler = async (event) => {
 
     return json(200, { url: session.url, mode: 'checkout_session' });
   } catch (err) {
-    return json(500, { error: err && err.message ? err.message : 'Checkout error' });
+    // Upstream Stripe errors must never disclose payment secrets or configuration.
+    return json(500, { error: 'Checkout temporarily unavailable' });
   }
 };
