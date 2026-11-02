@@ -2053,6 +2053,7 @@ html body #instagram .ig-tile{background:#11110d!important;}
   <script>window.YOAZ_INSTAGRAM_MANAGED = true;</script>
   <script src="/assets/js/yoaz-instagram-stable.js" defer></script>
   <script src="/assets/js/yoaz-case-navigation.js" defer></script>
+  <script src="/assets/js/yoaz-contact-stable.js" defer></script>
   <link rel="stylesheet" href="/assets/css/yoaz-current-polish.css">
 </head><body>
 <!-- Google Tag Manager (noscript) -->
@@ -2597,35 +2598,7 @@ html body #instagram .ig-tile{background:#11110d!important;}
       <button type="submit" class="ct-submit" id="submit-btn" data-key-aria="contact_send_aria"><span data-key="contact_send">ENVOYER</span> →</button>
       <p id="form-ok" data-key="form_ok_inline" style="display:none;margin-top:.8rem;font-family:var(--ff-body);font-size:.57rem;color:#b89a5a;letter-spacing:.05em">✓ Message envoyé ! Je vous réponds sous 48h.</p>
     </form>
-    <script>
-    document.getElementById('contact-form').addEventListener('submit',function(e){
-      e.preventDefault();
-      var form=this;
-      var btn=document.getElementById('submit-btn');
-      var span=btn.querySelector('span');
-      var tr=I18N[curLang]||I18N.fr;
-      btn.dataset.state='busy';
-      if(span){span.textContent=tr.form_sending;}else{btn.textContent=tr.form_sending;}
-      btn.style.opacity='.6';
-      fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}})
-        .then(function(r){
-          if(r.ok){
-            form.reset();
-            var okEl=document.getElementById('form-ok');
-            if(okEl){okEl.style.display='block';okEl.textContent=tr.form_ok_inline;}
-            if(span){span.textContent=tr.form_sent_btn;}else{btn.textContent=tr.form_sent_btn;}
-          } else {
-            if(span){span.textContent=tr.form_error_btn;}else{btn.textContent=tr.form_error_btn;}
-            btn.style.opacity='1';
-          }
-        }).catch(function(){
-          if(span){span.textContent=tr.form_error_email_btn;}else{btn.textContent=tr.form_error_email_btn;}
-          btn.style.opacity='1';
-          window.location.href='mailto:yoaz@hotmail.fr?subject=' + encodeURIComponent('[yoaz.fr] Message');
-        })
-        .finally(function(){delete btn.dataset.state;});
-    });
-    </script>
+    <!-- Contact submit logic moved to assets/js/yoaz-contact-stable.js -->
   </div>
 </div></section>
 <aside class="stats-strip" data-key-aria="stats_strip_aria">
