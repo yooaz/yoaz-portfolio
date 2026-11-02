@@ -1,0 +1,40 @@
+name: YOAZ — tests locaux du site actuel
+
+# GitHub Actions only. Does not call or deploy to Netlify.
+on:
+  push:
+    branches:
+      - work/yoaz-stabilisation-sans-netlify-20261102
+    paths:
+      - index.html
+      - projets/**
+      - en/projects/**
+      - assets/js/yoaz-instagram-stable.js
+      - assets/js/yoaz-case-navigation.js
+      - assets/css/**
+      - netlify/functions/instagram-feed.js
+      - netlify/functions/create-checkout.js
+      - tests/yoaz-current.test.cjs
+      - sitemap.xml
+      - .github/workflows/yoaz-current-offline-tests.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-site-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify JavaScript and the static site
+        run: |
+          node --check assets/js/yoaz-instagram-stable.js
+          node --check assets/js/yoaz-case-navigation.js
+          node --check netlify/functions/instagram-feed.js
+          node --check netlify/functions/create-checkout.js
+          node --test tests/yoaz-current.test.cjs
