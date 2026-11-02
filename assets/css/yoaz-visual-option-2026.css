@@ -1,0 +1,138 @@
+/* YOAZ visual proposal — experimental, isolated branch. No deploy.
+   Preserves current DOM order, original assets, logos, five posters, modal handlers and shop prices.
+   Optional stylesheet: use only in a visual QA environment before merging. */
+:root {
+  --yoaz-visual-paper: #f4f0e7;
+  --yoaz-visual-ink: #151512;
+  --yoaz-visual-accent: #9b7845;
+  --yoaz-visual-line: rgba(28,27,23,.17);
+  --yoaz-visual-ease: cubic-bezier(.2,.75,.2,1);
+}
+/* Typography first: no positioning or DOM rewriting. */
+html body #hero .hname,
+html body #yoaz-mobile-hero .yoaz-mobile-title {
+  font-family: "Arial Black", Arial, sans-serif!important;
+  font-weight: 900!important;
+  letter-spacing: -.075em!important;
+}
+html body #hero .htag,
+html body #yoaz-mobile-hero .yoaz-mobile-kicker {
+  font-weight: 800!important;
+  letter-spacing: .16em!important;
+}
+html body #hero .hdesc,
+html body #yoaz-mobile-hero .yoaz-mobile-desc {
+  font-family: Arial, Helvetica, sans-serif!important;
+  line-height: 1.48!important;
+}
+html body .section-mega-title {
+  font-family: "Arial Black", Arial, sans-serif!important;
+  font-weight: 900!important;
+  letter-spacing: -.055em!important;
+  line-height: .99!important;
+  text-wrap: balance;
+}
+/* More consistent section rhythm without changing their order. */
+html body #client,
+html body #shop,
+html body #gallery,
+html body #instagram,
+html body #faq,
+html body #contact {
+  scroll-margin-top: 92px;
+}
+html body #client .cw-grid {
+  gap: clamp(12px,1.45vw,24px)!important;
+}
+html body #client .cw-card[data-pid] {
+  border-radius: 2px!important;
+  outline-offset: 4px;
+}
+html body #client .cw-card[data-pid] .cw-info {
+  background: linear-gradient(transparent,rgba(17,16,13,.93))!important;
+}
+html body #client .cw-card[data-pid]:focus-visible .cw-info {
+  transform: translateY(0)!important;
+}
+/* Indexable project-detail links remain plain anchors, but gain a clearer hierarchy. */
+html body #client .yoaz-project-detail-links {
+  gap: .6rem!important;
+}
+html body #client .yoaz-project-detail-links a {
+  border-color: var(--yoaz-visual-line)!important;
+  border-radius: 2px!important;
+  min-height: 44px!important;
+  letter-spacing: .035em!important;
+  padding: .72rem 1rem!important;
+}
+html body #client .yoaz-project-detail-links a:hover,
+html body #client .yoaz-project-detail-links a:focus-visible {
+  border-color: var(--yoaz-visual-accent)!important;
+  background: rgba(155,120,69,.09)!important;
+}
+/* Client marks are never recolored, removed or replaced. */
+html body .yoaz-visible-client-logos img,
+html body .yoaz-real-logo-row img {
+  object-fit: contain!important;
+}
+/* Five existing edition cards: polish only, preserve real purchase controls and prices. */
+html body #shop .edition-grid {
+  gap: clamp(12px,1.4vw,24px)!important;
+}
+html body #shop .edition-card {
+  border-radius: 2px!important;
+}
+html body #shop .edition-card h3 {
+  letter-spacing: -.02em!important;
+  font-weight: 800!important;
+}
+html body #shop .edition-buy:focus-visible,
+html body #shop .edition-art:focus-visible {
+  outline: 3px solid var(--yoaz-visual-accent)!important;
+  outline-offset: 4px!important;
+}
+/* Artwork stays fully visible: no new image crops or replacement resources. */
+html body #gallery .gal-grid {
+  gap: clamp(7px,.85vw,14px)!important;
+}
+html body #gallery .gal-item {
+  border-radius: 2px!important;
+}
+html body #gallery .gal-item:focus-visible {
+  outline: 3px solid var(--yoaz-visual-accent)!important;
+  outline-offset: 3px!important;
+}
+html body #instagram .ig-tile {
+  border-radius: 2px!important;
+}
+/* Editorial interactive details: keyboard and reduced motion. */
+html body a:focus-visible,
+html body button:focus-visible {
+  outline-offset: 4px;
+}
+html body #nav-links a {
+  text-underline-offset: 6px;
+}
+@media (max-width: 700px) {
+  html body .section-mega-title {
+    font-size: clamp(2.9rem,10vw,5.6rem)!important;
+    letter-spacing: -.047em!important;
+    overflow-wrap: break-word;
+  }
+  html body #client .cw-grid {
+    gap: 10px!important;
+  }
+  html body #client .yoaz-project-detail-links a {
+    min-height: 44px!important;
+    font-size: .76rem!important;
+  }
+  html body #shop .edition-grid {
+    gap: 12px!important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #client .cw-card img,
+  html body #gallery .gal-item img {
+    transition: none!important;
+  }
+}
