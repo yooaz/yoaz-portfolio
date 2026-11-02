@@ -107,3 +107,8 @@ Travail réalisé **uniquement** dans `work/yoaz-qa-mobile-no-deploy-20261102`, 
 Lecture de la branche GitHub et vérifications statiques en mémoire : **12 pages et 12 JSON-LD analysés, 48 figures de projets, 13 URL de sitemap, 52 images indexées, 5 posters maintenus : PASS** sur ces critères. Syntaxe JavaScript des trois fichiers tests : PASS. Les images du sitemap ont aussi été vérifiées contre le répertoire GitHub (179 fichiers examinés lors de la génération).
 
 **Non testé :** `npm test` exécuté nativement sur un checkout complet, navigateur réel, temps de chargement, vraie découverte Google, soumission du sitemap Search Console, Instagram Meta, Stripe, Formspree ou analytics. Aucun token, paiement, e-mail, déploiement ou action Netlify n'a été utilisé. Le site `yoaz.fr` et `main` ne sont pas modifiés dans ce chantier.
+
+### Harmonisation anglaise
+
+- Les 5 pages projets anglaises préexistantes avaient chacune 4 images dont les descriptions alternatives et légendes étaient encore en français. Les **20 images** ont désormais leurs alt et légendes traduits en anglais sans changer les fichiers images ni le contenu des pages françaises. La sixième page Fast Company possède déjà sa version localisée.
+- Test de non-régression ajouté à `tests/yoaz-case-pages.test.cjs` pour contrôler la traduction des **24 images** de la galerie anglaise. Examen statique des sources ; exécution native `npm test` toujours à confirmer.
