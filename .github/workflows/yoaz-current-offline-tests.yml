@@ -11,6 +11,8 @@ on:
       - en/projects/**
       - assets/js/yoaz-instagram-stable.js
       - assets/js/yoaz-case-navigation.js
+      - assets/js/yoaz-contact-stable.js
+      - assets/js/yoaz-checkout-stable.js
       - assets/css/**
       - netlify/functions/instagram-feed.js
       - netlify/functions/create-checkout.js
@@ -35,6 +37,8 @@ jobs:
         run: |
           node --check assets/js/yoaz-instagram-stable.js
           node --check assets/js/yoaz-case-navigation.js
+          node --check assets/js/yoaz-contact-stable.js
+          node --check assets/js/yoaz-checkout-stable.js
           node --check netlify/functions/instagram-feed.js
           node --check netlify/functions/create-checkout.js
           node --test tests/yoaz-current.test.cjs
