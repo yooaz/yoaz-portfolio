@@ -89,3 +89,21 @@ Branche de travail **isolée** : `work/yoaz-qa-mobile-no-deploy-20261102` (cré�
 - Vérification des contenus GitHub par lecture seule : **10/10 pages**, **40 figures**, **120 balises de lien** contrôlées sans incohérence sur les critères vérifiés. La syntaxe JavaScript du nouveau test a été vérifiée.
 - **Non réalisé :** exécution native de `npm test` sur un checkout complet, revue visuelle Chrome/Safari/iPhone, vérification Instagram Meta/Stripe/Formspree réelle, Lighthouse et validation des DNS/Pretty URLs.
 - **Aucune PR, fusion, suppression d'œuvre, commande Netlify ou déploiement volontaire** dans cette passe. La production et `main` ne sont pas modifiées.
+
+## Troisième passe — visibilité éditoriale et sitemaps (2 novembre 2026)
+
+Travail réalisé **uniquement** dans `work/yoaz-qa-mobile-no-deploy-20261102`, sans pull request et sans Netlify :
+
+- Deux pages projets Fast Company (`projets/fast-company.html`, `en/projects/fast-company.html`) ajoutées à partir des visuels déjà présents dans le dépôt. Textes éditoriaux FR/EN, balises canoniques, `hreflang`, Open Graph, `CreativeWork`/fil d'Ariane JSON-LD, et liens vers Instagram/Behance/contact.
+- Nouveau lien Fast Company ajouté à la zone de liens projets existante, sans déplacer les sections ni retirer d'images/logos. Les cinq posters restent identiques.
+- `sitemap.xml` : **13 URL** (accueil + 6 projets × 2 langues), images dans le namespace Google corrigé `http://www.google.com/schemas/sitemap-image/1.1`. Les anciennes URLs de fragments restent exclues.
+- `image-sitemap.xml` : **13 URL et 52 références d'images** vérifiées contre les chemins du dépôt (4 images d'accueil + 48 images des 12 pages projets). Suppression des éléments `image:title` obsolètes selon Google Search Central.
+- `robots.txt` : deux sitemaps officiels déclarés une fois chacun (au lieu d'une duplication de `sitemap.xml`) ; les autorisations de robots existantes sont conservées.
+- `llms.txt` : ajout de Fast Company FR/EN, sans promesse de classement dans les moteurs.
+- `tests/yoaz-current.test.cjs`, `tests/yoaz-case-pages.test.cjs` : ajout du sixième projet. Nouveau `tests/yoaz-sitemaps.test.cjs` : couverture hors réseau des 13 URL, des 52 images, du namespace et des déclarations robots. `npm test` comprend les trois fichiers de tests.
+
+### Contrôle réel de cette passe
+
+Lecture de la branche GitHub et vérifications statiques en mémoire : **12 pages et 12 JSON-LD analysés, 48 figures de projets, 13 URL de sitemap, 52 images indexées, 5 posters maintenus : PASS** sur ces critères. Syntaxe JavaScript des trois fichiers tests : PASS. Les images du sitemap ont aussi été vérifiées contre le répertoire GitHub (179 fichiers examinés lors de la génération).
+
+**Non testé :** `npm test` exécuté nativement sur un checkout complet, navigateur réel, temps de chargement, vraie découverte Google, soumission du sitemap Search Console, Instagram Meta, Stripe, Formspree ou analytics. Aucun token, paiement, e-mail, déploiement ou action Netlify n'a été utilisé. Le site `yoaz.fr` et `main` ne sont pas modifiés dans ce chantier.
