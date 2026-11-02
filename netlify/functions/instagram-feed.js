@@ -1,115 +1,109 @@
-// YOAZ — real Instagram feed via official Meta/Instagram APIs
-// Required Netlify env var: INSTAGRAM_ACCESS_TOKEN
-// Optional env vars:
-// - INSTAGRAM_USER_ID: Instagram Business/Creator user id. If provided, the function uses Meta Graph API.
-// - INSTAGRAM_LIMIT: number of posts to return. Default: 9.
-//
-// Works in two modes:
-// 1) Meta Graph API for Business/Creator accounts:
-//    https://graph.facebook.com/v20.0/{INSTAGRAM_USER_ID}/media
-// 2) Instagram Basic Display fallback for tokens that support /me/media:
-//    https://graph.instagram.com/me/media
-//
-// The front-end never displays fake/local drawings as Instagram content.
+// YOAZ — Instagram professional-account feed (Meta Graph API).
+// Tokens ONLY in server-side environment variables, never in HTML or GitHub.
+// Mode A: INSTAGRAM_ACCESS_TOKEN + INSTAGRAM_USER_ID => Facebook Login, graph.facebook.com.
+// Mode B: INSTAGRAM_ACCESS_TOKEN and no INSTAGRAM_USER_ID => Instagram Login, graph.instagram.com.
+// Uses Meta Graph v26.0; the retired Instagram Basic Display fallback has been removed.
 
-let memoryCache = null;
-const CACHE_MS = 10 * 60 * 1000;
+'use strict';
 
-function json(statusCode, body, extraHeaders = {}) {
+const GRAPH_VERSION = 'v26.0';
+const DEFAULT_LIMIT = 9;
+const CACHE_FOR_MS = 10 * 60 * 1000;
+const STALE_FOR_MS = 24 * 60 * 60 * 1000;
+let cache = null;
+let pending = null;
+
+function response(statusCode, data, cacheable = false) {
   return {
     statusCode,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=300, s-maxage=900',
-      ...extraHeaders,
+      'Cache-Control': cacheable ? 'public, max-age=120, s-maxage=300' : 'no-store',
+      'X-Content-Type-Options': 'nosniff',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(data),
   };
 }
-
-function normalizeItems(data) {
-  return (data || [])
-    .filter((item) => item && (item.media_url || item.thumbnail_url) && item.permalink)
-    .filter((item) => item.media_type !== 'CAROUSEL_ALBUM' || item.media_url || item.thumbnail_url)
-    .map((item) => ({
-      id: item.id,
-      caption: item.caption || '',
-      media_type: item.media_type || 'IMAGE',
-      media_url: item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url,
-      thumbnail_url: item.thumbnail_url || '',
-      permalink: item.permalink,
-      timestamp: item.timestamp || '',
-      username: item.username || 'iamyoaz',
-    }));
+function safeHttps(value) {
+  try {
+    const url = new URL(String(value || ''));
+    return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
+  } catch (_) { return ''; }
 }
-
-async function fetchJson(url) {
-  const res = await fetch(url, { headers: { Accept: 'application/json' } });
-  const data = await res.json();
-  if (!res.ok || data.error) {
-    const message = data && data.error ? data.error.message : `Instagram API HTTP ${res.status}`;
-    const err = new Error(message);
-    err.status = res.status;
-    err.data = data;
-    throw err;
+function validInstagramPost(value) {
+  try {
+    const url = new URL(String(value || ''));
+    return url.protocol === 'https:' && /^(www\.)?instagram\.com$/.test(url.hostname) && !url.username && !url.password
+      ? url.href : '';
+  } catch (_) { return ''; }
+}
+function normalise(items, limit) {
+  if (!Array.isArray(items)) return [];
+  return items.filter(Boolean).map(item => {
+    const permalink = validInstagramPost(item.permalink);
+    const media = safeHttps(item.media_type === 'VIDEO'
+      ? (item.thumbnail_url || item.media_url)
+      : (item.media_url || item.thumbnail_url));
+    if (!permalink || !media) return null;
+    return {
+      id: String(item.id || '').slice(0, 80),
+      caption: String(item.caption || '').slice(0, 400),
+      media_type: ['IMAGE','VIDEO','CAROUSEL_ALBUM'].includes(item.media_type) ? item.media_type : 'IMAGE',
+      media_url: media,
+      permalink,
+      timestamp: String(item.timestamp || '').slice(0, 40),
+    };
+  }).filter(Boolean).sort((a, b) => Date.parse(b.timestamp || 0) - Date.parse(a.timestamp || 0)).slice(0, limit);
+}
+async function getMedia(token, userId, limit) {
+  const host = userId ? 'graph.facebook.com' : 'graph.instagram.com';
+  const path = userId ? encodeURIComponent(userId) : 'me';
+  const url = new URL('https://' + host + '/' + GRAPH_VERSION + '/' + path + '/media');
+  url.searchParams.set('fields', 'id,caption,media_type,media_url,permalink,thumbnail_url,timestamp');
+  url.searchParams.set('limit', String(limit));
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 6500);
+  try {
+    const result = await fetch(url, {
+      method: 'GET',
+      headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' },
+      signal: controller.signal,
+    });
+    if (!result.ok) throw new Error('meta_upstream_' + result.status);
+    const body = await result.json();
+    if (!body || !Array.isArray(body.data)) throw new Error('meta_upstream_shape');
+    const posts = normalise(body.data, limit);
+    if (!posts.length) throw new Error('meta_upstream_empty');
+    return posts;
+  } finally {
+    clearTimeout(timeout);
   }
-  return data;
 }
 
-exports.handler = async function () {
+exports.handler = async function(event = {}) {
+  if (event.httpMethod && event.httpMethod !== 'GET') return response(405, { ok:false, error:'method_not_allowed', items:[] });
   const token = process.env.INSTAGRAM_ACCESS_TOKEN || process.env.IG_GRAPH_ACCESS_TOKEN || '';
   const userId = process.env.INSTAGRAM_USER_ID || process.env.IG_USER_ID || '';
-  const limit = Math.max(1, Math.min(Number(process.env.INSTAGRAM_LIMIT || 9), 24));
-
-  if (!token) {
-    return json(503, {
-      ok: false,
-      configured: false,
-      error: 'INSTAGRAM_ACCESS_TOKEN missing',
-      items: [],
-    });
-  }
-
+  const parsed = Number(process.env.INSTAGRAM_LIMIT);
+  const limit = Number.isFinite(parsed) && parsed > 0 ? Math.max(1, Math.min(Math.floor(parsed), 24)) : DEFAULT_LIMIT;
+  if (!token) return response(503, {ok:false, configured:false, error:'not_configured', items:[]});
   const now = Date.now();
-  if (memoryCache && now - memoryCache.createdAt < CACHE_MS) {
-    return json(200, { ok: true, cached: true, source: memoryCache.source, items: memoryCache.items });
+  if (cache && cache.key === (userId + ':' + limit) && now - cache.at < CACHE_FOR_MS) {
+    return response(200, {ok:true, source:'instagram-graph', cached:true, items:cache.items}, true);
   }
-
-  const fields = 'id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username';
-  const sources = [];
-
-  if (userId && userId !== 'me') {
-    sources.push({
-      name: 'meta-graph-api',
-      url: `https://graph.facebook.com/v20.0/${encodeURIComponent(userId)}/media?fields=${encodeURIComponent(fields)}&limit=${encodeURIComponent(limit)}&access_token=${encodeURIComponent(token)}`,
-    });
-  }
-
-  sources.push({
-    name: 'instagram-basic-display',
-    url: `https://graph.instagram.com/me/media?fields=${encodeURIComponent(fields)}&limit=${encodeURIComponent(limit)}&access_token=${encodeURIComponent(token)}`,
-  });
-
-  let lastError = null;
-  for (const source of sources) {
-    try {
-      const data = await fetchJson(source.url);
-      const items = normalizeItems(data.data).slice(0, limit);
-      if (!items.length) {
-        lastError = new Error('Instagram API returned no displayable media');
-        continue;
-      }
-      memoryCache = { createdAt: now, source: source.name, items };
-      return json(200, { ok: true, cached: false, source: source.name, items });
-    } catch (err) {
-      lastError = err;
+  if (!pending) pending = getMedia(token, userId, limit).finally(() => { pending = null; });
+  try {
+    const items = await pending;
+    cache = { key:userId + ':' + limit, at:Date.now(), items };
+    return response(200, {ok:true, source:'instagram-graph', cached:false, items}, true);
+  } catch (_) {
+    if (cache && cache.key === (userId + ':' + limit) && now - cache.at < STALE_FOR_MS) {
+      return response(200, {ok:true, source:'instagram-graph', stale:true, items:cache.items}, false);
     }
+    // Never expose access tokens, upstream stack traces or sensitive Meta error payloads.
+    return response(502, {ok:false, configured:true, error:'upstream_unavailable', items:[]});
   }
-
-  return json(502, {
-    ok: false,
-    configured: true,
-    error: lastError && lastError.message ? lastError.message : 'Instagram fetch failed',
-    items: [],
-  });
 };
+
+// Export pure validators for CI tests; has no impact on the Netlify handler.
+exports._test = { safeHttps, validInstagramPost, normalise };
