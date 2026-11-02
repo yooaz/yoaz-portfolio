@@ -120,3 +120,16 @@ html body #hero a:focus-visible{
 @media(prefers-reduced-motion:reduce){
   html body #client .yoaz-project-detail-links a{transition:none!important;}
 }
+
+/* YOAZ keyboard focus stabilization — scoped to existing interactive controls. */
+html body #nav-toggle:focus-visible,
+html body #client .cw-card[data-pid]:focus-visible,
+html body #pj-modal button:focus-visible {
+  outline:3px solid #b89a5a!important;
+  outline-offset:4px!important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #pj-modal .pj-modal-body {
+    animation:none!important;
+  }
+}
