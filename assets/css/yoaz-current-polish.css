@@ -1,0 +1,117 @@
+/* YOAZ — targeted polish for the existing site, not a redesign.
+   Preserves horse artwork, project order, posters, backgrounds and client logos.
+   Intentional high specificity: the legacy page has many late !important patches. */
+:root{
+  --yoaz-polish-ink:#151515;
+  --yoaz-polish-gold:#b89a5a;
+}
+html body section#hero .hl .htag{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(.69rem,.80vw,.82rem)!important;
+  font-weight:700!important;
+  letter-spacing:.145em!important;
+  line-height:1.5!important;
+}
+html body section#hero .hl .hname{
+  font-family:"Arial Black",-apple-system,BlinkMacSystemFont,Arial,sans-serif!important;
+  font-weight:800!important;
+  letter-spacing:-.055em!important;
+  line-height:.91!important;
+  text-wrap:nowrap;
+}
+html body section#hero .hl .hdesc{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(.9rem,1.12vw,1.16rem)!important;
+  font-weight:500!important;
+  line-height:1.58!important;
+  letter-spacing:.015em!important;
+}
+html body section#hero .hl .hdesc .hero-style{
+  font-weight:650!important;
+  letter-spacing:.005em!important;
+}
+html body section#hero .hl .hdesc .hero-place{
+  font-weight:500!important;
+  letter-spacing:.105em!important;
+}
+html body #yoaz-mobile-hero .yoaz-mobile-title{
+  font-family:"Arial Black",-apple-system,BlinkMacSystemFont,Arial,sans-serif!important;
+  font-weight:800!important;
+  line-height:.93!important;
+  letter-spacing:.015em!important;
+}
+html body #yoaz-mobile-hero .yoaz-mobile-desc{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(.92rem,3.7vw,1.16rem)!important;
+  line-height:1.54!important;
+  letter-spacing:.01em!important;
+}
+html body #yoaz-mobile-hero .yoaz-mobile-kicker{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(.7rem,2.6vw,.85rem)!important;
+  font-weight:700!important;
+  letter-spacing:.14em!important;
+}
+html body #client .yoaz-project-detail-links{
+  margin:clamp(1.4rem,3vw,3rem) auto 0!important;
+  padding:1rem 0 0!important;
+  border-top:1px solid rgba(20,20,20,.18)!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:.75rem 1.1rem!important;
+  align-items:center!important;
+  width:100%!important;
+  max-width:none!important;
+  background:transparent!important;
+}
+html body #client .yoaz-project-detail-links .yoaz-project-detail-label{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif!important;
+  font-size:.67rem!important;
+  letter-spacing:.13em!important;
+  font-weight:750!important;
+  color:#615d57!important;
+  flex-basis:100%;
+}
+html body #client .yoaz-project-detail-links a{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:.38rem!important;
+  color:var(--yoaz-polish-ink)!important;
+  text-decoration:none!important;
+  border:1px solid rgba(20,20,20,.3)!important;
+  padding:.55rem .75rem!important;
+  border-radius:3px!important;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(.7rem,.8vw,.83rem)!important;
+  font-weight:650!important;
+  line-height:1.4!important;
+  transition:border-color .2s ease,background .2s ease!important;
+}
+html body #client .yoaz-project-detail-links a:hover,
+html body #client .yoaz-project-detail-links a:focus-visible{
+  border-color:var(--yoaz-polish-ink)!important;
+  background:rgba(20,20,20,.045)!important;
+}
+html body #instagram #ig-grid[data-ig-feed="curated-local"] .ig-tile,
+html body #instagram #ig-grid[data-ig-feed="instagram-graph-api"] .ig-tile{
+  cursor:pointer!important;
+}
+html body #instagram #ig-grid .ig-tile img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+html body #client a:focus-visible,
+html body #instagram a:focus-visible,
+html body #yoaz-mobile-hero a:focus-visible,
+html body #hero a:focus-visible{
+  outline:3px solid var(--yoaz-polish-gold)!important;
+  outline-offset:3px!important;
+}
+@media(max-width:960px){
+  html body #client .yoaz-project-detail-links{padding-top:1rem!important;margin-top:1.4rem!important;}
+  html body section#hero .hl .hname{letter-spacing:-.025em!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  html body #client .yoaz-project-detail-links a{transition:none!important;}
+}
