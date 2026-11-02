@@ -1,0 +1,28 @@
+name: YOAZ portfolio QA
+
+on:
+  pull_request:
+    paths:
+      - index.html
+      - assets/css/yoaz-v2.css
+      - assets/js/yoaz-v2.js
+      - scripts/check-yoaz-v2.mjs
+      - .github/workflows/yoaz-portfolio-qa.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: node --check assets/js/yoaz-v2.js
+      - name: Check portfolio assets, semantic markup, shop and translations
+        run: node scripts/check-yoaz-v2.mjs
