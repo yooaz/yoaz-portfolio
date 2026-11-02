@@ -1,0 +1,111 @@
+/* YOAZ V3 — opt-in editorial rhythm for the existing homepage, not a rebuild.
+   Do NOT load on production or main until the artist validates a browser preview.
+   Original horse, all client cards, all logos, five editions and all gallery art remain. */
+:root{
+  --yoaz-v3-ink:#181816;
+  --yoaz-v3-gold:#a28d68;
+  --yoaz-v3-rule:rgba(24,24,22,.18);
+}
+html body #hero .hname,
+html body #yoaz-mobile-hero .yoaz-mobile-title{
+  font-family:"Inter Display","Inter","Helvetica Neue",Arial,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:-.078em!important;
+  line-height:.93!important;
+}
+html body #hero .htag,
+html body #yoaz-mobile-hero .yoaz-mobile-kicker,
+html body .yoaz-project-detail-label{
+  font-family:"Inter","Helvetica Neue",Arial,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:.13em!important;
+}
+html body #hero .hdesc,
+html body #yoaz-mobile-hero .yoaz-mobile-desc{
+  font-family:"Inter","Helvetica Neue",Arial,sans-serif!important;
+  font-weight:450!important;
+  line-height:1.52!important;
+}
+html body .section-mega-title{
+  font-family:"Inter Display","Inter","Helvetica Neue",Arial,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:-.073em!important;
+  line-height:.98!important;
+  text-wrap:balance;
+}
+html body #client .cw-grid{
+  gap:clamp(11px,1.4vw,24px)!important;
+}
+html body #client .cw-card{
+  border-radius:1px!important;
+}
+html body #client .cw-card .cw-client{
+  font-family:"Inter Display","Inter",Arial,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:-.03em!important;
+  line-height:1.15!important;
+}
+html body #client .cw-card .cw-type{
+  font-family:"Inter",Arial,sans-serif!important;
+  font-weight:500!important;
+  letter-spacing:.025em!important;
+}
+html body #client .cw-card:focus-visible .cw-info,
+html body #client .cw-card:hover .cw-info{
+  transform:translateY(0)!important;
+}
+html body #client .yoaz-project-detail-links{
+  border-top:1px solid var(--yoaz-v3-rule)!important;
+  row-gap:.7rem!important;
+}
+html body #client .yoaz-project-detail-links a{
+  min-height:44px!important;
+  border-radius:1px!important;
+  font-family:"Inter",Arial,sans-serif!important;
+  letter-spacing:.02em!important;
+  font-weight:600!important;
+}
+html body #shop .edition-grid{
+  gap:clamp(12px,1.4vw,24px)!important;
+}
+html body #shop .edition-card{
+  border-radius:1px!important;
+}
+html body #shop .edition-card h3{
+  font-family:"Inter Display","Inter",Arial,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:-.045em!important;
+}
+html body #gallery .gal-grid{
+  gap:clamp(8px,.88vw,15px)!important;
+}
+html body #gallery .gal-item{
+  border-radius:1px!important;
+}
+html body #client .cw-card:focus-visible,
+html body #gallery .gal-item:focus-visible,
+html body #shop .edition-buy:focus-visible{
+  outline:3px solid var(--yoaz-v3-gold)!important;
+  outline-offset:3px!important;
+}
+@media(max-width:700px){
+  html body .section-mega-title{
+    font-size:clamp(2.8rem,10.6vw,5.8rem)!important;
+    overflow-wrap:break-word;
+  }
+  html body #client .cw-grid{
+    gap:10px!important;
+  }
+  html body #shop .edition-grid{
+    gap:11px!important;
+  }
+  html body #client .yoaz-project-detail-links a{
+    min-height:46px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body #client .cw-card img,
+  html body #gallery .gal-item img{
+    transition:none!important;
+  }
+}
