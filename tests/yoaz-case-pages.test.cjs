@@ -60,3 +60,21 @@ test('small viewport project reading and visible keyboard navigation are preserv
   assert.match(css,/\.footer a:focus-visible\{outline:3px solid #fff/);
   assert.match(css,/@media\(prefers-reduced-motion:reduce\)/);
 });
+
+test('English project gallery descriptions are localized, not copied from French',()=>{
+  const labels=html=>[...html.matchAll(/<figure>([\s\S]*?)<\/figure>/g)].map(m=>({
+    alt:(m[1].match(/\balt="([^"]+)"/)||[])[1],
+    caption:(m[1].match(/<figcaption>([^<]+)<\/figcaption>/)||[])[1]
+  }));
+  for(const slug of slugs){
+    const fr=labels(read('projets/'+slug+'.html'));
+    const en=labels(read('en/projects/'+slug+'.html'));
+    assert.equal(fr.length,4,slug+' French gallery count');
+    assert.equal(en.length,fr.length,slug+' English gallery count');
+    for(let i=0;i<fr.length;i++){
+      assert.ok(fr[i].alt&&en[i].alt&&en[i].caption,slug+' missing gallery copy');
+      assert.notEqual(en[i].alt,fr[i].alt,slug+' English alt text not localized: '+i);
+      assert.notEqual(en[i].caption,fr[i].caption,slug+' English caption not localized: '+i);
+    }
+  }
+});
