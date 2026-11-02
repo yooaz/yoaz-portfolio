@@ -1,0 +1,153 @@
+/* YOAZ 2026 — Editorial V6, OPTIONAL.
+   Apply to a separate test copy of the ORIGINAL homepage only after visual QA.
+   Never removes brand marks, client works, artworks, edition cards or translations.
+   No external images, fonts, scripts or layout reset. */
+:root{
+  --yoaz-v6-ink:#1b1b18;
+  --yoaz-v6-panel:#181815;
+  --yoaz-v6-accent:#ad956e;
+  --yoaz-v6-rule:rgba(255,255,255,.15);
+}
+html body #hero .hname,
+html body #yoaz-mobile-hero .yoaz-mobile-title{
+  font-family:"Inter Display","Inter","Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(4.6rem,10vw,10.2rem)!important;
+  font-weight:700!important;
+  line-height:.94!important;
+  letter-spacing:-.075em!important;
+}
+html body #hero .htag,
+html body #yoaz-mobile-hero .yoaz-mobile-kicker{
+  font-family:"Inter","Helvetica Neue",Arial,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:.135em!important;
+}
+html body .section-mega-title{
+  font-family:"Inter Display","Inter","Helvetica Neue",Arial,sans-serif!important;
+  font-weight:660!important;
+  line-height:1.02!important;
+  letter-spacing:-.066em!important;
+  text-wrap:balance;
+}
+html body #client .cw-grid{
+  gap:clamp(11px,1.4vw,23px)!important;
+}
+html body #client .cw-card[data-pid]{
+  border-radius:2px!important;
+}
+html body #client .cw-card .cw-client{
+  font-family:"Inter Display","Inter",Arial,sans-serif!important;
+  font-weight:650!important;
+  line-height:1.16!important;
+  letter-spacing:-.035em!important;
+}
+html body #client .cw-card:focus-visible .cw-info,
+html body #client .cw-card:hover .cw-info{
+  transform:translateY(0)!important;
+}
+html body .yoaz-home-trust.yoaz-after-client-gallery{
+  background:var(--yoaz-v6-panel)!important;
+  color:#f7f4ee!important;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:clamp(20px,3vw,44px) 0!important;
+  padding:0!important;
+  border-left:1px solid var(--yoaz-v6-rule)!important;
+  border-top:1px solid var(--yoaz-v6-rule)!important;
+  overflow:visible!important;
+  white-space:normal!important;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  height:clamp(95px,10vw,136px)!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  padding:clamp(13px,2vw,23px)!important;
+  margin:0!important;
+  border-right:1px solid var(--yoaz-v6-rule)!important;
+  border-bottom:1px solid var(--yoaz-v6-rule)!important;
+  background:transparent!important;
+  transform:none!important;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo:last-child{
+  grid-column:span 2;
+}
+html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:82%!important;
+  max-height:52px!important;
+  opacity:1!important;
+  object-fit:contain!important;
+  filter:none!important;
+  transform:none!important;
+}
+html body #shop .edition-grid{
+  gap:clamp(12px,1.45vw,24px)!important;
+}
+html body #shop .edition-card{
+  border-radius:2px!important;
+}
+html body #shop .edition-card h3{
+  font-family:"Inter Display","Inter",Arial,sans-serif!important;
+  font-weight:650!important;
+  letter-spacing:-.03em!important;
+}
+html body #shop .edition-buy{
+  min-height:44px!important;
+}
+html body #gallery .gal-grid{
+  gap:clamp(8px,1vw,16px)!important;
+}
+html body #gallery .gal-item{
+  border-radius:2px!important;
+}
+html body #client .cw-card:focus-visible,
+html body #gallery .gal-item:focus-visible,
+html body #shop .edition-buy:focus-visible,
+html body #nav-toggle:focus-visible{
+  outline:3px solid var(--yoaz-v6-accent)!important;
+  outline-offset:3px!important;
+}
+@media(max-width:950px){
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:700px){
+  html body #hero .hname,
+  html body #yoaz-mobile-hero .yoaz-mobile-title{
+    font-size:clamp(4.1rem,19vw,7.6rem)!important;
+    letter-spacing:-.065em!important;
+    overflow-wrap:normal!important;
+  }
+  html body .section-mega-title{
+    font-size:clamp(2.8rem,10.5vw,5.7rem)!important;
+    overflow-wrap:break-word;
+  }
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo{
+    height:clamp(86px,26vw,110px)!important;
+    padding:12px!important;
+  }
+  html body .yoaz-home-trust .yoaz-real-logo-row.yoaz-visible-client-logos .real-logo img{
+    max-height:45px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body #client .cw-card img,
+  html body #gallery .gal-item img{
+    transition:none!important;
+  }
+}
