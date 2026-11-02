@@ -59,4 +59,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://yoaz.fr/en/projects/relic-cipher/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yoaz.fr/projets/relic-cipher/"/>
   </url>
+  <url><loc>https://yoaz.fr/projets/fast-company/</loc><lastmod>2026-11-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yoaz.fr/projets/fast-company/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yoaz.fr/en/projects/fast-company/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yoaz.fr/projets/fast-company/"/>
+    <image:image><image:loc>https://yoaz.fr/images/client-fast-company.webp</image:loc></image:image>
+  </url>
+  <url><loc>https://yoaz.fr/en/projects/fast-company/</loc><lastmod>2026-11-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yoaz.fr/projets/fast-company/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yoaz.fr/en/projects/fast-company/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yoaz.fr/projets/fast-company/"/>
+    <image:image><image:loc>https://yoaz.fr/images/client-fast-company.webp</image:loc></image:image>
+  </url>
 </urlset>
