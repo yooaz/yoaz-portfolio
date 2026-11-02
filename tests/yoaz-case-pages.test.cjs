@@ -7,7 +7,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const slugs=['adobe-max','playstation-god-of-war','adidas-paris','converse-citadium','relic-cipher'];
+const slugs=['adobe-max','playstation-god-of-war','adidas-paris','converse-citadium','relic-cipher','fast-company'];
 const home=read('index.html');
 
 test('every project page is indexable, accessible and internally navigable',()=>{
