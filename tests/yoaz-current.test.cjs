@@ -52,6 +52,17 @@ test('one Instagram renderer, retired Behold and old scripts gated', () => {
   }
 });
 
+test('historic regression: no globally self-triggering card observer or duplicate IDs', () => {
+  assert.doesNotMatch(home, /mo\.observe\(document\.documentElement,\{childList:true,subtree:true\}\)/);
+  const ids = [...home.matchAll(/\bid="([^"]+)"/g)].map(x => x[1]);
+  const duplicates = ids.filter((id, idx) => ids.indexOf(id) !== idx);
+  assert.deepEqual(duplicates, []);
+  assert.match(home, /class="yoaz-project-detail-links" role="navigation"/);
+  for (const tag of home.match(/<a\b[^>]*target="_blank"[^>]*>/g) || []) {
+    assert.match(tag, /\brel="[^"]*noopener/, 'External link missing noopener: ' + tag);
+  }
+});
+
 test('new scripts and functions are valid JavaScript', () => {
   for (const filename of [
     'assets/js/yoaz-instagram-stable.js', 'assets/js/yoaz-case-navigation.js',
@@ -101,6 +112,39 @@ test('Instagram validators reject unsafe URLs', () => {
   ],9);
   assert.equal(posts.length, 1);
   assert.equal(posts[0].id, 'a');
+});
+
+test('Instagram cache is account/token scoped and refreshes after rotation', async () => {
+  const feed = require('../netlify/functions/instagram-feed.js');
+  const keys = ['INSTAGRAM_ACCESS_TOKEN','IG_GRAPH_ACCESS_TOKEN','INSTAGRAM_USER_ID','IG_USER_ID'];
+  const old = Object.fromEntries(keys.map(k => [k, process.env[k]]));
+  const originalFetch = global.fetch;
+  let calls = 0;
+  try {
+    delete process.env.IG_GRAPH_ACCESS_TOKEN; delete process.env.IG_USER_ID;
+    process.env.INSTAGRAM_USER_ID = 'test-user';
+    process.env.INSTAGRAM_ACCESS_TOKEN = 'test-token-ONE';
+    global.fetch = async () => {
+      calls++;
+      return { ok:true, json:async () => ({data:[{
+        id:String(calls),media_type:'IMAGE',media_url:'https://cdn.example.com/post.jpg',
+        permalink:'https://www.instagram.com/p/example/',timestamp:'2026-10-01T12:00:00Z'
+      }]})};
+    };
+    const one = await feed.handler({httpMethod:'GET'});
+    assert.equal(one.statusCode,200);
+    const cached = await feed.handler({httpMethod:'GET'});
+    assert.equal(JSON.parse(cached.body).cached,true);
+    assert.equal(calls,1);
+    process.env.INSTAGRAM_ACCESS_TOKEN = 'test-token-TWO';
+    const rotated = await feed.handler({httpMethod:'GET'});
+    assert.equal(rotated.statusCode,200);
+    assert.equal(JSON.parse(rotated.body).items[0].id,'2');
+    assert.equal(calls,2);
+  } finally {
+    global.fetch = originalFetch;
+    for (const k of keys) if(old[k]===undefined) delete process.env[k];else process.env[k]=old[k];
+  }
 });
 
 test('missing Instagram access token fails closed without exposing secrets', async () => {
