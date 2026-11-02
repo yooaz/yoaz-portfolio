@@ -2638,7 +2638,7 @@ const I18N={
     shop_intro_aria:'Collection posters',shop_intro_kicker:'Collection officielle',
     shop_intro_h3:'Produits vérifiés depuis la boutique YOAZ : image, titre et lien restent synchronisés.',shop_intro_link:'Shop',
     sp_price_label:'Tirage mural',
-    shop_note:'Tirages premium disponibles sur <strong><a href="#shop" target="_blank" style="color:#b89a5a">la boutique</a></strong>. Merch sur Redbubble & TeePublic.',
+    shop_note:'Tirages premium disponibles sur <strong><a href="#shop" style="color:#b89a5a">la boutique</a></strong>. Merch sur Redbubble & TeePublic.',
     shop_contact:'Me contacter pour commander →',
     gallery_eyebrow:'03 — Galerie',gallery_title:'Travaux Personnels',
     about_eyebrow:'04 — À Propos',about_bio:"Illustrateur freelance et directeur artistique basé à Paris, je crée des illustrations psychédéliques, géométriques et surréalistes depuis plus de 10 ans. Mon travail dense et coloré a été utilisé pour des campagnes mondiales, des packagings, des murals et des éditions limitées. Clients : Adobe, Apple, Nike, Adidas, Converse, PlayStation, Marvel, Warner. Disponible pour commissions et collaborations — monde entier.",
@@ -2693,7 +2693,7 @@ const I18N={
     shop_intro_aria:'Official poster collection',shop_intro_kicker:'Official collection',
     shop_intro_h3:'Verified products from the YOAZ store: image, title and link stay in sync.',shop_intro_link:'Shop',
     sp_price_label:'Wall art print',
-    shop_note:'Premium prints available on <strong><a href="#shop" target="_blank" style="color:#b89a5a">the shop</a></strong>. Merch on Redbubble & TeePublic.',
+    shop_note:'Premium prints available on <strong><a href="#shop" style="color:#b89a5a">the shop</a></strong>. Merch on Redbubble & TeePublic.',
     shop_contact:'Contact me to order →',
     gallery_eyebrow:'03 — Gallery',gallery_title:'Personal Work',
     about_eyebrow:'04 — About',about_bio:'Freelance illustrator and art director based in Paris. For over 10 years, geometric, colorful and psychedelic illustrations for global campaigns, packaging, murals and limited editions. Clients include Adobe, Apple, Nike, Adidas, Converse, PlayStation, Marvel and Warner. Commissions worldwide.',
@@ -2748,7 +2748,7 @@ const I18N={
     shop_intro_aria:'Officiële postercollectie',shop_intro_kicker:'Officiële collectie',
     shop_intro_h3:'Geverifieerde producten uit de YOAZ-winkel: afbeelding, titel en link blijven gesynchroniseerd.',shop_intro_link:'Shop',
     sp_price_label:'Wandkunst print',
-    shop_note:'Premium prints beschikbaar op <strong><a href="#shop" target="_blank" style="color:#b89a5a">de winkel</a></strong>. Merch op Redbubble & TeePublic.',
+    shop_note:'Premium prints beschikbaar op <strong><a href="#shop" style="color:#b89a5a">de winkel</a></strong>. Merch op Redbubble & TeePublic.',
     shop_contact:'Neem contact op →',
     gallery_eyebrow:'03 — Galerij',gallery_title:'Persoonlijk Werk',
     about_eyebrow:'04 — Over',about_bio:'Freelance illustrator en art director in Parijs. Al meer dan 10 jaar geometrische, psychedelische en surrealistische illustraties voor wereldwijde campagnes, verpakkingen, murals en limited editions. Klanten: Adobe, Apple, Nike, Adidas, Converse, PlayStation, Marvel, Warner. Opdrachten wereldwijd.',
@@ -2803,7 +2803,7 @@ const I18N={
     shop_intro_aria:'Colección oficial de posters',shop_intro_kicker:'Colección oficial',
     shop_intro_h3:'Productos verificados de la tienda YOAZ: imagen, título y enlace sincronizados.',shop_intro_link:'Shop',
     sp_price_label:'Print mural',
-    shop_note:'Prints premium disponibles en <strong><a href="#shop" target="_blank" style="color:#b89a5a">la tienda</a></strong>. Merch en Redbubble & TeePublic.',
+    shop_note:'Prints premium disponibles en <strong><a href="#shop" style="color:#b89a5a">la tienda</a></strong>. Merch en Redbubble & TeePublic.',
     shop_contact:'Contáctame para pedir →',
     gallery_eyebrow:'03 — Galería',gallery_title:'Trabajo Personal',
     about_eyebrow:'04 — Sobre mí',about_bio:'Ilustrador freelance y director artístico en París. Más de 10 años creando ilustraciones psicodélicas, geométricas y surrealistas para campañas mundiales, packaging, murales y ediciones limitadas. Clientes: Adobe, Apple, Nike, Adidas, Converse, PlayStation, Marvel, Warner. Encargos en todo el mundo.',
@@ -11255,7 +11255,7 @@ html[lang="en"] .fr-only,html[lang="es"] .fr-only,html[lang="nl"] .fr-only{displ
 
 
 <!-- YOAZ 2.1 — Social dedupe, Instagram fallback, Stripe-ready shop -->
-<style id="yoaz-release-2-1-social-instagram-stripe">
+<style id="yoaz-release-2-1-social-instagram-stripe-css">
   /* Remove deprecated NFT social link and prevent legacy duplicate social strips from appearing */
   a[href*="foundation.app"], .social-fd { display:none !important; }
   body .social-logo-strip.yoaz-v12-social-strip{display:none!important;}
@@ -12965,8 +12965,8 @@ html,body{max-width:100%;overflow-x:hidden!important;background:#f7f3ea!importan
   function run(){ ensureOnlyOneLogoRow(); correctCards(); correctModalData(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
   window.addEventListener('load',function(){ run(); setTimeout(run,250); setTimeout(run,1000); setTimeout(run,2200); },{once:true});
-  var mo=new MutationObserver(function(){ clearTimeout(window.__yoazFinalT); window.__yoazFinalT=setTimeout(run,60); });
-  if(document.documentElement) mo.observe(document.documentElement,{childList:true,subtree:true});
+  // Removed global subtree observer: run() rebuilds cards and would retrigger itself.
+  // Existing DOMContentLoaded/load and finite timers still apply the fixes.
 })();
 </script>
 
