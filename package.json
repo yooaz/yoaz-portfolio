@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node --test tests/yoaz-current.test.cjs tests/yoaz-case-pages.test.cjs"
+    "test": "node --test tests/yoaz-current.test.cjs tests/yoaz-case-pages.test.cjs tests/yoaz-sitemaps.test.cjs"
   },
   "repository": {
     "type": "git",
