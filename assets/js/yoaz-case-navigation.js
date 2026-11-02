@@ -15,12 +15,12 @@
     if (title) title.textContent = labels[lang] || labels.fr;
     nav.querySelectorAll('a[href]').forEach(link => {
       const slug = link.getAttribute('data-yoaz-case-slug') ||
-        (link.getAttribute('href').match(/\/(?:projets|en\/projects)\/([a-z0-9-]+)\.html/) || [])[1];
+        (link.getAttribute('href').match(/\/(?:projets|en\/projects)\/([a-z0-9-]+)(?:\.html|\/)?/) || [])[1];
       if (!slug) return;
       link.dataset.yoazCaseSlug = slug;
       link.href = lang === 'fr'
-        ? '/projets/' + slug + '.html'
-        : '/en/projects/' + slug + '.html';
+        ? '/projets/' + slug + '/'
+        : '/en/projects/' + slug + '/';
       link.hreflang = lang === 'fr' ? 'fr' : 'en';
     });
   }
