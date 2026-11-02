@@ -53,3 +53,14 @@ test('each project canonical and its four local images occur in both sitemaps',(
     }
   }
 });
+
+test('robots declares both sitemaps exactly once and keeps image/AI crawlers allowed',()=>{
+  const robots=read('robots.txt');
+  const declarations=[...robots.matchAll(/^Sitemap: (.+)$/gm)].map(m=>m[1]);
+  assert.deepEqual(declarations,[
+    'https://yoaz.fr/sitemap.xml',
+    'https://yoaz.fr/image-sitemap.xml'
+  ]);
+  assert.match(robots,/User-agent: Googlebot-Image\s+Allow: \/images\//);
+  assert.match(robots,/User-agent: OAI-SearchBot\s+Allow: \//);
+});
