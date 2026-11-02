@@ -5,6 +5,7 @@
 // Uses Meta Graph v26.0; the retired Instagram Basic Display fallback has been removed.
 
 'use strict';
+const { createHash } = require('node:crypto');
 
 const GRAPH_VERSION = 'v26.0';
 const DEFAULT_LIMIT = 9;
@@ -53,7 +54,7 @@ function normalise(items, limit) {
       permalink,
       timestamp: String(item.timestamp || '').slice(0, 40),
     };
-  }).filter(Boolean).sort((a, b) => Date.parse(b.timestamp || 0) - Date.parse(a.timestamp || 0)).slice(0, limit);
+  }).filter(Boolean).sort((a, b) => (Date.parse(b.timestamp || '') || 0) - (Date.parse(a.timestamp || '') || 0)).slice(0, limit);
 }
 async function getMedia(token, userId, limit) {
   const host = userId ? 'graph.facebook.com' : 'graph.instagram.com';
@@ -87,21 +88,30 @@ exports.handler = async function(event = {}) {
   const parsed = Number(process.env.INSTAGRAM_LIMIT);
   const limit = Number.isFinite(parsed) && parsed > 0 ? Math.max(1, Math.min(Math.floor(parsed), 24)) : DEFAULT_LIMIT;
   if (!token) return response(503, {ok:false, configured:false, error:'not_configured', items:[]});
+  // Hash credentials for cache identity so token rotation never returns data
+  // from a previous token or another account. The token is never logged/stored.
+  const key = createHash('sha256').update(token).update('\\0' + userId + '\\0' + limit).digest('hex');
   const now = Date.now();
-  if (cache && cache.key === (userId + ':' + limit) && now - cache.at < CACHE_FOR_MS) {
+  if (cache && cache.key === key && now - cache.at < CACHE_FOR_MS) {
     return response(200, {ok:true, source:'instagram-graph', cached:true, items:cache.items}, true);
   }
-  if (!pending) pending = getMedia(token, userId, limit).finally(() => { pending = null; });
+  let flight = pending;
+  if (!flight || flight.key !== key) {
+    flight = { key, promise: getMedia(token, userId, limit) };
+    pending = flight;
+  }
   try {
-    const items = await pending;
-    cache = { key:userId + ':' + limit, at:Date.now(), items };
+    const items = await flight.promise;
+    cache = { key, at:Date.now(), items };
     return response(200, {ok:true, source:'instagram-graph', cached:false, items}, true);
   } catch (_) {
-    if (cache && cache.key === (userId + ':' + limit) && now - cache.at < STALE_FOR_MS) {
+    if (cache && cache.key === key && now - cache.at < STALE_FOR_MS) {
       return response(200, {ok:true, source:'instagram-graph', stale:true, items:cache.items}, false);
     }
     // Never expose access tokens, upstream stack traces or sensitive Meta error payloads.
     return response(502, {ok:false, configured:true, error:'upstream_unavailable', items:[]});
+  } finally {
+    if (pending === flight) pending = null;
   }
 };
 
