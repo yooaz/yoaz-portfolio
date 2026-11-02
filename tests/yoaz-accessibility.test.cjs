@@ -120,3 +120,15 @@ test('mobile menu supports Escape and click outside without replacing legacy tog
   listeners.pointerdown[0]({target:{}});
   assert.equal(links.classList.contains('open'),false);
 });
+
+test('homepage exposes labeled controls, stable script and visible focus styles', () => {
+  const home = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
+  const css = fs.readFileSync(path.resolve(__dirname, '../assets/css/yoaz-current-polish.css'), 'utf8');
+  assert.equal((home.match(/\/assets\/js\/yoaz-accessibility-stable\.js/g)||[]).length,1);
+  assert.match(home, /id="nav-toggle"[^>]*aria-label="Ouvrir le menu"/);
+  assert.match(home, /id="pj-close"[^>]*aria-label="Fermer le projet"/);
+  assert.match(home, /id="pj-modal"[^>]*role="dialog"[^>]*aria-modal="true"/);
+  assert.match(css, /#client \.cw-card\[data-pid\]:focus-visible/);
+  assert.match(css, /#pj-modal button:focus-visible/);
+  assert.match(css, /prefers-reduced-motion: reduce/);
+});
