@@ -6,18 +6,18 @@ Official website: https://yoaz.fr/
 Contact: yoaz@hotmail.fr
 
 ## Selected, independently readable client projects
-- Adobe MAX — illustration and event environments: https://yoaz.fr/projets/adobe-max.html
-- PlayStation God of War — Paris Metro illustration: https://yoaz.fr/projets/playstation-god-of-war.html
-- Adidas Paris — illustrated apparel: https://yoaz.fr/projets/adidas-paris.html
-- Converse × Citadium — multi-format retail campaign: https://yoaz.fr/projets/converse-citadium.html
-- Relic Cipher Collection — embroidered apparel illustration: https://yoaz.fr/projets/relic-cipher.html
+- Adobe MAX — illustration and event environments: https://yoaz.fr/projets/adobe-max/
+- PlayStation God of War — Paris Metro illustration: https://yoaz.fr/projets/playstation-god-of-war/
+- Adidas Paris — illustrated apparel: https://yoaz.fr/projets/adidas-paris/
+- Converse × Citadium — multi-format retail campaign: https://yoaz.fr/projets/converse-citadium/
+- Relic Cipher Collection — embroidered apparel illustration: https://yoaz.fr/projets/relic-cipher/
 
 English versions:
-- https://yoaz.fr/en/projects/adobe-max.html
-- https://yoaz.fr/en/projects/playstation-god-of-war.html
-- https://yoaz.fr/en/projects/adidas-paris.html
-- https://yoaz.fr/en/projects/converse-citadium.html
-- https://yoaz.fr/en/projects/relic-cipher.html
+- https://yoaz.fr/en/projects/adobe-max/
+- https://yoaz.fr/en/projects/playstation-god-of-war/
+- https://yoaz.fr/en/projects/adidas-paris/
+- https://yoaz.fr/en/projects/converse-citadium/
+- https://yoaz.fr/en/projects/relic-cipher/
 
 ## Homepage sections
 - https://yoaz.fr/#client — selected commissions and client logos
