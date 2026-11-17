@@ -14,6 +14,18 @@ check("Required sections",()=>{for(const id of ["home","work","art","shop","abou
 check("Page content",()=>{assert.ok(html.length<100000,"HTML should remain modular and under 100 KB");assert.ok(css.length<100000);assert.ok(js.length<100000)});
 check("Unique IDs",()=>{const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);assert.equal(new Set(ids).size,ids.length)});
 check("Accessible images",()=>{const imgs=[...html.matchAll(/<img\b[^>]*>/g)].map(m=>m[0]);assert.ok(imgs.length>=20);for(const img of imgs)assert.match(img,/\balt="/)});
+check("Authentic client logos",()=>{
+ const strip=html.match(/<div class="brand-band"[^>]*>([\\s\\S]*?)<\\/div><\\/div>/)?.[1];
+ assert.ok(strip,"Client-logo strip is missing");
+ const logos=[...strip.matchAll(/<img\\b[^>]*>/g)].map(m=>m[0]);
+ assert.equal(logos.length,8,"Expected eight actual client marks");
+ for(const logo of logos){
+   assert.match(logo,/src="\\/images\\/brand-white-[a-z]+\\.png"/);
+   assert.match(logo,/alt="[^"]+"/);
+   const src=logo.match(/src="([^"]+)"/)[1];
+   assert.ok(existsSync(resolve(root,"."+src)),src+" missing");
+ }
+});
 check("Assets exist",()=>{
  const imageRefs=[...html.matchAll(/(?:src|data-art|data-project-images)="([^"]+)"/g)].flatMap(m=>m[1].split("|")).filter(x=>x.startsWith("/images/"));
  for(const src of imageRefs)assert.ok(existsSync(resolve(root,"."+src)),src+" missing");
