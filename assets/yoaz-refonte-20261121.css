@@ -1,0 +1,36 @@
+/* YOAZ 2026-11-21 — focused visual corrections, no new imagery or external dependencies */
+html body #hero{min-height:min(830px,92svh)!important;align-items:center!important;overflow:visible!important}
+html body #hero .himg{display:flex!important;justify-content:center!important;align-items:center!important;overflow:visible!important;min-height:590px!important}
+html body #hero .himg picture{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:100%!important;overflow:visible!important}
+html body #hero .himg img{display:block!important;width:auto!important;height:auto!important;max-width:100%!important;max-height:min(78svh,790px)!important;object-fit:contain!important;object-position:center center!important;clip-path:none!important;transform:none!important;filter:none!important}
+html body #yoaz-mobile-hero .yoaz-mobile-hero-image{display:flex!important;align-items:center!important;justify-content:center!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:12px 12px 0!important}
+html body #yoaz-mobile-hero .yoaz-mobile-hero-image img{display:block!important;width:auto!important;max-width:min(100%,620px)!important;height:auto!important;max-height:65svh!important;object-fit:contain!important;object-position:center center!important;margin:0 auto!important;transform:none!important;clip-path:none!important;animation:none!important}
+html body #yoaz-mobile-hero .yoaz-mobile-hero-copy{margin-top:0!important;transform:none!important}
+html body #client .cw-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:clamp(12px,1.6vw,26px)!important;overflow:visible!important;padding-inline:clamp(16px,2.8vw,50px)!important;scroll-snap-type:none!important}
+html body #client .cw-card{min-width:0!important;width:100%!important;max-width:none!important;flex:auto!important;scroll-snap-align:none!important;overflow:hidden!important;border-radius:0!important}
+html body #client .cw-gallery-stack{height:clamp(340px,36vw,660px)!important;max-height:none!important}
+html body #client .cw-card img,html body #client .cw-gallery-stack .cw-gimg{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;transition:transform .45s ease,opacity .3s ease!important}
+html body #client .cw-card:hover img{transform:scale(1.025)!important}
+html body #client video{max-width:100%!important;object-fit:contain!important}
+html body #gallery .gal-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:clamp(12px,1.6vw,26px)!important;overflow:visible!important}
+html body #gallery .gal-item{min-width:0!important;overflow:hidden!important}
+html body #gallery .gal-item img,html body #gallery .gal-item picture img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;transform:none!important}
+html body #gallery .gal-item:has(img[src*="cite-psychedelique"]){background:#f6f2e9!important}
+html body #shop .edition-card[data-product="cite-psychedelique"] .edition-art img{object-fit:contain!important;object-position:center!important}
+html body .yoaz-home-trust .yoaz-real-logo-row{gap:clamp(20px,3vw,48px)!important;padding-block:clamp(22px,3vw,48px)!important}
+html body .yoaz-home-trust .yoaz-real-logo-row .real-logo img{max-width:clamp(100px,10.5vw,190px)!important;max-height:clamp(40px,5vw,72px)!important;width:auto!important;height:auto!important;object-fit:contain!important}
+html body #contact{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;content-visibility:visible!important}
+html body #contact .contact-grid{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:clamp(25px,5vw,85px)!important}
+html body #contact .ct-intro,html body #contact .ct-form{display:flex!important;visibility:visible!important;opacity:1!important}
+html body #contact .ct-email{display:inline-block!important;font-size:clamp(1.25rem,2vw,2rem)!important;overflow-wrap:anywhere}
+html body #contact .ct-socials{display:flex!important;flex-wrap:wrap!important;gap:10px 20px!important}
+html body #contact .ct-soc{display:inline-flex!important;width:auto!important;white-space:nowrap!important}
+html body .yoaz-direct-contact{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.1rem;border:1px solid currentColor;text-decoration:none;font:600 .8rem/1.2 Arial,sans-serif;letter-spacing:.04em;color:inherit;transition:background-color .2s,color .2s,transform .2s}
+html body .yoaz-direct-contact:hover{transform:translateY(-2px);background:#151515;color:#fff}
+html body .yoaz-social-additions{display:flex;flex-wrap:wrap;gap:.7rem 1.25rem;padding-top:1rem}
+html body .yoaz-social-additions a{text-decoration:underline;text-underline-offset:4px;font-size:.9rem}
+html body #contact .ct-contact-actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
+@media(min-width:1100px){html body #client .cw-grid,html body #gallery .gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:960px){html body #hero{display:none!important}html body #yoaz-mobile-hero{overflow:visible!important}html body #client .cw-grid{grid-template-columns:1fr!important}html body #client .cw-gallery-stack{height:clamp(350px,72vw,640px)!important}html body #gallery .gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}html body #contact .contact-grid{grid-template-columns:1fr!important}}
+@media(max-width:560px){html body #yoaz-mobile-hero .yoaz-mobile-hero-image img{max-height:58svh!important}html body #client .cw-grid{padding-inline:12px!important}html body #client .cw-gallery-stack{height:clamp(310px,90vw,500px)!important}html body #gallery .gal-grid{grid-template-columns:1fr!important}html body #gallery .gal-item{min-height:320px!important}html body #contact .ct-contact-actions{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){html body #client .cw-card img,html body .yoaz-direct-contact{transition:none!important;animation:none!important}}
